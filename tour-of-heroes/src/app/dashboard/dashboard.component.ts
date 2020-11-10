@@ -33,8 +33,12 @@ export class DashboardComponent implements OnInit {
       );
     }
     else {
+      this._httpClient.get<Hero[]>('https://reqres.in/api/users' + `?page=${1}`).subscribe(
+        data => {
+          this.heroes = data["data"];
+        }
+      );
       this.heroes = this.heroes.filter(s => s.first_name.toLowerCase().includes(filterValue.toLowerCase()));
-      console.log(this.heroes);
     }
 
   }

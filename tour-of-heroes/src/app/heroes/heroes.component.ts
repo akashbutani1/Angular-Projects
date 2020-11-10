@@ -120,8 +120,12 @@ export class HeroesComponent implements AfterViewInit {
       );
     }
     else {
-      this.data = this.data.filter(s => s.first_name.toLowerCase().includes(filterValue.toLowerCase()) || s.email.toLowerCase().includes(filterValue.toLowerCase()) || s.last_name.toLowerCase().includes(filterValue.toLowerCase()));
-      console.log(this.data);
+      this._httpClient.get<Hero[]>('https://reqres.in/api/users' + `?page=${this.paginator.pageIndex + 1}`).subscribe(
+        data => {
+          this.data = data["data"];
+          this.data = this.data.filter(s => s.first_name.toLowerCase().includes(filterValue.toLowerCase()) || s.email.toLowerCase().includes(filterValue.toLowerCase()) || s.last_name.toLowerCase().includes(filterValue.toLowerCase()));
+        }
+      );
     }
 
   }
