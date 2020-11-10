@@ -1,0 +1,13 @@
+
+<h1 class="heading">{{title}}</h1>
+
+<div class="row navbar">
+  <nav>
+    <button mat-raised-button color="primary" routerLink="/dashboard" class="btn-dashboard">Dashboard <mat-icon [inline]="true">home</mat-icon></button>
+    <button mat-raised-button color="primary" routerLink="/heroes" class="btn-dashboard">Heroes <mat-icon [inline]="true"> contacts</mat-icon></button>
+  </nav>
+</div>
+ 
+
+<router-outlet></router-outlet>
+<app-messages></app-messages>

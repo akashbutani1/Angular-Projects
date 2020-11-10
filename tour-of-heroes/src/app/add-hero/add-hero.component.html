@@ -1,0 +1,69 @@
+<form [formGroup]="addHeroForm" (ngSubmit)="onSubmit()">
+  <div class="row form-container">
+    <div class="col-md-2">
+
+      <div class="form-group">
+        <mat-form-field appearance="outline">
+          <mat-label>Hero First Name</mat-label>
+          <input matInput formControlName="firstname">
+          <mat-error *ngIf="addHeroForm.get('firstname').hasError('required')">
+            First Name is required
+          </mat-error>
+          <mat-error *ngIf="addHeroForm.get('firstname').hasError('minlength')">
+            Min Length is 3
+          </mat-error>
+          <mat-error *ngIf="addHeroForm.get('firstname').hasError('pattern')">
+            Only Alphabets Are Allowed
+          </mat-error>
+        </mat-form-field>
+
+      </div>
+
+
+
+    </div>
+
+
+    <div class="col-md-2">
+      <div class="form-group">
+        <mat-form-field appearance="outline">
+          <mat-label>Last Name</mat-label>
+          <input matInput formControlName="lastName">
+          <mat-error *ngIf="addHeroForm.get('lastName').hasError('required')">
+            Last Name is required
+          </mat-error>
+          <mat-error *ngIf="addHeroForm.get('lastName').hasError('minlength')">
+            Min Length is 3
+          </mat-error>
+          <mat-error *ngIf="addHeroForm.get('lastName').hasError('pattern')">
+            Only Alphabets Are Allowed
+          </mat-error>
+        </mat-form-field>
+
+      </div>
+    </div>
+
+
+    <div class="col-md-2">
+      <div class="form-group">
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email">
+          <mat-error *ngIf="addHeroForm.get('email').hasError('required')">
+            email is required
+          </mat-error>
+          <mat-error *ngIf="addHeroForm.get('email').hasError('email') || addHeroForm.get('email').hasError('pattern')">
+            Email Is Invalid
+          </mat-error>
+        </mat-form-field>
+
+      </div>
+    </div>
+
+
+    <div class="col-md-3">
+      <button mat-raised-button color="accent" [disabled]="!addHeroForm.valid" type="submit" class="btn btn-primary"
+        style="margin-top: 10px;">Submit <mat-icon>save</mat-icon></button>
+    </div>
+  </div>
+</form>
