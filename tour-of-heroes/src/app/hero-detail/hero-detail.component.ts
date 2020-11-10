@@ -14,6 +14,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 export class HeroDetailComponent implements OnInit {
   hero: Hero;
   id: number;
+
   constructor(
     private route: ActivatedRoute,
     private heroService: HeroService,
@@ -52,6 +53,6 @@ export class HeroDetailComponent implements OnInit {
     this.hero.last_name = this.updateHeroForm.value.heroLastName;
 
     this.heroService.updateHero(this.hero)
-    .subscribe();
+    .subscribe(response => console.log(response));
   }
 }

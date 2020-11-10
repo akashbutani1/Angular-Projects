@@ -6,19 +6,19 @@ import { HeroService } from '../hero.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: [ './dashboard.component.css' ]
+  styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
   heroes: Hero[] = [];
-  
-  constructor(private heroService: HeroService,private _httpClient: HttpClient) { }
+
+  constructor(private heroService: HeroService, private _httpClient: HttpClient) { }
   resultLength = 0;
   ngOnInit() {
     this.getHeroes();
   }
-  
+
   getHeroes(): void {
-    this.heroService.getHeroes('id','asc',0)
+    this.heroService.getHeroes('id', 'asc', 0)
       .subscribe(heroes => this.heroes = heroes["data"]);
   }
 
@@ -36,9 +36,9 @@ export class DashboardComponent implements OnInit {
       this._httpClient.get<Hero[]>('https://reqres.in/api/users' + `?page=${1}`).subscribe(
         data => {
           this.heroes = data["data"];
+          this.heroes = this.heroes.filter(s => s.first_name.toLowerCase().includes(filterValue.toLowerCase()));
         }
       );
-      this.heroes = this.heroes.filter(s => s.first_name.toLowerCase().includes(filterValue.toLowerCase()));
     }
 
   }

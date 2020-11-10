@@ -9,17 +9,17 @@
         <mat-form-field appearance="outline">
           <mat-label>Hero Name</mat-label>
           <input matInput [(ngModel)]="hero.first_name" formControlName="heroFirstName">
-          <mat-error *ngIf="updateHeroForm.get('heroFirstName').hasError('required')" >
+          <mat-error *ngIf="updateHeroForm.get('heroFirstName').hasError('required')">
             First Name is required
           </mat-error>
-          <mat-error *ngIf="updateHeroForm.get('heroFirstName').hasError('minlength')" >
+          <mat-error *ngIf="updateHeroForm.get('heroFirstName').hasError('minlength')">
             Min Length is 3
           </mat-error>
-          <mat-error *ngIf="updateHeroForm.get('heroFirstName').hasError('pattern')" >
+          <mat-error *ngIf="updateHeroForm.get('heroFirstName').hasError('pattern')">
             Only Alphabets Are Allowed
           </mat-error>
         </mat-form-field>
-        
+
       </div>
 
 
@@ -27,40 +27,37 @@
         <mat-form-field appearance="outline">
           <mat-label>Last Name</mat-label>
           <input matInput [(ngModel)]="hero.last_name" formControlName="heroLastName">
-          <mat-error *ngIf="updateHeroForm.get('heroLastName').hasError('required')" >
+          <mat-error *ngIf="updateHeroForm.get('heroLastName').hasError('required')">
             Last Name is required
           </mat-error>
-          <mat-error *ngIf="updateHeroForm.get('heroLastName').hasError('minlength')" >
+          <mat-error *ngIf="updateHeroForm.get('heroLastName').hasError('minlength')">
             Min Length is 3
           </mat-error>
-          <mat-error *ngIf="updateHeroForm.get('heroLastName').hasError('pattern')" >
+          <mat-error *ngIf="updateHeroForm.get('heroLastName').hasError('pattern')">
             Only Alphabets Are Allowed
           </mat-error>
         </mat-form-field>
-        
+
       </div>
 
       <div class="col-md-2">
         <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
           <input matInput [(ngModel)]="hero.email" formControlName="heroEmail">
-          <mat-error *ngIf="updateHeroForm.get('heroEmail').hasError('required')" >
+          <mat-error *ngIf="updateHeroForm.get('heroEmail').hasError('required')">
             Email is required
           </mat-error>
-          
-          <mat-error *ngIf="updateHeroForm.get('heroEmail').hasError('email') || updateHeroForm.get('heroEmail').hasError('pattern')" >
+
+          <mat-error
+            *ngIf="updateHeroForm.get('heroEmail').hasError('email') || updateHeroForm.get('heroEmail').hasError('pattern')">
             Email Invalid
           </mat-error>
         </mat-form-field>
-        
+
       </div>
     </div>
 
     <div class="btn-details">
-
-      <!-- <button mat-raised-button color="accent" (click)="goBack()">
-        Go Back <mat-icon>keyboard_backspace</mat-icon>
-      </button> -->
       <button mat-raised-button color="accent" [disabled]="!updateHeroForm.valid" type="submit">
         Save <mat-icon>save</mat-icon>
       </button>

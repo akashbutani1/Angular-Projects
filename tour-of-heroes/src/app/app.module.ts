@@ -47,7 +47,7 @@ import { AddHeroComponent } from './add-hero/add-hero.component';
     // ),
     BrowserAnimationsModule,
     FormsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
     MatTableModule,
     MatButtonModule,
     MatFormFieldModule,
