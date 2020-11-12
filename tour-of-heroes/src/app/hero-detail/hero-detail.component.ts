@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { Hero, HeroAPI } from '../hero';
+import {  HeroAPI } from '../hero';
 import { HeroService } from '../hero.service';
 import { FormBuilder, Validators } from '@angular/forms';
 
@@ -12,7 +12,7 @@ import { FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./hero-detail.component.css']
 })
 export class HeroDetailComponent implements OnInit {
-  hero: Hero;
+  hero: HeroAPI;
   id: number;
 
   constructor(

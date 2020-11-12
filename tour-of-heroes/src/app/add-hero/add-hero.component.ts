@@ -1,9 +1,11 @@
 
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { Hero, HeroAPI, userRegister } from '../hero';
+import { HeroAPI } from '../hero';
 import { HeroService } from '../hero.service';
+import { HeroesComponent } from '../heroes/heroes.component';
 
 @Component({
   selector: 'app-add-hero',
@@ -48,6 +50,7 @@ export class AddHeroComponent implements OnInit {
       
     };
     this.heroService.addHero(registerObject).subscribe(res => console.log(res));
+    
     setTimeout(() => {
       this.router.navigate(['/heroes']);
     }, 1000);

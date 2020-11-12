@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { merge, Observable, of } from 'rxjs';
 import { catchError, debounceTime, filter, map, tap } from 'rxjs/operators';
 
-import { Hero, HeroAPI, userRegister } from './hero';
+import { HeroAPI } from './hero';
 import { MessageService } from './message.service';
 
 
@@ -52,11 +52,11 @@ export class HeroService {
   }
 
   /** GET hero by id. Will 404 if id not found */
-  getHero(id: number): Observable<Hero> {
+  getHero(id: number): Observable<HeroAPI> {
     const url = `https://localhost:44373/api/tblHeroes/${id}`;
-    return this.http.get<Hero>(url).pipe(
+    return this.http.get<HeroAPI>(url).pipe(
       tap(_ => this.log(`fetched hero id=${id}`)),
-      catchError(this.handleError<Hero>(`getHero id=${id}`))
+      catchError(this.handleError<HeroAPI>(`getHero id=${id}`))
     );
   }
 
@@ -65,7 +65,7 @@ export class HeroService {
   /** PUT: update the hero on the server */
   updateHero(userUpdatedData: HeroAPI): Observable<HeroAPI> {
     debugger;
-    return this.http.put<Hero>(`https://localhost:44373/api/tblHeroes/${userUpdatedData.id}`,userUpdatedData, this.httpOptions).pipe(
+    return this.http.put<HeroAPI>(`https://localhost:44373/api/tblHeroes/${userUpdatedData.id}`,userUpdatedData, this.httpOptions).pipe(
       map(data => data),
       tap(_ => this.log(`updated hero id = ${userUpdatedData.id}`)),
       catchError(this.handleError<any>('updateHero'))

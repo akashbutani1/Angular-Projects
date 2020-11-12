@@ -1,16 +1,30 @@
 <label class="search-label">Search Heroes : </label>
 
+<div class="row">
 
-<mat-form-field appearance="outline">
-  <mat-label>Search Value</mat-label>
-  <input matInput #inputSearch>
-</mat-form-field>
-<button mat-raised-button color="accent" (click)="searchFilter()" class="btn-search">
-  <mat-icon [inline]="true">search</mat-icon>
-</button>
-<button mat-raised-button color="accent" (click)="resetDataTable()" class="btn-search">
-  <mat-icon [inline]="true">refresh</mat-icon>
-</button>
+  <div class="col-md-10">
+    <form [formGroup]="searchForm" (ngSubmit)="searchFilter()" style="margin-left: 27px;">
+      <mat-form-field appearance="outline">
+        <mat-label>Search Value</mat-label>
+        <input matInput #inputSearch formControlName="searchField">
+        <mat-error *ngIf="searchForm.get('searchField').hasError('required')">
+          Search Value is required
+        </mat-error>
+      </mat-form-field>
+
+      <button mat-raised-button color="accent" type="submit" [disabled]="!searchForm.valid" class="btn-search">
+        <mat-icon [inline]="true">search</mat-icon>
+      </button>
+
+    </form>
+  </div>
+  <div class="col-md-2">
+    <button mat-raised-button color="accent" (click)="resetDataTable()" class="btn-reset">
+      <mat-icon [inline]="true">refresh</mat-icon>
+    </button>
+  </div>
+
+</div>
 
 <h3 class="heading">Top Heroes</h3>
 

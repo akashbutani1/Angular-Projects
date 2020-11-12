@@ -1,22 +1,36 @@
 <h2 class="heading">My Heroes</h2>
+<div class="row">
+
+  <div class="col-md-10">
+    <form [formGroup]="searchForm" (ngSubmit)="searchFilter()" style="margin-left: 27px;margin-bottom: 30px;">
+      <mat-form-field appearance="outline">
+        <mat-label>Search Value</mat-label>
+        <input matInput #inputSearch formControlName="searchField">
+        <mat-error *ngIf="searchForm.get('searchField').hasError('required')">
+          Search Value is required
+        </mat-error>
+      </mat-form-field>
+
+      <button mat-raised-button color="accent" type="submit" [disabled]="!searchForm.valid" class="btn-search">
+        <mat-icon [inline]="true">search</mat-icon>
+      </button>
+
+    </form>
+  </div>
+  <div class="col-md-2">
+    
+    <button mat-raised-button color="accent" (click)="resetDataTable()" class="btn-reset">
+      <mat-icon [inline]="true">refresh</mat-icon>
+    </button>
+  </div>
+
+</div>
 
 <div class="col-md-10 table-container">
 
-  <mat-form-field appearance="outline">
-    <mat-label>Search Value</mat-label>
-    <input matInput #inputSearch>
-  </mat-form-field>
 
-  <button mat-raised-button color="accent" (click)="searchFilter()" class="btn-search">
-    <mat-icon [inline]="true">search</mat-icon>
-  </button>
-  <button mat-raised-button color="accent" (click)="resetDataTable()" class="btn-search">
-    <mat-icon [inline]="true">refresh</mat-icon>
-  </button>
-
-
-  <table mat-table matSort [dataSource]="newData" matSortActive="id" 
-    matSortDisableClear matSortDirection="asc" class="mat-elevation-z8">
+  <table mat-table matSort [dataSource]="newData" matSortActive="id" matSortDisableClear matSortDirection="asc"
+    class="mat-elevation-z8">
 
     <!-- id Column -->
     <ng-container matColumnDef="id">
@@ -69,6 +83,6 @@
 
   </table>
 
-  <mat-paginator [length]="resultsLength" [pageSize]="5"></mat-paginator>
+  <mat-paginator [length]="resultsLength" [pageSize]="10" showFirstLastButtons></mat-paginator>
 
 </div>

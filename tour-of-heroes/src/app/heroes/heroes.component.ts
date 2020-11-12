@@ -13,6 +13,7 @@ import { merge } from 'rxjs';
 import { map, startWith, switchMap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FormBuilder, FormGroupDirective, Validators } from '@angular/forms';
 
 
 @Component({
@@ -26,7 +27,7 @@ export class HeroesComponent implements AfterViewInit {
   resultsLength = 0;
   newData: HeroAPI[] = [];
   filterValue: string;
-  alertMessage: string = "There Is No Data For Search Value!!";
+  alertMessage: string = "There Is No Data For Search Value : ";
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -35,9 +36,14 @@ export class HeroesComponent implements AfterViewInit {
   constructor(
     private heroService: HeroService,
     private dialog: MatDialog,
-    private _snackBar: MatSnackBar) { }
+    private _snackBar: MatSnackBar,
+    private formbuilder: FormBuilder) { }
 
+  searchForm = this.formbuilder.group({
+    searchField: ['', [Validators.required]]
 
+  });
+    
   ngAfterViewInit() {
     debugger;
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
@@ -75,7 +81,10 @@ export class HeroesComponent implements AfterViewInit {
 
         this.newData = this.newData.filter(h => h !== hero);
         this.resultsLength = this.resultsLength - 1;
-
+        
+        this._snackBar.open('Data Deleted Successfully!!', 'Close', {
+          duration: 5000
+        });
       }
     });
 
@@ -94,16 +103,23 @@ export class HeroesComponent implements AfterViewInit {
   //search filter
   searchFilter() {
     debugger;
-    this.filterValue = this.searchValue.nativeElement.value;
+    this.filterValue = this.searchForm.controls.searchField.value;
     this.heroService.getHeroesFromWebAPI(
       this.sort.active, this.sort.direction, this.paginator.pageIndex, this.filterValue).subscribe(
         response => {
           this.newData = response.slice((this.paginator.pageIndex) * (this.paginator.pageSize), (this.paginator.pageIndex + 1) * (this.paginator.pageSize));
           this.resultsLength = response.length;
           this.searchValue.nativeElement.value = "";
-          
+
+          this.searchForm.reset();
+
           if (this.resultsLength == 0) {
-            this._snackBar.open(this.alertMessage, 'Close', {
+            this._snackBar.open(this.alertMessage + this.filterValue, 'Close', {
+              duration: 5000
+            });
+          }
+          else{
+            this._snackBar.open("Data Found For : " + this.filterValue, 'Close', {
               duration: 5000
             });
           }
@@ -114,13 +130,16 @@ export class HeroesComponent implements AfterViewInit {
 
   //reset data after search
   resetDataTable() {
-    this.filterValue="";
+    this.filterValue = "";
     this.heroService.getHeroesFromWebAPI(
       this.sort.active, this.sort.direction, this.paginator.pageIndex, this.filterValue).subscribe(
         res => {
           this.newData = res.slice((this.paginator.pageIndex) * (this.paginator.pageSize), (this.paginator.pageIndex + 1) * (this.paginator.pageSize));
           this.resultsLength = res.length;
           this.searchValue.nativeElement.value = "";
+          this._snackBar.open('Table Refreshed As You Wished !!', 'Close', {
+            duration: 5000
+          });
         }
       );
   }
