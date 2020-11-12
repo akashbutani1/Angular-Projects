@@ -11,26 +11,12 @@ import { MessageService } from './message.service';
 @Injectable({ providedIn: 'root' })
 export class HeroService {
 
-  //private heroesUrl = 'api/heroes';  // URL to web api
-  private url = 'https://reqres.in/api/users';
-
   constructor(
     private http: HttpClient,
     private messageService: MessageService) { }
 
 
-  getHeroes(sort: string, order: string, page: number): Observable<Hero[]> {
-    debugger;
-
-    return this.http.get<Hero[]>(this.url + `?page=${page + 1}`).pipe(
-      tap(_ => this.log('fetched heroes')),
-      catchError(this.handleError<Hero[]>('getHeroes', []))
-    );
-
-
-  }
-
-  //Get Data From API Without Parameter
+  //Get Data From API Without Parameter(Dasahboard)
   getHeroesAngular(): Observable<HeroAPI[]>{
     debugger;
 
@@ -40,7 +26,7 @@ export class HeroService {
     );
   }
 
-  //Get Data From API With Parameter
+  //Get Data From API With Parameter(Heroes)
   getHeroesFromWebAPI(sort:string, order:string, page:number, firstName:string): Observable<HeroAPI[]>{
     debugger;
 
@@ -50,7 +36,7 @@ export class HeroService {
     );
   }
 
-  //Get Data From API With search Parameter
+  //Get Data From API With search Parameter(Dashboard)
   searchHeroesDashboard(searchValue: string): Observable<HeroAPI[]>{
     debugger;
 
@@ -59,24 +45,6 @@ export class HeroService {
       catchError(this.handleError<HeroAPI[]>('getHeroes', []))
     );
   }
-
-
-
-
-
-  searchHero(term: number): Observable<Hero[]> {
-    debugger;
-
-    return this.http.get<Hero[]>(this.url + `?id=${term}`)
-      .pipe(
-        tap(_ => this.log('fetched heroes'))
-      );
-  }
-
-
-
-
-
 
   /** Log a HeroService message with the MessageService */
   private log(message: string) {
@@ -108,7 +76,7 @@ export class HeroService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-
+  //Add hero in Heroes Component
   addHero(userData : HeroAPI): Observable<any> {
     debugger;
     return this.http.post<HeroAPI>("https://localhost:44373/api/tblHeroes",userData,this.httpOptions).pipe(
@@ -128,24 +96,8 @@ export class HeroService {
 
   }
 
-  /*SEARCH*/
-  searchHeroes(term: string): Observable<Hero[]> {
-    debugger;
-    if (!term.trim()) {
-      return of([]);
-    }
-    console.log(`${this.url}/?id=${parseInt(term)}`);
 
-    return this.http.get<Hero[]>(`${this.url}/?id=${parseInt(term)}`).pipe(
-      tap(x => x.length ?
-        this.log(`found heroes matching "${term}"`) :
-        this.log(`no heroes matching "${term}"`)),
-      catchError(this.handleError<Hero[]>('searchHeroes', []))
-    );
-  }
-
-
-  
+  //erro Handling
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 

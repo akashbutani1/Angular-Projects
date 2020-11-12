@@ -45,7 +45,7 @@
           <mat-label>Nick Name</mat-label>
           <input matInput [(ngModel)]="hero.hero_nickname" formControlName="heroNickName">
           <mat-error *ngIf="updateHeroForm.get('heroNickName').hasError('required')">
-            Last Name is required
+            Nick Name is required
           </mat-error>
           <mat-error *ngIf="updateHeroForm.get('heroNickName').hasError('minlength')">
             Min Length is 3
