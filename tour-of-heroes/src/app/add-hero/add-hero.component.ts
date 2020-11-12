@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Hero, userRegister } from '../hero';
+import { Hero, HeroAPI, userRegister } from '../hero';
 import { HeroService } from '../hero.service';
 
 @Component({
@@ -32,18 +32,19 @@ export class AddHeroComponent implements OnInit {
   ) { }
 
   addHeroForm = this.formBuilder.group({
-    firstname: ['', [Validators.required, Validators.minLength(3), Validators.pattern("^[a-zA-Z]+$")]],
+    firstName: ['', [Validators.required, Validators.minLength(3), Validators.pattern("^[a-zA-Z]+$")]],
     lastName: ['', [Validators.required, Validators.minLength(3), Validators.pattern("^[a-zA-Z]+$")]],
-    email: ['', [Validators.required, Validators.email,Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
+    nickName: ['', [Validators.required, Validators.minLength(3), Validators.pattern("^[a-zA-Z]+$")]],
 
   });
 
   onSubmit() {
     debugger;
-    const registerObject: userRegister = {
-     
-      name: this.addHeroForm.controls.firstname.value,
-      job: this.addHeroForm.controls.lastName.value,
+    const registerObject: HeroAPI = {
+      id: 0,
+      hero_name: this.addHeroForm.controls.firstName.value,
+      hero_lastname: this.addHeroForm.controls.lastName.value,
+      hero_nickname: this.addHeroForm.controls.nickName.value
       
     };
     this.heroService.addHero(registerObject).subscribe(res => console.log(res));

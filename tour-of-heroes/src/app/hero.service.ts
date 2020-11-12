@@ -30,6 +30,30 @@ export class HeroService {
 
   }
 
+  //Get Data From API Without Parameter
+  getHeroesAngular(): Observable<HeroAPI[]>{
+    debugger;
+
+    return this.http.get<HeroAPI[]>('https://localhost:44373/api/tblHeroes?SearchQuery=&Sort=&Order=&PageNumber=1').pipe(
+      tap(_ => this.log('fetched heroes')),
+      catchError(this.handleError<HeroAPI[]>('getHeroes', []))
+    );
+  }
+
+  //Get Data From API With Parameter
+  getHeroesFromWebAPI(sort:string, order:string, page:number, firstName:string): Observable<HeroAPI[]>{
+    debugger;
+
+    return this.http.get<HeroAPI[]>('https://localhost:44373/api/tblHeroes?SearchQuery='+firstName+'&Sort='+sort+'&Order='+order+'&PageNumber='+(page+1)).pipe(
+      tap(_ => this.log('fetched heroes')),
+      catchError(this.handleError<HeroAPI[]>('getHeroes', []))
+    );
+  }
+
+
+
+
+
   searchHero(term: number): Observable<Hero[]> {
     debugger;
 
@@ -51,33 +75,21 @@ export class HeroService {
 
   /** GET hero by id. Will 404 if id not found */
   getHero(id: number): Observable<Hero> {
-    const url = `${this.url}/${id}`;
+    const url = `https://localhost:44373/api/tblHeroes/${id}`;
     return this.http.get<Hero>(url).pipe(
       tap(_ => this.log(`fetched hero id=${id}`)),
       catchError(this.handleError<Hero>(`getHero id=${id}`))
     );
   }
 
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-
-      // TODO: better job of transforming error for user consumption
-      this.log(`${operation} failed: ${error.message}`);
-
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
-    };
-  }
+  
 
   /** PUT: update the hero on the server */
-  updateHero(hero: Hero): Observable<Hero> {
+  updateHero(userUpdatedData: HeroAPI): Observable<HeroAPI> {
     debugger;
-    return this.http.put<Hero>(this.url, hero, this.httpOptions).pipe(
+    return this.http.put<Hero>(`https://localhost:44373/api/tblHeroes/${userUpdatedData.id}`,userUpdatedData, this.httpOptions).pipe(
       map(data => data),
-      tap(_ => this.log(`updated hero id = ${hero.id}`)),
+      tap(_ => this.log(`updated hero id = ${userUpdatedData.id}`)),
       catchError(this.handleError<any>('updateHero'))
     );
   }
@@ -87,20 +99,22 @@ export class HeroService {
   };
 
 
-  addHero(body:userRegister): Observable<any> {
-    console.log(body);
-
-    return this.http.post<Hero>(this.url,body,this.httpOptions).pipe(
-      tap(_ => this.log(`Hero Added Successfully : `+`${body.name}`)),
-      catchError(this.handleError<any>('add Hero'))
+  addHero(userData : HeroAPI): Observable<any> {
+    debugger;
+    return this.http.post<HeroAPI>("https://localhost:44373/api/tblHeroes",userData,this.httpOptions).pipe(
+      tap(_ => this.log(`Hero Added Successfully`)),
+      catchError(this.handleError<any>('Add Hero'))
     );
   }
 
   /** DELETE: delete the hero from the server */
-  deleteHero(hero: Hero | number): Observable<Hero> {
+  deleteHero(hero: HeroAPI | number): Observable<HeroAPI> {
     const id = typeof hero === 'number' ? hero : hero.id;
-    const url = `${this.url}/${id}`;
-    return this.http.delete<Hero>(url, this.httpOptions).pipe();
+    const url = "https://localhost:44373/api/tblHeroes/"+id;
+    return this.http.delete<HeroAPI>(url, this.httpOptions).pipe(
+      tap(_ => this.log(`Hero Deleted Successfully `)),
+      catchError(this.handleError<any>('add Hero'))
+    );
 
   }
 
@@ -118,6 +132,22 @@ export class HeroService {
         this.log(`no heroes matching "${term}"`)),
       catchError(this.handleError<Hero[]>('searchHeroes', []))
     );
+  }
+
+
+  
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
+
+      // TODO: better job of transforming error for user consumption
+      this.log(`${operation} failed: ${error.message}`);
+
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
+    };
   }
 }
 

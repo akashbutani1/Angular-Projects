@@ -8,12 +8,10 @@ export interface Hero {
 }
 
 export interface HeroAPI {
-  page: number;
-  per_page: number;
-  total: number;
-  total_pages: number;
-  data: Hero[];
-  ad: any;
+  id:number;
+  hero_name:string;
+  hero_lastname:string;
+  hero_nickname:string;
 }
 
 export class userRegister {
@@ -23,3 +21,5 @@ export class userRegister {
   createdAt?: string;
 
 }
+
+

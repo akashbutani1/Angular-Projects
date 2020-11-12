@@ -10,16 +10,22 @@ import { HeroService } from '../hero.service';
 })
 export class DashboardComponent implements OnInit {
   heroes: Hero[] = [];
+  data: HeroAPI[] = [];
 
   constructor(private heroService: HeroService, private _httpClient: HttpClient) { }
   resultLength = 0;
   ngOnInit() {
     this.getHeroes();
+    
   }
 
   getHeroes(): void {
-    this.heroService.getHeroes('id', 'asc', 0)
-      .subscribe(heroes => this.heroes = heroes["data"]);
+    this.heroService.getHeroesAngular().subscribe(
+      res => {
+        this.data = res;
+      }
+    );
+   
   }
 
   applyFilter(event: Event) {

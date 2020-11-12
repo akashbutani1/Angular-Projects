@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { Hero } from '../hero';
+import { Hero, HeroAPI } from '../hero';
 import { HeroService } from '../hero.service';
 import { FormBuilder, Validators } from '@angular/forms';
 
@@ -25,7 +25,7 @@ export class HeroDetailComponent implements OnInit {
   updateHeroForm = this.formBuilder.group({
     heroFirstName: ['', [Validators.required, Validators.minLength(3), Validators.pattern("^[a-zA-Z_ -]+$")]],
     heroLastName: ['', [Validators.required, Validators.minLength(3), Validators.pattern("^[a-zA-Z_ -]+$")]],
-    heroEmail: ['', [Validators.required, Validators.email,Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
+    heroNickName: ['', [Validators.required, Validators.minLength(3), Validators.pattern("^[a-zA-Z_ -]+$")]],
     
   });
 
@@ -38,21 +38,28 @@ export class HeroDetailComponent implements OnInit {
   getHero(): void {
     const id = +this.route.snapshot.paramMap.get('id');
     this.heroService.getHero(id)
-      .subscribe(hero => this.hero = hero["data"]);
+      .subscribe(hero => this.hero = hero);
   }
 
-  // goBack(): void {
-  //   this.location.back();
-  // }
+  goBack(): void {
+    this.location.back();
+  }
 
   onSubmit(){
     debugger;
-    this.hero.id = +this.route.snapshot.paramMap.get('id');;
-    this.hero.email = this.updateHeroForm.value.heroEmail;
-    this.hero.first_name = this.updateHeroForm.value.heroFirstName;
-    this.hero.last_name = this.updateHeroForm.value.heroLastName;
+    
+    const registerObject: HeroAPI = {
+      id: +this.route.snapshot.paramMap.get('id'),
+      hero_name: this.updateHeroForm.controls.heroFirstName.value,
+      hero_lastname: this.updateHeroForm.controls.heroLastName.value,
+      hero_nickname: this.updateHeroForm.controls.heroNickName.value
+      
+    };
 
-    this.heroService.updateHero(this.hero)
-    .subscribe(response => console.log(response));
+    this.heroService.updateHero(registerObject)
+    .subscribe(response => {
+      console.log(response);
+      this.goBack();
+    });
   }
 }

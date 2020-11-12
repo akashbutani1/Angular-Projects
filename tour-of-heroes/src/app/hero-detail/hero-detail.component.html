@@ -8,7 +8,7 @@
       <div class="col-md-2">
         <mat-form-field appearance="outline">
           <mat-label>Hero Name</mat-label>
-          <input matInput [(ngModel)]="hero.first_name" formControlName="heroFirstName">
+          <input matInput [(ngModel)]="hero.hero_name" formControlName="heroFirstName">
           <mat-error *ngIf="updateHeroForm.get('heroFirstName').hasError('required')">
             First Name is required
           </mat-error>
@@ -26,7 +26,7 @@
       <div class="col-md-2">
         <mat-form-field appearance="outline">
           <mat-label>Last Name</mat-label>
-          <input matInput [(ngModel)]="hero.last_name" formControlName="heroLastName">
+          <input matInput [(ngModel)]="hero.hero_lastname" formControlName="heroLastName">
           <mat-error *ngIf="updateHeroForm.get('heroLastName').hasError('required')">
             Last Name is required
           </mat-error>
@@ -42,15 +42,16 @@
 
       <div class="col-md-2">
         <mat-form-field appearance="outline">
-          <mat-label>Email</mat-label>
-          <input matInput [(ngModel)]="hero.email" formControlName="heroEmail">
-          <mat-error *ngIf="updateHeroForm.get('heroEmail').hasError('required')">
-            Email is required
+          <mat-label>Nick Name</mat-label>
+          <input matInput [(ngModel)]="hero.hero_nickname" formControlName="heroNickName">
+          <mat-error *ngIf="updateHeroForm.get('heroNickName').hasError('required')">
+            Last Name is required
           </mat-error>
-
-          <mat-error
-            *ngIf="updateHeroForm.get('heroEmail').hasError('email') || updateHeroForm.get('heroEmail').hasError('pattern')">
-            Email Invalid
+          <mat-error *ngIf="updateHeroForm.get('heroNickName').hasError('minlength')">
+            Min Length is 3
+          </mat-error>
+          <mat-error *ngIf="updateHeroForm.get('heroNickName').hasError('pattern')">
+            Only Alphabets Are Allowed
           </mat-error>
         </mat-form-field>
 

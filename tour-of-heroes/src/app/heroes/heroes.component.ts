@@ -12,7 +12,8 @@ import { Hero, HeroAPI } from '../hero';
 import { HeroService } from '../hero.service';
 import { merge } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -24,10 +25,12 @@ export class HeroesComponent implements AfterViewInit {
 
 
 
-  displayedColumns: string[] = ['id', 'email', 'firstname', 'lastname', 'delete'];
+  displayedColumns: string[] = ['id', 'firstname', 'lastname', 'nickname', 'delete'];
   data: Hero[] = [];
   searchWord: string;
   resultsLength = 0;
+  newData: HeroAPI[] = [];
+  filterValue: string;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -35,7 +38,9 @@ export class HeroesComponent implements AfterViewInit {
 
   constructor(private _httpClient: HttpClient,
     private heroService: HeroService,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog,
+    private router: Router) { }
+
 
   ngAfterViewInit() {
     debugger;
@@ -45,47 +50,28 @@ export class HeroesComponent implements AfterViewInit {
         startWith({}),
         switchMap(() => {
 
-          return this.heroService.getHeroes(
-            this.sort.active, this.sort.direction, this.paginator.pageIndex);
+          return this.heroService.getHeroesFromWebAPI(
+            this.sort.active, this.sort.direction, this.paginator.pageIndex, this.filterValue);
         }),
 
         map(data => {
-          debugger;
-          this.resultsLength = data["data"].length;
-          if (this.sort.active === 'id')
-            if (this.sort.direction === 'desc')
-              data["data"].sort((a, b) => {
-                return b.id - a.id;
-              });
-            else
-              data["data"].sort((a, b) => {
-                return a.id - b.id;
-              });
-          else
-            if (this.sort.direction === 'asc')
-              data["data"].sort((a, b) => {
-                return a.email < b.email ? -1 : 1;
-              });
-            else
-              data["data"].sort((a, b) => {
-                return a.email < b.email ? 1 : -1;
-              });
-
-
+          this.resultsLength = data.length;
           return data;
         })
       ).subscribe(data => {
         debugger;
-        this.data = data["data"];
+        this.newData = data.slice((this.paginator.pageIndex) * (this.paginator.pageSize), (this.paginator.pageIndex + 1) * (this.paginator.pageSize));
+        console.log(this.newData);
+
       });
   }
 
 
-  confirmDelete(hero: Hero) {
+  confirmDelete(hero: HeroAPI) {
     const confirmDialog = this.dialog.open(ConfirmDialogComponent, {
       data: {
         title: 'Delete Hero',
-        message: 'Are you sure you want to remove a Hero : ' + hero.first_name
+        message: 'Are you sure you want to remove a Hero : ' + hero.hero_name
       }
     });
     confirmDialog.afterClosed().subscribe(result => {
@@ -96,17 +82,15 @@ export class HeroesComponent implements AfterViewInit {
 
   }
 
-  delete(hero: Hero): void {
+  delete(hero: HeroAPI): void {
 
     setTimeout(() => {
-      this.heroService.deleteHero(hero).subscribe();
-      this.heroService.getHeroes(this.sort.active, this.sort.direction, this.paginator.pageIndex).subscribe(
-        data => {
-          this.data = this.data.filter(h => h !== hero);
-        }
-      );
+      this.heroService.deleteHero(hero).subscribe(res => {console.log(res);});
+      this.newData = this.newData.filter(h => h !== hero);      
     }, 1000);
   }
+
+  
 
 
   applyFilter(event: Event) {
@@ -116,6 +100,7 @@ export class HeroesComponent implements AfterViewInit {
       this._httpClient.get<Hero[]>('https://reqres.in/api/users' + `?page=${this.paginator.pageIndex + 1}`).subscribe(
         data => {
           this.data = data["data"];
+          this.resultsLength = this.data.length * 2;
         }
       );
     }
@@ -124,6 +109,8 @@ export class HeroesComponent implements AfterViewInit {
         data => {
           this.data = data["data"];
           this.data = this.data.filter(s => s.first_name.toLowerCase().includes(filterValue.toLowerCase()) || s.email.toLowerCase().includes(filterValue.toLowerCase()) || s.last_name.toLowerCase().includes(filterValue.toLowerCase()));
+          this.resultsLength = this.data.length;
+          console.log(this.resultsLength);
         }
       );
     }
