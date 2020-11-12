@@ -1,9 +1,20 @@
 <label class="search-label">Search Heroes : </label>
 
-<mat-form-field appearance="outline">
+<!-- <mat-form-field appearance="outline">
   <mat-label></mat-label>
   <input matInput (keyup)="applyFilter($event)">
+</mat-form-field> -->
+
+<mat-form-field appearance="outline">
+  <mat-label>Search Value</mat-label>
+  <input matInput #inputSearch>
 </mat-form-field>
+<button mat-raised-button color="accent" (click)="searchFilter()" class="btn-search">
+  <mat-icon [inline]="true">search</mat-icon>
+</button>
+<button mat-raised-button color="accent" (click)="resetDataTable()" class="btn-search">
+  <mat-icon [inline]="true">refresh</mat-icon>
+</button>
 
 <h3 class="heading">Top Heroes</h3>
 

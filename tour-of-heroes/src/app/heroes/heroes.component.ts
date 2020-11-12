@@ -14,6 +14,7 @@ import { merge } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -26,25 +27,25 @@ export class HeroesComponent implements AfterViewInit {
 
 
   displayedColumns: string[] = ['id', 'firstname', 'lastname', 'nickname', 'delete'];
-  data: Hero[] = [];
-  searchWord: string;
   resultsLength = 0;
   newData: HeroAPI[] = [];
   filterValue: string;
+  alertMessage: string = "There Is No Data For Search Value!!";
+  durationInSeconds = 3;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  @ViewChild('input') searchBox: ElementRef;
+  @ViewChild('inputSearch') searchValue: ElementRef;
 
   constructor(private _httpClient: HttpClient,
     private heroService: HeroService,
     private dialog: MatDialog,
-    private router: Router) { }
+    private _snackBar: MatSnackBar) { }
 
 
   ngAfterViewInit() {
     debugger;
-
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
     merge(this.sort.sortChange, this.paginator.page)
       .pipe(
         startWith({}),
@@ -61,7 +62,7 @@ export class HeroesComponent implements AfterViewInit {
       ).subscribe(data => {
         debugger;
         this.newData = data.slice((this.paginator.pageIndex) * (this.paginator.pageSize), (this.paginator.pageIndex + 1) * (this.paginator.pageSize));
-        console.log(this.newData);
+        // console.log(this.newData);
 
       });
   }
@@ -77,6 +78,10 @@ export class HeroesComponent implements AfterViewInit {
     confirmDialog.afterClosed().subscribe(result => {
       if (result === true) {
         this.delete(hero);
+
+        this.newData = this.newData.filter(h => h !== hero);
+        this.resultsLength = this.resultsLength - 1;
+
       }
     });
 
@@ -85,37 +90,44 @@ export class HeroesComponent implements AfterViewInit {
   delete(hero: HeroAPI): void {
 
     setTimeout(() => {
-      this.heroService.deleteHero(hero).subscribe(res => {console.log(res);});
-      this.newData = this.newData.filter(h => h !== hero);      
+      this.heroService.deleteHero(hero).subscribe(res => { console.log(res); });
     }, 1000);
+  }
+
+
+
+
+  searchFilter() {
+    debugger;
+    this.heroService.getHeroesFromWebAPI(
+      this.sort.active, this.sort.direction, this.paginator.pageIndex, this.searchValue.nativeElement.value).subscribe(
+        response => {
+          this.newData = response.slice((this.paginator.pageIndex) * (this.paginator.pageSize), (this.paginator.pageIndex + 1) * (this.paginator.pageSize));
+          this.resultsLength = response.length;
+          console.log(this.resultsLength);
+          this.searchValue.nativeElement.value="";
+          if(this.resultsLength == 0){
+            this._snackBar.open(this.alertMessage,'Close', {
+              duration: this.durationInSeconds * 1000
+            });
+          }
+        }
+      );
   }
 
   
 
-
-  applyFilter(event: Event) {
-    debugger;
-    const filterValue = (event.target as HTMLInputElement).value;
-    if (filterValue === "") {
-      this._httpClient.get<Hero[]>('https://reqres.in/api/users' + `?page=${this.paginator.pageIndex + 1}`).subscribe(
-        data => {
-          this.data = data["data"];
-          this.resultsLength = this.data.length * 2;
+  resetDataTable(){
+    this.heroService.getHeroesFromWebAPI(
+      this.sort.active, this.sort.direction, this.paginator.pageIndex, this.filterValue).subscribe(
+        res => {
+          this.newData = res.slice((this.paginator.pageIndex) * (this.paginator.pageSize), (this.paginator.pageIndex + 1) * (this.paginator.pageSize));
+          this.resultsLength = res.length;
+          this.searchValue.nativeElement.value = "";
         }
       );
-    }
-    else {
-      this._httpClient.get<Hero[]>('https://reqres.in/api/users' + `?page=${this.paginator.pageIndex + 1}`).subscribe(
-        data => {
-          this.data = data["data"];
-          this.data = this.data.filter(s => s.first_name.toLowerCase().includes(filterValue.toLowerCase()) || s.email.toLowerCase().includes(filterValue.toLowerCase()) || s.last_name.toLowerCase().includes(filterValue.toLowerCase()));
-          this.resultsLength = this.data.length;
-          console.log(this.resultsLength);
-        }
-      );
-    }
-
   }
+
 
 
 }

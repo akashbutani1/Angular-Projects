@@ -101,9 +101,21 @@ table {
   margin-top: 10px;
   margin-bottom: 10px;
 }
+.btn-add{
+  margin-left: 35px;
+  margin-bottom: 15px;
+  margin-top: 15px;
+}
 .mat-form-field {
   font-size: 14px;
   width: 20%;
+}
+.btn-search{
+  margin-left: 10px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  min-width: 43px !important;
+  font-size: 25px;
 }
 /* .mat-row{        
   position: relative;

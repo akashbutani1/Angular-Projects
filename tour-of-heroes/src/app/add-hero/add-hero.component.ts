@@ -32,9 +32,9 @@ export class AddHeroComponent implements OnInit {
   ) { }
 
   addHeroForm = this.formBuilder.group({
-    firstName: ['', [Validators.required, Validators.minLength(3), Validators.pattern("^[a-zA-Z]+$")]],
-    lastName: ['', [Validators.required, Validators.minLength(3), Validators.pattern("^[a-zA-Z]+$")]],
-    nickName: ['', [Validators.required, Validators.minLength(3), Validators.pattern("^[a-zA-Z]+$")]],
+    firstName: ['', [Validators.required, Validators.minLength(3), Validators.pattern("^[a-zA-Z ]*$")]],
+    lastName: ['', [Validators.required, Validators.minLength(3), Validators.pattern("^[a-zA-Z ]*$")]],
+    nickName: ['', [Validators.required, Validators.minLength(3), Validators.pattern("^[a-zA-Z ]*$")]],
 
   });
 

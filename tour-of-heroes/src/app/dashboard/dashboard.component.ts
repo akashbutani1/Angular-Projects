@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Hero, HeroAPI } from '../hero';
 import { HeroService } from '../hero.service';
 
@@ -9,14 +9,14 @@ import { HeroService } from '../hero.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  heroes: Hero[] = [];
   data: HeroAPI[] = [];
+  @ViewChild('inputSearch') searchvalue: ElementRef;
 
   constructor(private heroService: HeroService, private _httpClient: HttpClient) { }
   resultLength = 0;
   ngOnInit() {
     this.getHeroes();
-    
+
   }
 
   getHeroes(): void {
@@ -25,27 +25,29 @@ export class DashboardComponent implements OnInit {
         this.data = res;
       }
     );
-   
   }
 
-  applyFilter(event: Event) {
+
+  searchFilter() {
     debugger;
-    const filterValue = (event.target as HTMLInputElement).value;
-    if (filterValue === "") {
-      this._httpClient.get<Hero[]>('https://reqres.in/api/users' + `?page=${1}`).subscribe(
-        data => {
-          this.heroes = data["data"];
+    this.heroService.searchHeroesDashboard(this.searchvalue.nativeElement.value).subscribe(
+        response => {
+          this.data = response;
+          this.searchvalue.nativeElement.value="";
         }
       );
-    }
-    else {
-      this._httpClient.get<Hero[]>('https://reqres.in/api/users' + `?page=${1}`).subscribe(
-        data => {
-          this.heroes = data["data"];
-          this.heroes = this.heroes.filter(s => s.first_name.toLowerCase().includes(filterValue.toLowerCase()));
-        }
-      );
-    }
-
   }
+
+  
+
+  resetDataTable(){
+    this.heroService.searchHeroesDashboard(this.searchvalue.nativeElement.value).subscribe(
+      response => {
+        this.data = response;
+        this.searchvalue.nativeElement.value="";
+      }
+    );
+  }
+
+
 }

@@ -50,6 +50,16 @@ export class HeroService {
     );
   }
 
+  //Get Data From API With search Parameter
+  searchHeroesDashboard(searchValue: string): Observable<HeroAPI[]>{
+    debugger;
+
+    return this.http.get<HeroAPI[]>('https://localhost:44373/api/tblHeroes?SearchQuery='+searchValue+'&Sort=&Order=&PageNumber=1').pipe(
+      tap(_ => this.log('fetched heroes')),
+      catchError(this.handleError<HeroAPI[]>('getHeroes', []))
+    );
+  }
+
 
 
 
