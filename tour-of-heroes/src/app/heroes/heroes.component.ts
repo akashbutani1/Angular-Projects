@@ -36,14 +36,8 @@ export class HeroesComponent implements AfterViewInit {
   constructor(
     private heroService: HeroService,
     private dialog: MatDialog,
-    private _snackBar: MatSnackBar,
-    private formbuilder: FormBuilder) { }
+    private _snackBar: MatSnackBar) { }
 
-  searchForm = this.formbuilder.group({
-    searchField: ['', [Validators.required]]
-
-  });
-    
   ngAfterViewInit() {
     debugger;
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
@@ -81,7 +75,7 @@ export class HeroesComponent implements AfterViewInit {
 
         this.newData = this.newData.filter(h => h !== hero);
         this.resultsLength = this.resultsLength - 1;
-        
+
         this._snackBar.open('Data Deleted Successfully!!', 'Close', {
           duration: 5000
         });
@@ -103,26 +97,15 @@ export class HeroesComponent implements AfterViewInit {
   //search filter
   searchFilter() {
     debugger;
-    this.filterValue = this.searchForm.controls.searchField.value;
+    this.filterValue = this.searchValue.nativeElement.value;
     this.heroService.getHeroesFromWebAPI(
       this.sort.active, this.sort.direction, this.paginator.pageIndex, this.filterValue).subscribe(
         response => {
           this.newData = response.slice((this.paginator.pageIndex) * (this.paginator.pageSize), (this.paginator.pageIndex + 1) * (this.paginator.pageSize));
           this.resultsLength = response.length;
           this.searchValue.nativeElement.value = "";
+          
 
-          this.searchForm.reset();
-
-          if (this.resultsLength == 0) {
-            this._snackBar.open(this.alertMessage + this.filterValue, 'Close', {
-              duration: 5000
-            });
-          }
-          else{
-            this._snackBar.open("Data Found For : " + this.filterValue, 'Close', {
-              duration: 5000
-            });
-          }
         }
       );
   }

@@ -1,6 +1,6 @@
-<div *ngIf="hero">
-
-  <h2 class="input-details">{{hero.name | uppercase}} Details</h2>
+<h1 *ngIf="isAddMode" style="margin-left: 30px;">Add Hero</h1>
+<h1 *ngIf="!isAddMode" style="margin-left: 30px;">Edit Hero</h1>
+<div>
 
   <form [formGroup]="updateHeroForm" (ngSubmit)="onSubmit()">
     <div class="row form-container">
@@ -8,7 +8,7 @@
       <div class="col-md-2">
         <mat-form-field appearance="outline">
           <mat-label>Hero Name</mat-label>
-          <input matInput [(ngModel)]="hero.hero_name" formControlName="heroFirstName">
+          <input matInput  formControlName="heroFirstName">
           <mat-error *ngIf="updateHeroForm.get('heroFirstName').hasError('required')">
             First Name is required
           </mat-error>
@@ -26,7 +26,7 @@
       <div class="col-md-2">
         <mat-form-field appearance="outline">
           <mat-label>Last Name</mat-label>
-          <input matInput [(ngModel)]="hero.hero_lastname" formControlName="heroLastName">
+          <input matInput  formControlName="heroLastName">
           <mat-error *ngIf="updateHeroForm.get('heroLastName').hasError('required')">
             Last Name is required
           </mat-error>
@@ -43,7 +43,7 @@
       <div class="col-md-2">
         <mat-form-field appearance="outline">
           <mat-label>Nick Name</mat-label>
-          <input matInput [(ngModel)]="hero.hero_nickname" formControlName="heroNickName">
+          <input matInput formControlName="heroNickName">
           <mat-error *ngIf="updateHeroForm.get('heroNickName').hasError('required')">
             Nick Name is required
           </mat-error>
@@ -61,6 +61,9 @@
     <div class="btn-details">
       <button mat-raised-button color="accent" [disabled]="!updateHeroForm.valid" type="submit">
         Save <mat-icon>save</mat-icon>
+      </button>
+      <button mat-raised-button color="accent" (click)="goBack()">
+        GO BACK<mat-icon>keyboard_backspace</mat-icon>
       </button>
 
     </div>

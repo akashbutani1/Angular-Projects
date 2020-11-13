@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import {  HeroAPI } from '../hero';
+import { HeroAPI } from '../hero';
 import { HeroService } from '../hero.service';
 
 @Component({
@@ -15,25 +15,23 @@ export class DashboardComponent implements OnInit {
   alertMessage: string = "There Is No Data For Search Value : ";
   durationInSeconds = 3;
   searchForm: FormGroup;
-
-  @ViewChild('inputSearch') searchvalue: ElementRef;
-
-  constructor(private heroService: HeroService, private _snackBar: MatSnackBar,private formBuilder: FormBuilder) { }
   resultLength = 0;
+  noDataFound: boolean = false;
+
+  @ViewChild('inputSearch') searchValue: ElementRef;
+
+
+  constructor(private heroService: HeroService, private _snackBar: MatSnackBar) { }
+
   ngOnInit() {
     this.getHeroes();
-    this.searchForm = this.formBuilder.group({
-      searchField: ['', [Validators.required]]
-  
-    });
-
   }
 
   getHeroes(): void {
     this.heroService.getHeroesAngular().subscribe(
       res => {
         this.data = res;
-        this.data = this.data.slice(0,20);
+        this.data = this.data.slice(0, 20);
       }
     );
   }
@@ -41,32 +39,25 @@ export class DashboardComponent implements OnInit {
 
   searchFilter() {
     debugger;
-    this.heroService.searchHeroesDashboard(this.searchForm.controls.searchField.value).subscribe(
-        response => {
-          this.data = response;
-          if(response.length == 0){
-            this._snackBar.open(this.alertMessage + this.searchForm.controls.searchField.value,'Close', {
-              duration: this.durationInSeconds * 1000
-            });
-          }
-          else{
-            this._snackBar.open('Data Found For : ' + this.searchForm.controls.searchField.value ,'Close', {
-              duration: this.durationInSeconds * 1000
-            });
-          }
-          this.searchForm.reset();
+    this.noDataFound = false;
+    this.heroService.searchHeroesDashboard(this.searchValue.nativeElement.value).subscribe(
+      response => {
+        this.data = response;
+        if(this.data.length == 0){
+          this.noDataFound = true;
         }
-      );
+      }
+    );
   }
 
-  
 
-  resetDataTable(){
+
+  resetDataTable() {
+    this.noDataFound = false;
     this.heroService.getHeroesAngular().subscribe(
       response => {
-        this.data = response.slice(0,20);
-        this.searchvalue.nativeElement.value="";
-        this._snackBar.open('Refreshed Table As you wished !!','Close', {
+        this.data = response.slice(0, 20);
+        this._snackBar.open('Refreshed Data As you wished !!', 'Close', {
           duration: this.durationInSeconds * 1000
         });
       }

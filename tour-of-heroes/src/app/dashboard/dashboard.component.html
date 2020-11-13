@@ -1,22 +1,17 @@
 <label class="search-label">Search Heroes : </label>
 
-<div class="row">
+<div class="row" style="margin-left: 15px;">
 
   <div class="col-md-10">
-    <form [formGroup]="searchForm" (ngSubmit)="searchFilter()" style="margin-left: 27px;">
-      <mat-form-field appearance="outline">
-        <mat-label>Search Value</mat-label>
-        <input matInput #inputSearch formControlName="searchField">
-        <mat-error *ngIf="searchForm.get('searchField').hasError('required')">
-          Search Value is required
-        </mat-error>
-      </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Search Value</mat-label>
+      <input matInput #inputSearch>
+    </mat-form-field>
 
-      <button mat-raised-button color="accent" type="submit" [disabled]="!searchForm.valid" class="btn-search">
-        <mat-icon [inline]="true">search</mat-icon>
-      </button>
+    <button mat-raised-button color="accent" (click)="searchFilter()" class="btn-search">
+      <mat-icon [inline]="true">search</mat-icon>
+    </button>
 
-    </form>
   </div>
   <div class="col-md-2">
     <button mat-raised-button color="accent" (click)="resetDataTable()" class="btn-reset">
@@ -27,6 +22,8 @@
 </div>
 
 <h3 class="heading">Top Heroes</h3>
+
+<div *ngIf="noDataFound" class="col-md-12 card">There is No Data Matching</div>
 
 <mat-grid-list cols="10" class="grid-details">
 

@@ -1,31 +1,26 @@
 <h2 class="heading">My Heroes</h2>
-<div class="row">
+<div class="row" style="margin-left: 18px;">
 
   <div class="col-md-10">
-    <form [formGroup]="searchForm" (ngSubmit)="searchFilter()" style="margin-left: 27px;margin-bottom: 30px;">
-      <mat-form-field appearance="outline">
-        <mat-label>Search Value</mat-label>
-        <input matInput #inputSearch formControlName="searchField">
-        <mat-error *ngIf="searchForm.get('searchField').hasError('required')">
-          Search Value is required
-        </mat-error>
-      </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Search Value</mat-label>
+      <input matInput #inputSearch>
 
-      <button mat-raised-button color="accent" type="submit" [disabled]="!searchForm.valid" class="btn-search">
-        <mat-icon [inline]="true">search</mat-icon>
-      </button>
+    </mat-form-field>
 
-    </form>
+    <button mat-raised-button color="accent" (click)='searchFilter()' class="btn-search">
+      <mat-icon [inline]="true">search</mat-icon>
+    </button>
+
   </div>
   <div class="col-md-2">
-    
+
     <button mat-raised-button color="accent" (click)="resetDataTable()" class="btn-reset">
       <mat-icon [inline]="true">refresh</mat-icon>
     </button>
   </div>
 
 </div>
-
 <div class="col-md-10 table-container">
 
 
@@ -63,7 +58,7 @@
 
     <!-- Delete And View Action Column -->
     <ng-container matColumnDef="delete">
-      <th mat-header-cell *matHeaderCellDef> Action <button mat-raised-button color="accent" routerLink="/addheroes"
+      <th mat-header-cell *matHeaderCellDef> Action <button mat-raised-button color="accent" routerLink="/detail/0"
           class="btn-add">
           <mat-icon>add</mat-icon>
         </button>
@@ -80,6 +75,10 @@
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="8"><span style="color: red;">No Data matching the Search Value</span></td>
+    </tr>
 
   </table>
 
