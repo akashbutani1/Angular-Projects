@@ -44,19 +44,19 @@ export class HeroDetailComponent implements OnInit {
     else {
       this.isAddMode = false;
       this.heroService.getHero(id)
-      .pipe(first())
-      .subscribe(x => {
-        console.log(x);
-        
-        this.updateHeroForm.patchValue( {
-          heroFirstName : x.hero_name,
-          heroLastName : x.hero_lastname,
-          heroNickName: x.hero_nickname
+        .pipe(first())
+        .subscribe(x => {
+          console.log(x);
+
+          this.updateHeroForm.patchValue({
+            heroFirstName: x.hero_name,
+            heroLastName: x.hero_lastname,
+            heroNickName: x.hero_nickname
+          });
         });
-      });
     }
 
-   
+
   }
 
 
@@ -75,16 +75,19 @@ export class HeroDetailComponent implements OnInit {
 
     };
 
-    if(this.isAddMode){
-      this.heroService.addHero(registerObject).subscribe(res => console.log(res));
-    }
-    else{
-      this.heroService.updateHero(registerObject)
-      .subscribe(response => {
-        console.log(response);
+    if (this.isAddMode) {
+      this.heroService.addHero(registerObject).subscribe(res => {
+        console.log(res);
         this.goBack();
       });
     }
-    
+    else {
+      this.heroService.updateHero(registerObject)
+        .subscribe(response => {
+          console.log(response);
+          this.goBack();
+        });
+    }
+
   }
 }

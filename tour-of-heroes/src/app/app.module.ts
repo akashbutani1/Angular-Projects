@@ -16,6 +16,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatDialogModule } from '@angular/material/dialog';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatToolbarModule} from '@angular/material/toolbar';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -59,7 +60,8 @@ import { AddHeroComponent } from './add-hero/add-hero.component';
     MatPaginatorModule,
     MatSortModule,
     MatDialogModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatToolbarModule
   ],
   
   bootstrap: [AppComponent]

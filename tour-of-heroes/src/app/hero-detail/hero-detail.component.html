@@ -62,12 +62,12 @@
       <button mat-raised-button color="accent" [disabled]="!updateHeroForm.valid" type="submit">
         Save <mat-icon>save</mat-icon>
       </button>
-      <button mat-raised-button color="accent" (click)="goBack()">
-        GO BACK<mat-icon>keyboard_backspace</mat-icon>
-      </button>
+      
 
     </div>
   </form>
 
-
+  <button mat-raised-button color="accent" (click)="goBack()" class="btn-back">
+    GO BACK<mat-icon>keyboard_backspace</mat-icon>
+  </button>
 </div>

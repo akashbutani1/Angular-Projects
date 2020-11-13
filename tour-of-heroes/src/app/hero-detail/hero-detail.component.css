@@ -1,23 +1,26 @@
 /* HeroDetailComponent's private CSS styles */
+
 label {
     display: inline-block;
     width: 3em;
     margin: .5em 0;
     color: #607D8B;
     font-weight: bold;
-  }
-  input {
+}
+
+input {
     height: 2em;
     font-size: 1em;
     padding-left: .4em;
-  }
-  .form-container{
+}
+
+.form-container {
     margin-left: 15px;
     margin-bottom: 15px;
     margin-top: 15px;
-  }
-  
-  button {
+}
+
+button {
     margin-top: 20px;
     font-family: Arial;
     background-color: #eee;
@@ -27,17 +30,24 @@ label {
     cursor: pointer;
     margin-left: 25px;
     margin-bottom: 25px;
-  }
-  
-  button:disabled {
+}
+
+button:disabled {
     background-color: #eee;
     color: #ccc;
     cursor: auto;
-  }
-  .input-details{
-    margin-left: 25px;
-  }
-  .mat-form-field{
-    margin-right: 10px;
-  }
+}
 
+.input-details {
+    margin-left: 25px;
+}
+
+.mat-form-field {
+    margin-right: 10px;
+}
+
+.btn-back {
+    position: absolute;
+    top: 240px;
+    left: 125px;
+}
