@@ -13,7 +13,6 @@ import { HeroService } from '../hero.service';
 export class DashboardComponent implements OnInit {
   data: HeroAPI[] = [];
   alertMessage: string = "There Is No Data For Search Value : ";
-  durationInSeconds = 3;
   searchForm: FormGroup;
   resultLength = 0;
   noDataFound: boolean = false;
@@ -52,17 +51,17 @@ export class DashboardComponent implements OnInit {
 
 
 
-  resetDataTable() {
-    this.noDataFound = false;
-    this.heroService.getHeroesAngular().subscribe(
-      response => {
-        this.data = response.slice(0, 20);
-        this._snackBar.open('Refreshed Data As you wished !!', 'Close', {
-          duration: this.durationInSeconds * 1000
-        });
-      }
-    );
-  }
+  // resetDataTable() {
+  //   this.noDataFound = false;
+  //   this.heroService.getHeroesAngular().subscribe(
+  //     response => {
+  //       this.data = response.slice(0, 20);
+  //       this._snackBar.open('Refreshed Data As you wished !!', 'Close', {
+  //         duration: 3000
+  //       });
+  //     }
+  //   );
+  // }
 
 
 }

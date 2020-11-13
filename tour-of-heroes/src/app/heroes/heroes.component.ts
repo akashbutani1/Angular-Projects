@@ -11,9 +11,7 @@ import { HeroAPI } from '../hero';
 import { HeroService } from '../hero.service';
 import { merge } from 'rxjs';
 import { map, startWith, switchMap } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { FormBuilder, FormGroupDirective, Validators } from '@angular/forms';
 
 
 @Component({
@@ -25,7 +23,7 @@ export class HeroesComponent implements AfterViewInit {
 
   displayedColumns: string[] = ['id', 'firstname', 'lastname', 'nickname', 'delete'];
   resultsLength = 0;
-  newData: HeroAPI[] = [];
+  dataHeroes: HeroAPI[] = [];
   filterValue: string;
   alertMessage: string = "There Is No Data For Search Value : ";
 
@@ -56,7 +54,7 @@ export class HeroesComponent implements AfterViewInit {
         })
       ).subscribe(data => {
         debugger;
-        this.newData = data.slice((this.paginator.pageIndex) * (this.paginator.pageSize), (this.paginator.pageIndex + 1) * (this.paginator.pageSize));
+        this.dataHeroes = data.slice((this.paginator.pageIndex) * (this.paginator.pageSize), (this.paginator.pageIndex + 1) * (this.paginator.pageSize));
       });
   }
 
@@ -73,7 +71,7 @@ export class HeroesComponent implements AfterViewInit {
       if (result === true) {
         this.delete(hero);
 
-        this.newData = this.newData.filter(h => h !== hero);
+        this.dataHeroes = this.dataHeroes.filter(h => h !== hero);
         this.resultsLength = this.resultsLength - 1;
 
         this._snackBar.open('Data Deleted Successfully!!', 'Close', {
@@ -101,31 +99,29 @@ export class HeroesComponent implements AfterViewInit {
     this.heroService.getHeroesFromWebAPI(
       this.sort.active, this.sort.direction, this.paginator.pageIndex, this.filterValue).subscribe(
         response => {
-          this.newData = response.slice((this.paginator.pageIndex) * (this.paginator.pageSize), (this.paginator.pageIndex + 1) * (this.paginator.pageSize));
+          this.dataHeroes = response.slice((this.paginator.pageIndex) * (this.paginator.pageSize), (this.paginator.pageIndex + 1) * (this.paginator.pageSize));
           this.resultsLength = response.length;
           this.searchValue.nativeElement.value = "";
-          
-
         }
       );
   }
 
 
   //reset data after search
-  resetDataTable() {
-    this.filterValue = "";
-    this.heroService.getHeroesFromWebAPI(
-      this.sort.active, this.sort.direction, this.paginator.pageIndex, this.filterValue).subscribe(
-        res => {
-          this.newData = res.slice((this.paginator.pageIndex) * (this.paginator.pageSize), (this.paginator.pageIndex + 1) * (this.paginator.pageSize));
-          this.resultsLength = res.length;
-          this.searchValue.nativeElement.value = "";
-          this._snackBar.open('Table Refreshed As You Wished !!', 'Close', {
-            duration: 5000
-          });
-        }
-      );
-  }
+  // resetDataTable() {
+  //   this.filterValue = "";
+  //   this.heroService.getHeroesFromWebAPI(
+  //     this.sort.active, this.sort.direction, this.paginator.pageIndex, this.filterValue).subscribe(
+  //       res => {
+  //         this.dataHeroes = res.slice((this.paginator.pageIndex) * (this.paginator.pageSize), (this.paginator.pageIndex + 1) * (this.paginator.pageSize));
+  //         this.resultsLength = res.length;
+  //         this.searchValue.nativeElement.value = "";
+  //         this._snackBar.open('Table Refreshed As You Wished !!', 'Close', {
+  //           duration: 5000
+  //         });
+  //       }
+  //     );
+  // }
 
 
 

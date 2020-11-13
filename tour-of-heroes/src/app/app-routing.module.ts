@@ -10,7 +10,7 @@ import { AddHeroComponent } from './add-hero/add-hero.component';
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'add/:id', component: HeroDetailComponent },
+  { path: 'add', component: HeroDetailComponent },
   { path: 'edit/:id', component: HeroDetailComponent },
   { path: 'heroes', component: HeroesComponent }
 ];

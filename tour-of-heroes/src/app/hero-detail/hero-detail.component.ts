@@ -38,10 +38,7 @@ export class HeroDetailComponent implements OnInit {
 
     });
 
-    if (id == 0) {
-      this.isAddMode = true;
-    }
-    else {
+    if (id != 0) {
       this.isAddMode = false;
       this.heroService.getHero(id)
         .pipe(first())
@@ -54,6 +51,9 @@ export class HeroDetailComponent implements OnInit {
             heroNickName: x.hero_nickname
           });
         });
+    }
+    else {
+      this.isAddMode = true;
     }
 
 
@@ -72,7 +72,6 @@ export class HeroDetailComponent implements OnInit {
       hero_name: this.updateHeroForm.controls.heroFirstName.value,
       hero_lastname: this.updateHeroForm.controls.heroLastName.value,
       hero_nickname: this.updateHeroForm.controls.heroNickName.value
-
     };
 
     if (this.isAddMode) {
