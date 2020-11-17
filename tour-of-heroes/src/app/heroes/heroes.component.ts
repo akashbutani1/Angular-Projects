@@ -38,9 +38,9 @@ export class HeroesComponent implements AfterViewInit {
     private _snackBar: MatSnackBar) { }
 
   ngAfterViewInit() {
-    
+
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-    merge(this.sort.sortChange, this.paginator.page,this.filter)
+    merge(this.sort.sortChange, this.paginator.page, this.filter)
       .pipe(
         startWith({}),
         switchMap(() => {
@@ -48,7 +48,7 @@ export class HeroesComponent implements AfterViewInit {
           return this.heroService.getHeroesFromWebAPI(
             this.sort.active, this.sort.direction, this.paginator.pageIndex, this.filterValue);
         }),
-        
+
         map(data => {
           debugger;
           this.resultsLength = data.TotalCount;
@@ -100,10 +100,7 @@ export class HeroesComponent implements AfterViewInit {
     this.filterValue = this.searchValue.nativeElement.value;
     this.filter.emit();
     this.searchValue.nativeElement.value = "";
-    
   }
-
-
 }
 
 
