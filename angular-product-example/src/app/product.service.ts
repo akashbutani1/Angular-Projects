@@ -1,0 +1,18 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ProductService {
+
+  constructor(private http: HttpClient) { }
+
+  requestURL: string = 'api/tblProducts';
+  //get products from API
+  getProducts(): Observable<any> {
+    return this.http.get<any>('https://localhost:44373/api/tblProducts');
+
+  }
+}
