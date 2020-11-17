@@ -1,5 +1,5 @@
 
-import { AfterViewInit, ViewChild } from '@angular/core';
+import { AfterViewInit, EventEmitter, ViewChild } from '@angular/core';
 import { Component, ElementRef } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -30,6 +30,7 @@ export class HeroesComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('inputSearch') searchValue: ElementRef;
+  filter = new EventEmitter<void>();
 
   constructor(
     private heroService: HeroService,
@@ -37,9 +38,9 @@ export class HeroesComponent implements AfterViewInit {
     private _snackBar: MatSnackBar) { }
 
   ngAfterViewInit() {
-    debugger;
+    
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-    merge(this.sort.sortChange, this.paginator.page)
+    merge(this.sort.sortChange, this.paginator.page,this.filter)
       .pipe(
         startWith({}),
         switchMap(() => {
@@ -47,14 +48,15 @@ export class HeroesComponent implements AfterViewInit {
           return this.heroService.getHeroesFromWebAPI(
             this.sort.active, this.sort.direction, this.paginator.pageIndex, this.filterValue);
         }),
-
+        
         map(data => {
-          this.resultsLength = data.length;
-          return data;
+          debugger;
+          this.resultsLength = data.TotalCount;
+          return data.Items;
         })
       ).subscribe(data => {
         debugger;
-        this.dataHeroes = data.slice((this.paginator.pageIndex) * (this.paginator.pageSize), (this.paginator.pageIndex + 1) * (this.paginator.pageSize));
+        this.dataHeroes = data;
       });
   }
 
@@ -96,33 +98,10 @@ export class HeroesComponent implements AfterViewInit {
   searchFilter() {
     debugger;
     this.filterValue = this.searchValue.nativeElement.value;
-    this.heroService.getHeroesFromWebAPI(
-      this.sort.active, this.sort.direction, this.paginator.pageIndex, this.filterValue).subscribe(
-        response => {
-          this.dataHeroes = response.slice((this.paginator.pageIndex) * (this.paginator.pageSize), (this.paginator.pageIndex + 1) * (this.paginator.pageSize));
-          this.resultsLength = response.length;
-          this.searchValue.nativeElement.value = "";
-        }
-      );
+    this.filter.emit();
+    this.searchValue.nativeElement.value = "";
+    
   }
-
-
-  //reset data after search
-  // resetDataTable() {
-  //   this.filterValue = "";
-  //   this.heroService.getHeroesFromWebAPI(
-  //     this.sort.active, this.sort.direction, this.paginator.pageIndex, this.filterValue).subscribe(
-  //       res => {
-  //         this.dataHeroes = res.slice((this.paginator.pageIndex) * (this.paginator.pageSize), (this.paginator.pageIndex + 1) * (this.paginator.pageSize));
-  //         this.resultsLength = res.length;
-  //         this.searchValue.nativeElement.value = "";
-  //         this._snackBar.open('Table Refreshed As You Wished !!', 'Close', {
-  //           duration: 5000
-  //         });
-  //       }
-  //     );
-  // }
-
 
 
 }

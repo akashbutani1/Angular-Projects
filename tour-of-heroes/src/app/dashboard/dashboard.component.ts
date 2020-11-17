@@ -29,7 +29,7 @@ export class DashboardComponent implements OnInit {
   getHeroes(): void {
     this.heroService.getHeroesAngular().subscribe(
       res => {
-        this.data = res;
+        this.data = res.Items;
         this.data = this.data.slice(0, 20);
       }
     );
@@ -41,27 +41,12 @@ export class DashboardComponent implements OnInit {
     this.noDataFound = false;
     this.heroService.searchHeroesDashboard(this.searchValue.nativeElement.value).subscribe(
       response => {
-        this.data = response;
+        this.data = response.Items;
         if(this.data.length == 0){
           this.noDataFound = true;
         }
       }
     );
   }
-
-
-
-  // resetDataTable() {
-  //   this.noDataFound = false;
-  //   this.heroService.getHeroesAngular().subscribe(
-  //     response => {
-  //       this.data = response.slice(0, 20);
-  //       this._snackBar.open('Refreshed Data As you wished !!', 'Close', {
-  //         duration: 3000
-  //       });
-  //     }
-  //   );
-  // }
-
 
 }

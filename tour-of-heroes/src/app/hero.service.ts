@@ -17,32 +17,32 @@ export class HeroService {
 
 
   //Get Data From API Without Parameter(Dasahboard)
-  getHeroesAngular(): Observable<HeroAPI[]>{
+  getHeroesAngular(): Observable<any>{
     debugger;
 
-    return this.http.get<HeroAPI[]>('https://localhost:44373/api/tblHeroes?SearchQuery=&Sort=&Order=&PageNumber=1').pipe(
+    return this.http.get<any>('https://localhost:44373/api/tblHeroes?SearchQuery=&Sort=&Order=&PageNumber=1').pipe(
       tap(_ => this.log('fetched heroes')),
-      catchError(this.handleError<HeroAPI[]>('getHeroes', []))
+      catchError(this.handleError<any>('getHeroes', []))
     );
   }
 
   //Get Data From API With Parameter(Heroes)
-  getHeroesFromWebAPI(sort:string, order:string, page:number, firstName:string): Observable<HeroAPI[]>{
+  getHeroesFromWebAPI(sort:string, order:string, page:number, firstName:string): Observable<any>{
     debugger;
 
-    return this.http.get<HeroAPI[]>('https://localhost:44373/api/tblHeroes?SearchQuery='+firstName+'&Sort='+sort+'&Order='+order+'&PageNumber='+(page+1)).pipe(
+    return this.http.get<any>('https://localhost:44373/api/tblHeroes?SearchQuery='+firstName+'&Sort='+sort+'&Order='+order+'&PageNumber='+(page+1)).pipe(
       tap(_ => this.log('fetched heroes')),
-      catchError(this.handleError<HeroAPI[]>('getHeroes', []))
+      catchError(this.handleError<any>('getHeroes', []))
     );
   }
 
   //Get Data From API With search Parameter(Dashboard)
-  searchHeroesDashboard(searchValue: string): Observable<HeroAPI[]>{
+  searchHeroesDashboard(searchValue: string): Observable<any>{
     debugger;
 
-    return this.http.get<HeroAPI[]>('https://localhost:44373/api/tblHeroes?SearchQuery='+searchValue+'&Sort=&Order=&PageNumber=1').pipe(
+    return this.http.get<any>('https://localhost:44373/api/tblHeroes?SearchQuery='+searchValue+'&Sort=&Order=&PageNumber=1').pipe(
       tap(_ => this.log('fetched heroes')),
-      catchError(this.handleError<HeroAPI[]>('getHeroes', []))
+      catchError(this.handleError<any>('getHeroes', []))
     );
   }
 
