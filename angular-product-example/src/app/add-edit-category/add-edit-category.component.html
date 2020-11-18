@@ -1,5 +1,5 @@
-<h1 *ngIf="isAddMode" style="margin-left: 30px;">Add Category</h1>
-<h1 *ngIf="!isAddMode" style="margin-left: 30px;">Edit Category</h1>
+<h1 *ngIf="isAddMode" style="margin-left: 30px;font-weight: bold;">Add Category</h1>
+<h1 *ngIf="!isAddMode" style="margin-left: 30px;font-weight: bold;">Edit Category</h1>
 <div>
 
     <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">

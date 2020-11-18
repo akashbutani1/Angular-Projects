@@ -26,7 +26,7 @@ export class AddEditCategoryComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
+    debugger;
     const id = +this.route.snapshot.paramMap.get('id');
 
     this.categoryForm = this.formBuilder.group({
@@ -59,7 +59,7 @@ export class AddEditCategoryComponent implements OnInit {
 
     const registerObject: CategoryModel = {
       id: +this.route.snapshot.paramMap.get('id'),
-      category_name: this.categoryForm.controls.heroFirstName.value,
+      category_name: this.categoryForm.controls.categoryName.value,
     };
 
     if (this.isAddMode) {
