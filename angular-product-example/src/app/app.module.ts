@@ -9,18 +9,19 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { MatDialogModule } from '@angular/material/dialog';
-import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatTabsModule} from '@angular/material/tabs';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProductListComponent } from './product-list/product-list.component';
+import { CategoryListComponent } from './category-list/category-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ProductListComponent
+    ProductListComponent,
+    CategoryListComponent
   ],
   imports: [
     BrowserModule,
@@ -31,8 +32,8 @@ import { ProductListComponent } from './product-list/product-list.component';
     FormsModule,
     ReactiveFormsModule,
     MatButtonModule,
-    MatSnackBar,MatIconModule,MatButtonModule,MatDialogModule,MatFormFieldModule,MatInputModule,MatPaginatorModule,MatSortModule
-    ,MatSnackBarModule
+    MatIconModule,MatButtonModule,MatFormFieldModule,MatInputModule,MatPaginatorModule,MatSortModule,MatTabsModule
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

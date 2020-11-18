@@ -3,19 +3,19 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { merge } from 'rxjs';
 import { map, startWith, switchMap } from 'rxjs/operators';
-import { ProductService } from '../product.service';
-import { ProductModel } from '../ProductModel';
+import { CategoryService } from '../category.service';
+import { CategoryModel } from '../CategoryModel';
 
 @Component({
-  selector: 'app-product-list',
-  templateUrl: './product-list.component.html',
-  styleUrls: ['./product-list.component.css']
+  selector: 'app-category-list',
+  templateUrl: './category-list.component.html',
+  styleUrls: ['./category-list.component.css']
 })
-export class ProductListComponent implements AfterViewInit {
+export class CategoryListComponent implements AfterViewInit {
 
-  displayedColumns: string[] = ['id', 'productName', 'productPrice', 'productCategory', 'action'];
+  displayedColumns: string[] = ['id', 'categoryName', 'action'];
   resultsLength = 0;
-  dataProducts: ProductModel[] = [];
+  dataCategory: CategoryModel[] = [];
   filterValue: string;
   alertMessage: string = "There Is No Data For Search Value : ";
 
@@ -25,7 +25,7 @@ export class ProductListComponent implements AfterViewInit {
   filter = new EventEmitter<void>();
 
   constructor(
-    private productService : ProductService
+    private categoryService : CategoryService
     ) { }
 
     ngAfterViewInit() {
@@ -36,7 +36,7 @@ export class ProductListComponent implements AfterViewInit {
           startWith({}),
           switchMap(() => {
   
-            return this.productService.getProductsFromAPI(
+            return this.categoryService.getCategoriesFromAPI(
               this.sort.active, this.sort.direction, this.paginator.pageIndex, this.filterValue);
           }),
   
@@ -48,7 +48,7 @@ export class ProductListComponent implements AfterViewInit {
           })
         ).subscribe(data => {
           debugger;
-          this.dataProducts = data;
+          this.dataCategory = data;
         });
     }
 
