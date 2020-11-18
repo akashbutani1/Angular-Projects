@@ -23,9 +23,10 @@ export class ProductService {
 
   //delete product
   
-  deleteProduct(product: ProductModel | number): Observable<ProductModel> {
-    const id = typeof product === 'number' ? product : product.id;
-    const url = "https://localhost:44373/api/tblProducts/"+id;
+  deleteProduct(product:  number): Observable<ProductModel> {
+    debugger;
+    
+    const url = "https://localhost:44373/api/tblProducts/"+product;
     return this.http.delete<ProductModel>(url, this.httpOptions).pipe(
     );
 

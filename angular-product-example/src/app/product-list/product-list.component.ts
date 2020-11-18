@@ -27,35 +27,35 @@ export class ProductListComponent implements AfterViewInit {
   filter = new EventEmitter<void>();
 
   constructor(
-    private productService : ProductService,private dialog: MatDialog
-    ) { }
+    private productService: ProductService, private dialog: MatDialog
+  ) { }
 
-    ngAfterViewInit() {
+  ngAfterViewInit() {
 
-      this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-      merge(this.sort.sortChange, this.paginator.page, this.filter)
-        .pipe(
-          startWith({}),
-          switchMap(() => {
-  
-            return this.productService.getProductsFromAPI(
-              this.sort.active, this.sort.direction, this.paginator.pageIndex, this.filterValue);
-          }),
-  
-          map(data => {
-            debugger;
-            console.log(data);
-            this.resultsLength = data.TotalCount;
-            return data.Items;
-          })
-        ).subscribe(data => {
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+    merge(this.sort.sortChange, this.paginator.page, this.filter)
+      .pipe(
+        startWith({}),
+        switchMap(() => {
+
+          return this.productService.getProductsFromAPI(
+            this.sort.active, this.sort.direction, this.paginator.pageIndex, this.filterValue);
+        }),
+
+        map(data => {
           debugger;
-          this.dataProducts = data;
-        });
-    }
+          console.log(data);
+          this.resultsLength = data.TotalCount;
+          return data.Items;
+        })
+      ).subscribe(data => {
+        debugger;
+        this.dataProducts = data;
+      });
+  }
 
 
-    //search filter
+  //search filter
   searchFilter() {
     debugger;
     this.filterValue = this.searchValue.nativeElement.value;
@@ -76,7 +76,8 @@ export class ProductListComponent implements AfterViewInit {
     });
     confirmDialog.afterClosed().subscribe(result => {
       if (result === true) {
-        this.delete(product);
+        debugger;
+        this.delete(product.Id);
 
         this.dataProducts = this.dataProducts.filter(h => h !== product);
         this.resultsLength = this.resultsLength - 1;
@@ -90,7 +91,8 @@ export class ProductListComponent implements AfterViewInit {
   }
 
   //delete Data
-  delete(product: ProductModel): void {
+  delete(product: number): void {
+    debugger;
 
     setTimeout(() => {
       this.productService.deleteProduct(product).subscribe(res => { console.log(res); });
