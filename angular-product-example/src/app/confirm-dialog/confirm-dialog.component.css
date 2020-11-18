@@ -1,0 +1,23 @@
+.title {
+    font-size: 30px;
+    font-weight: bold;
+    margin-left: 23px;
+}
+
+.content {
+    margin-left: -2px;
+    margin-bottom: -13px;
+    font-size: 15px;
+}
+
+.btn-confirm {
+    padding: 5px 75px 5px 75px;
+    left: -10px;
+    top: 70px;
+}
+
+.btn-cancel {
+    padding: 5px 78px 5px 79px;
+    left: 200px;
+    top: 23px;
+}

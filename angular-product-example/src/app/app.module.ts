@@ -10,18 +10,23 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatDialogModule} from '@angular/material/dialog';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProductListComponent } from './product-list/product-list.component';
 import { CategoryListComponent } from './category-list/category-list.component';
+import { AddEditCategoryComponent } from './add-edit-category/add-edit-category.component';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProductListComponent,
-    CategoryListComponent
+    CategoryListComponent,
+    AddEditCategoryComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +38,7 @@ import { CategoryListComponent } from './category-list/category-list.component';
     ReactiveFormsModule,
     MatButtonModule,
     MatIconModule,MatButtonModule,MatFormFieldModule,MatInputModule,MatPaginatorModule,MatSortModule,MatTabsModule
-    
+    ,MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

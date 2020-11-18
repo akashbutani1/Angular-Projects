@@ -1,0 +1,12 @@
+<h1 mat-dialog-title class="title">{{data.title}}</h1>
+<div mat-dialog-content class="content">
+    {{data.message}}
+</div>
+<div class="row" style="margin-top: 25px;">
+    <div class="col-md-6" style="padding-left: 0px;padding-right: 0px;">
+        <button style="margin:0px 10px;" mat-raised-button color="accent" [mat-dialog-close]="true" class="btn-confirm">Confirm</button>
+    </div>
+    <div class="col-md-6" style="padding-left: 0px;padding-right: 0px;">
+        <button mat-raised-button color="basic" [mat-dialog-close]="false" class="btn-cancel">Cancel</button>
+    </div>
+</div>

@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { ProductModel } from './ProductModel';
 
 @Injectable({
   providedIn: 'root'
@@ -19,4 +20,19 @@ export class ProductService {
       
     );
   }
+
+  //delete product
+  
+  deleteProduct(product: ProductModel | number): Observable<ProductModel> {
+    const id = typeof product === 'number' ? product : product.id;
+    const url = "https://localhost:44373/api/tblProducts/"+id;
+    return this.http.delete<ProductModel>(url, this.httpOptions).pipe(
+    );
+
+  }
+
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
+  
 }

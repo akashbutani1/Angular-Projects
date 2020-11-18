@@ -1,8 +1,10 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { merge } from 'rxjs';
 import { map, startWith, switchMap } from 'rxjs/operators';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { ProductService } from '../product.service';
 import { ProductModel } from '../ProductModel';
 
@@ -25,7 +27,7 @@ export class ProductListComponent implements AfterViewInit {
   filter = new EventEmitter<void>();
 
   constructor(
-    private productService : ProductService
+    private productService : ProductService,private dialog: MatDialog
     ) { }
 
     ngAfterViewInit() {
@@ -60,5 +62,40 @@ export class ProductListComponent implements AfterViewInit {
     this.filter.emit();
     this.searchValue.nativeElement.value = "";
   }
+
+
+
+  //delete confirm dialog box 
+  confirmDelete(product: ProductModel) {
+    debugger;
+    const confirmDialog = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Delete Product : ' + product.ProductName,
+        message: 'Are you sure to Remove this ?'
+      }
+    });
+    confirmDialog.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.delete(product);
+
+        this.dataProducts = this.dataProducts.filter(h => h !== product);
+        this.resultsLength = this.resultsLength - 1;
+
+        // this._snackBar.open('Data Deleted Successfully!!', 'Close', {
+        //   duration: 5000
+        // });
+      }
+    });
+
+  }
+
+  //delete Data
+  delete(product: ProductModel): void {
+
+    setTimeout(() => {
+      this.productService.deleteProduct(product).subscribe(res => { console.log(res); });
+    }, 1000);
+  }
+
 
 }

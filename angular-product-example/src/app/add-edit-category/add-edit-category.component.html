@@ -1,0 +1,39 @@
+<h1 *ngIf="isAddMode" style="margin-left: 30px;">Add Category</h1>
+<h1 *ngIf="!isAddMode" style="margin-left: 30px;">Edit Category</h1>
+<div>
+
+    <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+        <div class="row form-container">
+
+            <div class="col-md-2">
+                <mat-form-field appearance="outline">
+                    <mat-label>Category Name</mat-label>
+                    <input matInput formControlName="categoryName">
+                    <mat-error *ngIf="categoryForm.get('categoryName').hasError('required')">
+                        Category Name is required
+                    </mat-error>
+                    <mat-error *ngIf="categoryForm.get('categoryName').hasError('minlength')">
+                        Min Length is 3
+                    </mat-error>
+                    <mat-error *ngIf="categoryForm.get('categoryName').hasError('pattern')">
+                        Only Alphabets Are Allowed
+                    </mat-error>
+                </mat-form-field>
+
+            </div>
+
+        </div>
+
+        <div class="btn-details">
+            <button mat-raised-button color="accent" [disabled]="!categoryForm.valid" type="submit">
+        Save <mat-icon>save</mat-icon>
+      </button>
+
+
+        </div>
+    </form>
+
+    <button mat-raised-button color="accent" (click)="goBack()" class="btn-back">
+    GO BACK<mat-icon>keyboard_backspace</mat-icon>
+  </button>
+</div>

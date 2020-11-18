@@ -1,10 +1,12 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { merge } from 'rxjs';
 import { map, startWith, switchMap } from 'rxjs/operators';
 import { CategoryService } from '../category.service';
 import { CategoryModel } from '../CategoryModel';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-category-list',
@@ -25,7 +27,8 @@ export class CategoryListComponent implements AfterViewInit {
   filter = new EventEmitter<void>();
 
   constructor(
-    private categoryService : CategoryService
+    private categoryService : CategoryService,
+    private dialog: MatDialog
     ) { }
 
     ngAfterViewInit() {
@@ -59,6 +62,38 @@ export class CategoryListComponent implements AfterViewInit {
     this.filterValue = this.searchValue.nativeElement.value;
     this.filter.emit();
     this.searchValue.nativeElement.value = "";
+  }
+
+
+  //delete confirm dialog box 
+  confirmDelete(category: CategoryModel) {
+    const confirmDialog = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Delete Category : ' + category.category_name,
+        message: 'Are you sure to Remove this ?'
+      }
+    });
+    confirmDialog.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.delete(category);
+
+        this.dataCategory = this.dataCategory.filter(h => h !== category);
+        this.resultsLength = this.resultsLength - 1;
+
+        // this._snackBar.open('Data Deleted Successfully!!', 'Close', {
+        //   duration: 5000
+        // });
+      }
+    });
+
+  }
+
+  //delete Data
+  delete(category: CategoryModel): void {
+
+    setTimeout(() => {
+      this.categoryService.deleteCategory(category).subscribe(res => { console.log(res); });
+    }, 1000);
   }
 
 }

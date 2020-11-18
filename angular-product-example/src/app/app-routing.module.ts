@@ -1,13 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AddEditCategoryComponent } from './add-edit-category/add-edit-category.component';
 import { CategoryListComponent } from './category-list/category-list.component';
 import { ProductListComponent } from './product-list/product-list.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/products', pathMatch: 'full' },
   { path: 'products', component: ProductListComponent },
-  { path: 'categories', component: CategoryListComponent }
-  
+  { path: 'categories', component: CategoryListComponent },
+  { path: 'AddCategories', component: AddEditCategoryComponent },
+  { path: 'EditCategories/:id', component: AddEditCategoryComponent }
 ];
 
 @NgModule({
