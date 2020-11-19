@@ -18,3 +18,13 @@ body {
     overflow-x: hidden !important;
     overflow-y: hidden !important;
 }
+
+.mat-tab-label-container {
+    border-bottom: 2px solid blue;
+}
+
+.mat-tab-label .mat-tab-label-content {
+    font-size: 18px;
+    font-weight: bold;
+    color: black !important;
+}

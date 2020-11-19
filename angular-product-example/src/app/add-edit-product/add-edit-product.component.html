@@ -1,0 +1,65 @@
+<h1 *ngIf="isAddMode" style="margin-left: 30px;margin-top:30px;font-weight: bold;">Add Product</h1>
+<h1 *ngIf="!isAddMode" style="margin-left: 30px;margin-top:30px;font-weight: bold;">Edit Product</h1>
+<div>
+
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+        <div class="row form-container">
+
+            <div class="col-md-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>Product Name</mat-label>
+                    <input matInput formControlName="productName">
+                    <mat-error *ngIf="productForm.get('productName').hasError('required')">
+                        Product Name is required
+                    </mat-error>
+                    <mat-error *ngIf="productForm.get('productName').hasError('minlength')">
+                        Min Length is 3
+                    </mat-error>
+                    <mat-error *ngIf="productForm.get('productName').hasError('pattern')">
+                        Please Enter Valid Text
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>Product Price</mat-label>
+                    <input matInput formControlName="productPrice">
+                    <mat-error *ngIf="productForm.get('productPrice').hasError('required')">
+                        Product Price is required
+                    </mat-error>
+                    <mat-error *ngIf="productForm.get('productPrice').hasError('pattern')">
+                        Only Numbers Are Allowed
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-6">
+                <mat-form-field *ngIf="categoryData" appearance="outline">
+                    <mat-select formControlName="productCategory" placeholder="Select 
+                 Category" [(ngModel)]="selectedValue" (change)="changeSelect($event.value)">
+                        <mat-option *ngFor="let category of categoryData" [value]="category.id">
+                            {{category.category_name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="productForm.get('productCategory').hasError('required')">
+                        Product Category is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+        </div>
+
+        <div class="btn-details">
+            <button mat-raised-button color="accent" [disabled]="!productForm.valid" type="submit">
+        Save <mat-icon>save</mat-icon>
+      </button>
+
+
+        </div>
+    </form>
+
+    <button mat-raised-button color="accent" (click)="goBack()" class="btn-back">
+    GO BACK<mat-icon>keyboard_backspace</mat-icon>
+  </button>
+</div>

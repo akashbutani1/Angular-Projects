@@ -51,7 +51,7 @@
 
         <!-- Delete And View Action Column -->
         <ng-container matColumnDef="action">
-            <th mat-header-cell *matHeaderCellDef> Action <button mat-raised-button color="accent" routerLink="/add" class="btn-add">
+            <th mat-header-cell *matHeaderCellDef> Action <button mat-raised-button color="accent" routerLink="/AddProduct" class="btn-add">
           <mat-icon>add</mat-icon>
         </button>
             </th>
@@ -59,7 +59,7 @@
                 <button mat-raised-button color="primary" class="btn-delete" (click)='confirmDelete(element)' disableRipple>
           <mat-icon>delete_outline</mat-icon>
         </button>
-                <button mat-raised-button color="accent" routerLink="/edit/{{element.id}}" disableRipple>
+                <button mat-raised-button color="accent" routerLink="/edit-Products/{{element.Id}}" disableRipple>
           <mat-icon>create</mat-icon>
         </button>
             </td>

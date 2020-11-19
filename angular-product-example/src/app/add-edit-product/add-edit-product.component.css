@@ -44,10 +44,15 @@ button:disabled {
 
 .mat-form-field {
     margin-right: 10px;
+    width: 40%;
 }
 
 .btn-back {
     position: absolute;
-    top: 245px;
+    top: 441px;
     left: 125px;
+}
+
+.col-md-6 {
+    margin-bottom: 15px;
 }
