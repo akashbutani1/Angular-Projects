@@ -70,7 +70,7 @@ export class ProductListComponent implements AfterViewInit {
     debugger;
     const confirmDialog = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        title: 'Delete Product : ' + product.product_name,
+        title: 'Delete Product',
         message: 'Are you sure to Remove this ?'
       }
     });
