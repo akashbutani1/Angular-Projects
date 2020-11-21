@@ -24,7 +24,7 @@ export class ProductListComponent implements AfterViewInit {
   dataProducts: ProductModel[] = [];
   dataCategory: CategoryModel[] = [];
   filterValue: string;
-  selectedValue: string;
+  selectedValue: number;
   alertMessage: string = "There Is No Data For Search Value : ";
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -39,7 +39,7 @@ export class ProductListComponent implements AfterViewInit {
     private router: Router
   ) { }
 
-    
+
 
   ngAfterViewInit() {
 
@@ -57,7 +57,7 @@ export class ProductListComponent implements AfterViewInit {
               }
             );
           return this.productService.getProductsFromAPI(
-            this.sort.active, this.sort.direction, this.paginator.pageIndex, this.filterValue);
+            this.sort.active, this.sort.direction, this.paginator.pageIndex, this.filterValue,this.selectedValue);
         }),
 
         map(data => {
@@ -76,7 +76,7 @@ export class ProductListComponent implements AfterViewInit {
   //search filter
   searchFilter() {
     debugger;
-    this.filterValue = this.searchValue.nativeElement.value;
+    this.filterValue = this.searchValue.nativeElement.value;    
     this.filter.emit();
     this.searchValue.nativeElement.value = "";
   }
@@ -116,8 +116,8 @@ export class ProductListComponent implements AfterViewInit {
 
   changeSelect(data) {
     debugger;
-    this.selectedValue = this.dataCategory[data].category_name;
-
+    this.selectedValue = this.dataCategory[data].id;
+    
   }
 
   getCategoryData(){

@@ -14,10 +14,10 @@ export class ProductService {
   requestURL: string = 'api/tblProducts';
 
   //get products from API
-  getProductsFromAPI(sort:string, order:string, page:number, firstName:string): Observable<any>{
+  getProductsFromAPI(sort:string, order:string, page:number, firstName:string, category: number): Observable<any>{
     debugger;
 
-    return this.http.get<any>('https://localhost:44373/api/tblProducts?SearchQuery='+firstName+'&Sort='+sort+'&Order='+order+'&PageNumber='+(page+1)).pipe(
+    return this.http.get<any>('https://localhost:44373/api/tblProducts?SearchQuery='+firstName+'&Sort='+sort+'&Order='+order+'&PageNumber='+(page+1)+'&SearchCatgory='+category).pipe(
       
     );
   }
