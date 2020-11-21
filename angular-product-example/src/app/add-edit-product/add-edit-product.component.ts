@@ -38,7 +38,7 @@ export class AddEditProductComponent implements OnInit {
     this.categoryService.getCategoriesFromAPI(
       '', '', 0, '').subscribe(
         data => {
-          console.log(data.Items);
+          //console.log(data.Items);
           this.categoryData = data.Items;
         }
       );
@@ -55,7 +55,7 @@ export class AddEditProductComponent implements OnInit {
       this.productService.getProductById(id)
         .pipe(first())
         .subscribe(x => {
-          console.log(x);
+          //console.log(x);
 
           this.productForm.patchValue({
             productName: x.product_name,
@@ -85,14 +85,14 @@ export class AddEditProductComponent implements OnInit {
 
     if (this.isAddMode) {
       this.productService.addProduct(registerObject).subscribe(res => {
-        console.log(res);
+        //console.log(res);
         this.goBack();
       });
     }
     else {
       this.productService.updateProduct(registerObject)
         .subscribe(response => {
-          console.log(response);
+          //console.log(response);
           this.goBack();
         });
     }

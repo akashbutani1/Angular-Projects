@@ -1,4 +1,4 @@
-<mat-tab-group color="primary" backgroundColor="default">
+<mat-tab-group color="primary" backgroundColor="default" (selectedTabChange)="onTabChanged($event)">
     <mat-tab label="Product">
 
         <app-product-list></app-product-list>

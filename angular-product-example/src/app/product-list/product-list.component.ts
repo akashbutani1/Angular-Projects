@@ -1,9 +1,13 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, OnInit, ViewChild } from '@angular/core';
+import { Location } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { Router } from '@angular/router';
 import { merge } from 'rxjs';
 import { map, startWith, switchMap } from 'rxjs/operators';
+import { CategoryService } from '../category.service';
+import { CategoryModel } from '../CategoryModel';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { ProductService } from '../product.service';
 import { ProductModel } from '../ProductModel';
@@ -18,7 +22,9 @@ export class ProductListComponent implements AfterViewInit {
   displayedColumns: string[] = ['id', 'productName', 'productPrice', 'productCategory', 'action'];
   resultsLength = 0;
   dataProducts: ProductModel[] = [];
+  dataCategory: CategoryModel[] = [];
   filterValue: string;
+  selectedValue: string;
   alertMessage: string = "There Is No Data For Search Value : ";
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -27,24 +33,36 @@ export class ProductListComponent implements AfterViewInit {
   filter = new EventEmitter<void>();
 
   constructor(
-    private productService: ProductService, private dialog: MatDialog
+    private productService: ProductService,
+    private dialog: MatDialog,
+    private categoryService: CategoryService,
+    private router: Router
   ) { }
+
+    
 
   ngAfterViewInit() {
 
+    debugger;
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
     merge(this.sort.sortChange, this.paginator.page, this.filter)
       .pipe(
         startWith({}),
         switchMap(() => {
-
+          //getting categories data for select form field
+          this.categoryService.getCategoriesFromAPI(
+            '', '', 0, '').subscribe(
+              data => {
+                this.dataCategory = data.Items;
+              }
+            );
           return this.productService.getProductsFromAPI(
             this.sort.active, this.sort.direction, this.paginator.pageIndex, this.filterValue);
         }),
 
         map(data => {
           debugger;
-          console.log(data);
+          // console.log(data);
           this.resultsLength = data.TotalCount;
           return data.Items;
         })
@@ -81,10 +99,7 @@ export class ProductListComponent implements AfterViewInit {
 
         this.dataProducts = this.dataProducts.filter(h => h !== product);
         this.resultsLength = this.resultsLength - 1;
-
-        // this._snackBar.open('Data Deleted Successfully!!', 'Close', {
-        //   duration: 5000
-        // });
+        this.router.navigate['/dashboard']; 
       }
     });
 
@@ -98,6 +113,22 @@ export class ProductListComponent implements AfterViewInit {
       this.productService.deleteProduct(product).subscribe(res => { console.log(res); });
     }, 1000);
   }
+
+  changeSelect(data) {
+    debugger;
+    this.selectedValue = this.dataCategory[data].category_name;
+
+  }
+
+  getCategoryData(){
+    this.categoryService.getCategoriesFromAPI(
+      '', '', 0, '').subscribe(
+        data => {
+          this.dataCategory = data.Items;
+        }
+      );
+  }
+
 
 
 }

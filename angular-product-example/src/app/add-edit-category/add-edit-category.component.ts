@@ -38,7 +38,7 @@ export class AddEditCategoryComponent implements OnInit {
       this.categoryService.getCategoriesById(id)
         .pipe(first())
         .subscribe(x => {
-          console.log(x);
+         // console.log(x);
 
           this.categoryForm.patchValue({
             categoryName: x.category_name
@@ -64,14 +64,14 @@ export class AddEditCategoryComponent implements OnInit {
 
     if (this.isAddMode) {
       this.categoryService.addCategory(registerObject).subscribe(res => {
-        console.log(res);
+        //console.log(res);
         this.goBack();
       });
     }
     else {
       this.categoryService.updateCategory(registerObject)
         .subscribe(response => {
-          console.log(response);
+         // console.log(response);
           this.goBack();
         });
     }

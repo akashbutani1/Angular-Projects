@@ -1,7 +1,9 @@
+import { Location } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, EventEmitter, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { Router } from '@angular/router';
 import { merge } from 'rxjs';
 import { map, startWith, switchMap } from 'rxjs/operators';
 import { CategoryService } from '../category.service';
@@ -27,36 +29,38 @@ export class CategoryListComponent implements AfterViewInit {
   filter = new EventEmitter<void>();
 
   constructor(
-    private categoryService : CategoryService,
-    private dialog: MatDialog
-    ) { }
+    private categoryService: CategoryService,
+    private dialog: MatDialog,
+    private location: Location,
+    private router: Router
+  ) { }
 
-    ngAfterViewInit() {
+  ngAfterViewInit() {
 
-      this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-      merge(this.sort.sortChange, this.paginator.page, this.filter)
-        .pipe(
-          startWith({}),
-          switchMap(() => {
-  
-            return this.categoryService.getCategoriesFromAPI(
-              this.sort.active, this.sort.direction, this.paginator.pageIndex, this.filterValue);
-          }),
-  
-          map(data => {
-            debugger;
-            console.log(data);
-            this.resultsLength = data.TotalCount;
-            return data.Items;
-          })
-        ).subscribe(data => {
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+    merge(this.sort.sortChange, this.paginator.page, this.filter)
+      .pipe(
+        startWith({}),
+        switchMap(() => {
+          
+          return this.categoryService.getCategoriesFromAPI(
+            this.sort.active, this.sort.direction, this.paginator.pageIndex, this.filterValue);
+        }),
+
+        map(data => {
           debugger;
-          this.dataCategory = data;
-        });
-    }
+         // console.log(data);
+          this.resultsLength = data.TotalCount;
+          return data.Items;
+        })
+      ).subscribe(data => {
+        debugger;
+        this.dataCategory = data;
+      });
+  }
 
 
-    //search filter
+  //search filter
   searchFilter() {
     debugger;
     this.filterValue = this.searchValue.nativeElement.value;
@@ -79,10 +83,6 @@ export class CategoryListComponent implements AfterViewInit {
 
         this.dataCategory = this.dataCategory.filter(h => h !== category);
         this.resultsLength = this.resultsLength - 1;
-
-        // this._snackBar.open('Data Deleted Successfully!!', 'Close', {
-        //   duration: 5000
-        // });
       }
     });
 
@@ -92,8 +92,15 @@ export class CategoryListComponent implements AfterViewInit {
   delete(category: CategoryModel): void {
 
     setTimeout(() => {
-      this.categoryService.deleteCategory(category).subscribe(res => { console.log(res); });
+      this.categoryService.deleteCategory(category).subscribe(res => { //console.log(res)
+        ; });
     }, 1000);
   }
 
+  goBack(): void {
+    this.location.back();
+  }
+
+ 
+  
 }

@@ -7,6 +7,14 @@
             <input matInput #inputSearch>
 
         </mat-form-field>
+        <mat-form-field *ngIf="dataCategory" appearance="outline">
+            <mat-select placeholder="Select 
+         Category" [(ngModel)]="selectedValue" (change)="changeSelect($event.value)">
+                <mat-option *ngFor="let category of dataCategory" [value]="category.id">
+                    {{category.category_name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
 
         <button mat-raised-button color="accent" (click)='searchFilter()' class="btn-search">
       <mat-icon [inline]="true">search</mat-icon>
@@ -51,7 +59,7 @@
 
         <!-- Delete And View Action Column -->
         <ng-container matColumnDef="action">
-            <th mat-header-cell *matHeaderCellDef> Action <button mat-raised-button color="accent" routerLink="/AddProduct" class="btn-add">
+            <th mat-header-cell *matHeaderCellDef> Action <button mat-raised-button color="accent" routerLink="/add-product" class="btn-add">
           <mat-icon>add</mat-icon>
         </button>
             </th>
@@ -59,7 +67,7 @@
                 <button mat-raised-button color="primary" class="btn-delete" (click)='confirmDelete(element)' disableRipple>
           <mat-icon>delete_outline</mat-icon>
         </button>
-                <button mat-raised-button color="accent" routerLink="/edit-Products/{{element.Id}}" disableRipple>
+                <button mat-raised-button color="accent" routerLink="/edit-products/{{element.Id}}" disableRipple>
           <mat-icon>create</mat-icon>
         </button>
             </td>

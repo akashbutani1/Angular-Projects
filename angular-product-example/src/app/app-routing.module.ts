@@ -9,11 +9,11 @@ import { ProductListComponent } from './product-list/product-list.component';
 const routes: Routes = [
   { path: 'products', component: ProductListComponent },
   { path: 'categories', component: CategoryListComponent },
-  { path: 'AddCategories', component: AddEditCategoryComponent },
-  { path: 'EditCategories/:id', component: AddEditCategoryComponent },
+  { path: 'add-categories', component: AddEditCategoryComponent },
+  { path: 'edit-categories/:id', component: AddEditCategoryComponent },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'edit-Products/:id', component: AddEditProductComponent },
-  { path: 'AddProduct', component: AddEditProductComponent }
+  { path: 'edit-products/:id', component: AddEditProductComponent },
+  { path: 'add-product', component: AddEditProductComponent }
 ];
 
 @NgModule({

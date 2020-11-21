@@ -15,7 +15,7 @@ export class CategoryService {
 
   //get products from API
   getCategoriesFromAPI(sort:string, order:string, page:number, query:string): Observable<any>{
-    debugger;
+
 
     return this.http.get<any>('https://localhost:44373/api/tblCategories?SearchQuery='+query+'&Sort='+sort+'&Order='+order+'&PageNumber='+(page+1)).pipe(
       
