@@ -44,7 +44,7 @@ import { AddEditProductComponent } from './add-edit-product/add-edit-product.com
     HttpClientModule,
     MatTableModule,
     FormsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
     MatButtonModule,
     MatIconModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatPaginatorModule, MatSortModule, MatTabsModule
     , MatDialogModule, MatToolbarModule,MatSelectModule,MatSnackBarModule

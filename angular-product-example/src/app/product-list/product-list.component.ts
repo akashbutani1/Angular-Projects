@@ -1,4 +1,3 @@
-import { Location } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -82,7 +81,7 @@ export class ProductListComponent implements AfterViewInit {
     this.filterValue = this.searchValue.nativeElement.value;    
     this.filter.emit();
     this.searchValue.nativeElement.value = "";
-    this.selectedValue = 0;
+    
   }
 
   //add data
@@ -159,18 +158,11 @@ export class ProductListComponent implements AfterViewInit {
     
   }
 
-  getCategoryData(){
-    this.categoryService.getCategoriesFromAPI(
-      '', '', 0, '').subscribe(
-        data => {
-          this.dataCategory = data.Items;
-        }
-      );
-  }
-
   //refresh Table
   refreshTable() {
     debugger;
+    this.selectedValue = 0;
+    this.filterValue = "";
     this.productService.getProductsFromAPI(
       this.sort.active, this.sort.direction, this.paginator.pageIndex, this.filterValue,this.selectedValue).subscribe(
         data => {
