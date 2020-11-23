@@ -6,6 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 import { merge } from 'rxjs';
 import { map, startWith, switchMap } from 'rxjs/operators';
+import { AddEditCategoryComponent } from '../add-edit-category/add-edit-category.component';
 import { CategoryService } from '../category.service';
 import { CategoryModel } from '../CategoryModel';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
@@ -42,14 +43,14 @@ export class CategoryListComponent implements AfterViewInit {
       .pipe(
         startWith({}),
         switchMap(() => {
-          
+
           return this.categoryService.getCategoriesFromAPI(
             this.sort.active, this.sort.direction, this.paginator.pageIndex, this.filterValue);
         }),
 
         map(data => {
           debugger;
-         // console.log(data);
+          // console.log(data);
           this.resultsLength = data.TotalCount;
           return data.Items;
         })
@@ -88,12 +89,54 @@ export class CategoryListComponent implements AfterViewInit {
 
   }
 
+  //add data
+  addNew() {
+    const dialogRef = this.dialog.open(AddEditCategoryComponent, {
+      data: { issue: CategoryModel }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 1) {
+        // After dialog is closed we're doing frontend updates
+        this.refreshTable();
+      }
+    });
+  }
+
+  //edit data
+  editData(id: number, category_name: string) {
+    const dialogRef = this.dialog.open(AddEditCategoryComponent, {
+      data: { id: id, category_name: category_name }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 1) {
+        // After dialog is closed we're doing frontend updates
+        this.refreshTable();
+      }
+    });
+  }
+
+
+  //refresh Table
+  refreshTable() {
+    debugger;
+    this.categoryService.getCategoriesFromAPI(
+      this.sort.active, this.sort.direction, this.paginator.pageIndex, this.filterValue).subscribe(
+        data => {
+          this.resultsLength = data.TotalCount;
+          this.dataCategory = data.Items;
+        }
+      );
+  }
+
   //delete Data
   delete(category: CategoryModel): void {
 
     setTimeout(() => {
       this.categoryService.deleteCategory(category).subscribe(res => { //console.log(res)
-        ; });
+        ;
+      });
     }, 1000);
   }
 
@@ -101,6 +144,6 @@ export class CategoryListComponent implements AfterViewInit {
     this.location.back();
   }
 
- 
-  
+
+
 }

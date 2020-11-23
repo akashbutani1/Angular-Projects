@@ -48,6 +48,7 @@ button:disabled {
 
 .btn-back {
     position: absolute;
-    top: 245px;
-    left: 125px;
+    top: 160px;
+    left: 800px;
+    background: white;
 }

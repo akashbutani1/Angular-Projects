@@ -40,7 +40,7 @@
 
         <!-- Delete And View Action Column -->
         <ng-container matColumnDef="action">
-            <th mat-header-cell *matHeaderCellDef> Action <button mat-raised-button color="accent" routerLink="/add-categories" class="btn-add">
+            <th mat-header-cell *matHeaderCellDef> Action <button mat-raised-button color="accent" (click)="addNew()" class="btn-add">
           <mat-icon>add</mat-icon>
         </button>
             </th>
@@ -48,7 +48,7 @@
                 <button mat-raised-button color="primary" class="btn-delete" (click)='confirmDelete(element)' disableRipple>
           <mat-icon>delete_outline</mat-icon>
         </button>
-                <button mat-raised-button color="accent" routerLink="/edit-categories/{{element.id}}" disableRipple>
+                <button mat-raised-button color="accent" (click)="editData(element.id,element.category_name)" disableRipple>
           <mat-icon>create</mat-icon>
         </button>
             </td>

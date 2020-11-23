@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { CategoryService } from '../category.service';
 import { CategoryModel } from '../CategoryModel';
 import { Location } from '@angular/common'
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add-edit-category',
@@ -22,20 +23,26 @@ export class AddEditCategoryComponent implements OnInit {
     private route: ActivatedRoute,
     private categoryService: CategoryService,
     private location: Location,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    public dialogRef: MatDialogRef<AddEditCategoryComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: CategoryModel
   ) { }
 
   ngOnInit(): void {
     debugger;
-    const id = +this.route.snapshot.paramMap.get('id');
-
+    this.id = this.data.id;
+    
     this.categoryForm = this.formBuilder.group({
       categoryName: ['', [Validators.required, Validators.minLength(3), Validators.pattern("^[a-zA-Z_ -]+$")]],
     });
 
-    if (id != 0) {
+    if (String(this.id) == "undefined") {
+      this.isAddMode = true;
+    }
+    else {
+      
       this.isAddMode = false;
-      this.categoryService.getCategoriesById(id)
+      this.categoryService.getCategoriesById(this.id)
         .pipe(first())
         .subscribe(x => {
          // console.log(x);
@@ -45,34 +52,31 @@ export class AddEditCategoryComponent implements OnInit {
           });
         });
     }
-    else {
-      this.isAddMode = true;
-    }
   }
 
-  goBack(): void {
-    this.location.back();
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
   onSubmit() {
     debugger;
 
     const registerObject: CategoryModel = {
-      id: +this.route.snapshot.paramMap.get('id'),
+      id: this.data.id,
       category_name: this.categoryForm.controls.categoryName.value,
     };
 
     if (this.isAddMode) {
       this.categoryService.addCategory(registerObject).subscribe(res => {
         //console.log(res);
-        this.goBack();
+        //this.goBack();
       });
     }
     else {
       this.categoryService.updateCategory(registerObject)
         .subscribe(response => {
          // console.log(response);
-          this.goBack();
+          //this.goBack();
         });
     }
 
