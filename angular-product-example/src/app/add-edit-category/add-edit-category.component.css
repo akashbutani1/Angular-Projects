@@ -30,6 +30,7 @@ button {
     cursor: pointer;
     margin-left: 25px;
     margin-bottom: 25px;
+    border-radius: 0px;
 }
 
 button:disabled {
@@ -48,7 +49,7 @@ button:disabled {
 
 .btn-back {
     position: absolute;
-    top: 160px;
+    top: 180px;
     left: 800px;
     background: white;
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
@@ -7,6 +7,7 @@ import { CategoryModel } from '../CategoryModel';
 import { ProductModel } from '../ProductModel';
 import { Location } from '@angular/common';
 import { ProductService } from '../product.service';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add-edit-product',
@@ -27,12 +28,14 @@ export class AddEditProductComponent implements OnInit {
     private categoryService: CategoryService,
     private location: Location,
     private formBuilder: FormBuilder,
-    private productService: ProductService
+    private productService: ProductService,
+    public dialogRef: MatDialogRef<AddEditProductComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: ProductModel
   ) { }
 
   ngOnInit(): void {
     debugger;
-    const id = +this.route.snapshot.paramMap.get('id');
+    this.id = this.data.Id;
 
     //getting categories data for select form field
     this.categoryService.getCategoriesFromAPI(
@@ -45,14 +48,18 @@ export class AddEditProductComponent implements OnInit {
 
     this.productForm = this.formBuilder.group({
       productName: ['', [Validators.required, Validators.minLength(3), Validators.pattern("^[ A-Za-z0-9_@./#&()+-]*$")]],
-      productPrice: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
+      productPrice: ['', [Validators.required, Validators.pattern("^[0-9.]*$")]],
       productCategory: ['', [Validators.required, Validators.minLength(3)]],
       
     });
 
-    if (id != 0) {
+    if (String(this.id) == "undefined") {
+      this.isAddMode = true;
+      
+    }
+    else {
       this.isAddMode = false;
-      this.productService.getProductById(id)
+      this.productService.getProductById(this.id)
         .pipe(first())
         .subscribe(x => {
           //console.log(x);
@@ -64,20 +71,17 @@ export class AddEditProductComponent implements OnInit {
           });
         });
     }
-    else {
-      this.isAddMode = true;
-    }
   }
 
-  goBack(): void {
-    this.location.back();
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
   onSubmit() {
     debugger;
 
     const registerObject: ProductModel = {
-      Id: +this.route.snapshot.paramMap.get('id'),
+      Id: this.data.Id,
       product_name: this.productForm.controls.productName.value,
       product_price: this.productForm.controls.productPrice.value,
       category_id: this.selectedValue
@@ -86,14 +90,14 @@ export class AddEditProductComponent implements OnInit {
     if (this.isAddMode) {
       this.productService.addProduct(registerObject).subscribe(res => {
         //console.log(res);
-        this.goBack();
+        //this.goBack();
       });
     }
     else {
       this.productService.updateProduct(registerObject)
         .subscribe(response => {
           //console.log(response);
-          this.goBack();
+         // this.goBack();
         });
     }
 

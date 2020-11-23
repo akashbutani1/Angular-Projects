@@ -1,14 +1,16 @@
-<h1 *ngIf="isAddMode" style="margin-left: 30px;margin-top:30px;font-weight: bold;">Add Product</h1>
-<h1 *ngIf="!isAddMode" style="margin-left: 30px;margin-top:30px;font-weight: bold;">Edit Product</h1>
+<h1 mat-dialog-title *ngIf="isAddMode" style="margin-left: 30px;margin-top:0px;font-weight: bold;color:#FF4081;">Add Product
+    <button type="button" (click)="onNoClick()" class="btn-back"><mat-icon [inline]="true">cancel</mat-icon></button></h1>
+<h1 mat-dialog-title *ngIf="!isAddMode" style="margin-left: 30px;margin-top:0px;font-weight: bold;color:#FF4081;">Edit Product
+    <button type="button" (click)="onNoClick()" class="btn-back"><mat-icon [inline]="true">cancel</mat-icon></button></h1>
 <div>
 
-    <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="mat-dialog-content">
         <div class="row form-container">
 
             <div class="col-md-6">
                 <mat-form-field appearance="outline">
                     <mat-label>Product Name</mat-label>
-                    <input matInput formControlName="productName">
+                    <input matInput formControlName="productName" placeholder="Enter Product Name" autocomplete="off">
                     <mat-error *ngIf="productForm.get('productName').hasError('required')">
                         Product Name is required
                     </mat-error>
@@ -24,7 +26,7 @@
             <div class="col-md-6">
                 <mat-form-field appearance="outline">
                     <mat-label>Product Price</mat-label>
-                    <input matInput formControlName="productPrice">
+                    <input matInput formControlName="productPrice" placeholder="Enter Product Price" autocomplete="off">
                     <mat-error *ngIf="productForm.get('productPrice').hasError('required')">
                         Product Price is required
                     </mat-error>
@@ -49,17 +51,13 @@
             </div>
 
         </div>
-
-        <div class="btn-details">
-            <button mat-raised-button color="accent" [disabled]="!productForm.valid" type="submit">
+        <div mat-dialog-actions>
+            <div class="btn-details">
+                <button mat-raised-button color="accent" [disabled]="!productForm.valid" type="submit" [mat-dialog-close]=1>
         Save <mat-icon>save</mat-icon>
       </button>
-
+            </div>
 
         </div>
     </form>
-
-    <button mat-raised-button color="accent" (click)="goBack()" class="btn-back">
-    GO BACK<mat-icon>keyboard_backspace</mat-icon>
-  </button>
 </div>

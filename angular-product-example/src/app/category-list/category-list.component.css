@@ -60,6 +60,7 @@ button {
     cursor: pointer;
     cursor: hand;
     font-family: Arial;
+    border-radius: 0px;
 }
 
 button.delete {
@@ -113,12 +114,14 @@ th {
     margin-right: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
+    border-radius: 0px;
 }
 
 .btn-add {
     margin-left: 17px;
     margin-bottom: 15px;
     margin-top: 15px;
+    border-radius: 0px;
 }
 
 .mat-form-field {
@@ -132,6 +135,7 @@ th {
     padding-bottom: 0px;
     min-width: 43px !important;
     font-size: 25px;
+    border-radius: 0px;
 }
 
 .btn-reset {
@@ -141,4 +145,5 @@ th {
     padding-bottom: 0px;
     min-width: 43px !important;
     font-size: 25px;
+    border-radius: 0px;
 }

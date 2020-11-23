@@ -23,8 +23,16 @@ body {
     border-bottom: 2px solid blue;
 }
 
+button:focus {
+    outline: none !important;
+}
+
 .mat-tab-label .mat-tab-label-content {
     font-size: 18px;
     font-weight: bold;
     color: black !important;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline {
+    color: gray;
 }

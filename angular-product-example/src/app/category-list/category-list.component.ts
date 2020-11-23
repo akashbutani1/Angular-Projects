@@ -2,6 +2,7 @@ import { Location } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, EventEmitter, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 import { merge } from 'rxjs';
@@ -33,7 +34,7 @@ export class CategoryListComponent implements AfterViewInit {
     private categoryService: CategoryService,
     private dialog: MatDialog,
     private location: Location,
-    private router: Router
+    private _snackbar: MatSnackBar
   ) { }
 
   ngAfterViewInit() {
@@ -84,6 +85,9 @@ export class CategoryListComponent implements AfterViewInit {
 
         this.dataCategory = this.dataCategory.filter(h => h !== category);
         this.resultsLength = this.resultsLength - 1;
+        this._snackbar.open('Data Deleted Successfully : '+ category.category_name, 'Close', {
+          duration: 5000
+        });
       }
     });
 
@@ -99,6 +103,9 @@ export class CategoryListComponent implements AfterViewInit {
       if (result === 1) {
         // After dialog is closed we're doing frontend updates
         this.refreshTable();
+        this._snackbar.open('Data Added Successfully !!', 'Close', {
+          duration: 5000
+        });
       }
     });
   }
@@ -113,6 +120,9 @@ export class CategoryListComponent implements AfterViewInit {
       if (result === 1) {
         // After dialog is closed we're doing frontend updates
         this.refreshTable();
+        this._snackbar.open('Data Edited Successfully : ' + category_name, 'Close', {
+          duration: 5000
+        });
       }
     });
   }

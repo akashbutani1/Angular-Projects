@@ -13,6 +13,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatSelectModule} from '@angular/material/select';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -46,7 +47,7 @@ import { AddEditProductComponent } from './add-edit-product/add-edit-product.com
     ReactiveFormsModule,
     MatButtonModule,
     MatIconModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatPaginatorModule, MatSortModule, MatTabsModule
-    , MatDialogModule, MatToolbarModule,MatSelectModule
+    , MatDialogModule, MatToolbarModule,MatSelectModule,MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

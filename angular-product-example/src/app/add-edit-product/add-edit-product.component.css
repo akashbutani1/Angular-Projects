@@ -30,6 +30,7 @@ button {
     cursor: pointer;
     margin-left: 25px;
     margin-bottom: 25px;
+    border-radius: 0px;
 }
 
 button:disabled {
@@ -44,13 +45,15 @@ button:disabled {
 
 .mat-form-field {
     margin-right: 10px;
-    width: 40%;
+    width: 90%;
 }
 
 .btn-back {
     position: absolute;
-    top: 441px;
-    left: 125px;
+    top: 80px;
+    left: 790px;
+    background: white;
+    font-size: 30px;
 }
 
 .col-md-6 {
