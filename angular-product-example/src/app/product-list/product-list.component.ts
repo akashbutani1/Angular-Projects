@@ -79,6 +79,7 @@ export class ProductListComponent implements AfterViewInit {
     this.filterValue = this.searchValue.nativeElement.value;    
     this.filter.emit();
     this.searchValue.nativeElement.value = "";
+    this.selectedValue = 0;
   }
 
 
