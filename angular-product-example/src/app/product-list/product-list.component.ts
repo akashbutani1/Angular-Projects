@@ -64,7 +64,6 @@ export class ProductListComponent implements AfterViewInit {
 
         map(data => {
           debugger;
-          // console.log(data);
           this.resultsLength = data.TotalCount;
           return data.Items;
         })
@@ -130,11 +129,12 @@ export class ProductListComponent implements AfterViewInit {
     confirmDialog.afterClosed().subscribe(result => {
       if (result === true) {
         debugger;
-        this.delete(product.Id);
+        setTimeout(() => {
+          this.productService.deleteProduct(product.Id).subscribe(res => { console.log(res); });
+        }, 1000);
 
         this.dataProducts = this.dataProducts.filter(h => h !== product);
-        this.resultsLength = this.resultsLength - 1;
-        this.router.navigate['/dashboard']; 
+        this.resultsLength = this.resultsLength - 1; 
         this._snackbar.open('Data Deleted Successfully : '+product.Id, 'Close', {
           duration: 5000
         });
@@ -143,14 +143,6 @@ export class ProductListComponent implements AfterViewInit {
 
   }
 
-  //delete Data
-  delete(product: number): void {
-    debugger;
-
-    setTimeout(() => {
-      this.productService.deleteProduct(product).subscribe(res => { console.log(res); });
-    }, 1000);
-  }
 
   changeSelect(data) {
     debugger;
