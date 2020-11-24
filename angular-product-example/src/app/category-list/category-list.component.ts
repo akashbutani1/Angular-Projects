@@ -24,6 +24,7 @@ export class CategoryListComponent implements AfterViewInit {
   dataCategory: CategoryModel[] = [];
   filterValue: string;
   alertMessage: string = "There Is No Data For Search Value : ";
+  
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -44,19 +45,20 @@ export class CategoryListComponent implements AfterViewInit {
       .pipe(
         startWith({}),
         switchMap(() => {
-
+          
           return this.categoryService.getCategoriesFromAPI(
             this.sort.active, this.sort.direction, this.paginator.pageIndex, this.filterValue);
         }),
 
         map(data => {
           debugger;
-          // console.log(data);
+          
           this.resultsLength = data.TotalCount;
           return data.Items;
         })
       ).subscribe(data => {
         debugger;
+        
         this.dataCategory = data;
       });
   }

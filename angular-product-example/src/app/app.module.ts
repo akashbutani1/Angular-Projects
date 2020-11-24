@@ -12,9 +12,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import {MatSelectModule} from '@angular/material/select';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
-
+import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -44,10 +43,10 @@ import { AddEditProductComponent } from './add-edit-product/add-edit-product.com
     HttpClientModule,
     MatTableModule,
     FormsModule,
-    ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
+    ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
     MatButtonModule,
     MatIconModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatPaginatorModule, MatSortModule, MatTabsModule
-    , MatDialogModule, MatToolbarModule,MatSelectModule,MatSnackBarModule
+    , MatDialogModule, MatToolbarModule, MatSelectModule, MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
