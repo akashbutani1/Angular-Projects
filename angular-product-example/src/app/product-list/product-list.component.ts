@@ -1,9 +1,8 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter,ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
-import { Router } from '@angular/router';
 import { merge } from 'rxjs';
 import { map, startWith, switchMap } from 'rxjs/operators';
 import { AddEditProductComponent } from '../add-edit-product/add-edit-product.component';
@@ -37,10 +36,8 @@ export class ProductListComponent implements AfterViewInit {
     private productService: ProductService,
     private dialog: MatDialog,
     private categoryService: CategoryService,
-    private router: Router,
     private _snackbar: MatSnackBar
   ) { }
-
 
 
   ngAfterViewInit() {
@@ -144,7 +141,7 @@ export class ProductListComponent implements AfterViewInit {
   }
 
 
-  changeSelect(data) {
+  changeSelect(data : any) {
     debugger;
     this.selectedValue = this.dataCategory[data].id;
     
@@ -155,13 +152,7 @@ export class ProductListComponent implements AfterViewInit {
     debugger;
     this.selectedValue = 0;
     this.filterValue = "";
-    this.productService.getProductsFromAPI(
-      this.sort.active, this.sort.direction, this.paginator.pageIndex, this.filterValue,this.selectedValue).subscribe(
-        data => {
-          this.resultsLength = data.TotalCount;
-          this.dataProducts = data.Items;
-        }
-      );
+    this.filter.emit();
   }
 
 

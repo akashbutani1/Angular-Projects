@@ -18,7 +18,7 @@
                         Min Length is 3
                     </mat-error>
                     <mat-error *ngIf="productForm.get('productName').hasError('pattern')">
-                        Please Enter Valid Text
+                        Please enter valid text
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -28,10 +28,10 @@
                     <mat-label>Product Price</mat-label>
                     <input matInput formControlName="productPrice" placeholder="Enter Product Price" autocomplete="off">
                     <mat-error *ngIf="productForm.get('productPrice').hasError('required')">
-                        Product Price is required
+                        Product price is required
                     </mat-error>
                     <mat-error *ngIf="productForm.get('productPrice').hasError('pattern')">
-                        Only Numbers Are Allowed
+                        Only numbers are allowed
                     </mat-error>
                 </mat-form-field>
             </div>

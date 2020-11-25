@@ -68,7 +68,7 @@ export class AddEditProductComponent implements OnInit {
             productName: x.product_name,
             productPrice: x.product_price,
             productCategory: x.category_id
-          });
+          }); 
         });
     }
   }
