@@ -24,9 +24,7 @@ export class AddEditProductComponent implements OnInit {
   selectedValue : string;
 
   constructor(
-    private route: ActivatedRoute,
     private categoryService: CategoryService,
-    private location: Location,
     private formBuilder: FormBuilder,
     private productService: ProductService,
     public dialogRef: MatDialogRef<AddEditProductComponent>,
@@ -35,14 +33,14 @@ export class AddEditProductComponent implements OnInit {
 
   ngOnInit(): void {
     debugger;
-    this.id = this.data.Id;
+    this.id = this.data.id;
 
     //getting categories data for select form field
     this.categoryService.getCategoriesFromAPI(
       '', '', 0, '').subscribe(
         data => {
-          //console.log(data.Items);
-          this.categoryData = data.Items;
+          //console.log(data);
+          this.categoryData = data.items;
         }
       );
 
@@ -65,9 +63,9 @@ export class AddEditProductComponent implements OnInit {
           //console.log(x);
 
           this.productForm.patchValue({
-            productName: x.product_name,
-            productPrice: x.product_price,
-            productCategory: x.category_id
+            productName: x.productName,
+            productPrice: x.productPrice,
+            productCategory: x.categoryId
           }); 
         });
     }
@@ -81,22 +79,22 @@ export class AddEditProductComponent implements OnInit {
     debugger;
 
     const registerObject: ProductModel = {
-      Id: this.data.Id,
-      product_name: this.productForm.controls.productName.value,
-      product_price: this.productForm.controls.productPrice.value,
-      category_id: this.selectedValue
+      id: this.data.id,
+      productName: this.productForm.controls.productName.value,
+      productPrice: this.productForm.controls.productPrice.value,
+      categoryId: this.selectedValue
     };
 
     if (this.isAddMode) {
       this.productService.addProduct(registerObject).subscribe(res => {
-        //console.log(res);
+        console.log(res);
         //this.goBack();
       });
     }
     else {
       this.productService.updateProduct(registerObject)
         .subscribe(response => {
-          //console.log(response);
+          console.log(response);
          // this.goBack();
         });
     }
@@ -105,7 +103,7 @@ export class AddEditProductComponent implements OnInit {
 
   changeSelect(data){
     debugger;
-    this.selectedValue = this.categoryData[data].category_name;
+    this.selectedValue = this.categoryData[data].categoryName;
     
   }
 

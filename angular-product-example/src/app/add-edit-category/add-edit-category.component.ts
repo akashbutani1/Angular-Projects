@@ -48,7 +48,7 @@ export class AddEditCategoryComponent implements OnInit {
          // console.log(x);
 
           this.categoryForm.patchValue({
-            categoryName: x.category_name
+            categoryName: x.categoryName
           });
         });
     }
@@ -63,7 +63,7 @@ export class AddEditCategoryComponent implements OnInit {
 
     const registerObject: CategoryModel = {
       id: this.data.id,
-      category_name: this.categoryForm.controls.categoryName.value,
+      categoryName: this.categoryForm.controls.categoryName.value,
     };
 
     if (this.isAddMode) {

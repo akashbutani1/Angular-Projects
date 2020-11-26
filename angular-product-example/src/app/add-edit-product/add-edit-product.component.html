@@ -41,7 +41,7 @@
                     <mat-select formControlName="productCategory" placeholder="Select 
                  Category" [(ngModel)]="selectedValue" (change)="changeSelect($event.value)">
                         <mat-option *ngFor="let category of categoryData" [value]="category.id">
-                            {{category.category_name}}
+                            {{category.categoryName}}
                         </mat-option>
                     </mat-select>
                     <mat-error *ngIf="productForm.get('productCategory').hasError('required')">

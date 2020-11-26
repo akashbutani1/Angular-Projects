@@ -53,13 +53,15 @@ export class CategoryListComponent implements AfterViewInit {
         map(data => {
           debugger;
           
-          this.resultsLength = data.TotalCount;
-          return data.Items;
+          this.resultsLength = data.totalCount;
+          return data.items;
         })
       ).subscribe(data => {
         debugger;
         
         this.dataCategory = data;
+       // console.log(this.dataCategory);
+        
       });
   }
 
@@ -77,7 +79,7 @@ export class CategoryListComponent implements AfterViewInit {
   confirmDelete(category: CategoryModel) {
     const confirmDialog = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        title: 'Delete Category : ' + category.category_name,
+        title: 'Delete Category : ' + category.categoryName,
         message: 'Are you sure to Remove this ?'
       }
     });
@@ -87,7 +89,7 @@ export class CategoryListComponent implements AfterViewInit {
 
         this.dataCategory = this.dataCategory.filter(h => h !== category);
         this.resultsLength = this.resultsLength - 1;
-        this._snackbar.open('Data Deleted Successfully : '+ category.category_name, 'Close', {
+        this._snackbar.open('Data Deleted Successfully', 'Close', {
           duration: 5000
         });
       }
@@ -115,14 +117,14 @@ export class CategoryListComponent implements AfterViewInit {
   //edit data
   editData(id: number, category_name: string) {
     const dialogRef = this.dialog.open(AddEditCategoryComponent, {
-      data: { id: id, category_name: category_name }
+      data: { id: id, categoryName: category_name }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
         // After dialog is closed we're doing frontend updates
         this.refreshTable();
-        this._snackbar.open('Data Edited Successfully : ' + category_name, 'Close', {
+        this._snackbar.open('Data Edited Successfully ', 'Close', {
           duration: 5000
         });
       }
@@ -136,8 +138,10 @@ export class CategoryListComponent implements AfterViewInit {
     this.categoryService.getCategoriesFromAPI(
       this.sort.active, this.sort.direction, this.paginator.pageIndex, this.filterValue).subscribe(
         data => {
-          this.resultsLength = data.TotalCount;
-          this.dataCategory = data.Items;
+
+          
+          this.resultsLength = data.totalCount;
+          this.dataCategory = data.items;
         }
       );
   }

@@ -24,7 +24,7 @@ export class ProductListComponent implements AfterViewInit {
   dataProducts: ProductModel[] = [];
   dataCategory: CategoryModel[] = [];
   filterValue: string;
-  selectedValue: number;
+  selectedValue: number = 0;
   alertMessage: string = "There Is No Data For Search Value : ";
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -52,7 +52,7 @@ export class ProductListComponent implements AfterViewInit {
           this.categoryService.getCategoriesFromAPI(
             '', '', 0, '').subscribe(
               data => {
-                this.dataCategory = data.Items;
+                this.dataCategory = data.items;
               }
             );
           return this.productService.getProductsFromAPI(
@@ -61,8 +61,9 @@ export class ProductListComponent implements AfterViewInit {
 
         map(data => {
           debugger;
-          this.resultsLength = data.TotalCount;
-          return data.Items;
+          console.log(data);
+          this.resultsLength = data.totalCount;
+          return data.items;
         })
       ).subscribe(data => {
         debugger;
@@ -100,7 +101,7 @@ export class ProductListComponent implements AfterViewInit {
   //edit data
   editData(id: number, product_name:string,product_price:number,category_name:string) {
     const dialogRef = this.dialog.open(AddEditProductComponent, {
-      data: { Id: id, ProductName: product_name,ProductPrice: product_price,CategoryName: category_name }
+      data: { id: id, productName: product_name,productPrice: product_price,categoryName: category_name }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -127,12 +128,12 @@ export class ProductListComponent implements AfterViewInit {
       if (result === true) {
         debugger;
         setTimeout(() => {
-          this.productService.deleteProduct(product.Id).subscribe(res => { console.log(res); });
+          this.productService.deleteProduct(product.id).subscribe(res => { console.log(res); });
         }, 1000);
 
         this.dataProducts = this.dataProducts.filter(h => h !== product);
         this.resultsLength = this.resultsLength - 1; 
-        this._snackbar.open('Data Deleted Successfully : '+product.Id, 'Close', {
+        this._snackbar.open('Data Deleted Successfully : '+product.id, 'Close', {
           duration: 5000
         });
       }
