@@ -51,7 +51,7 @@ export class ProductService {
   //update product
   updateProduct(userUpdatedData: ProductModel): Observable<ProductModel> {
     debugger;
-    return this.http.put<ProductModel>(this.requestURL + '/${userUpdatedData.id}', userUpdatedData, this.httpOptions).pipe(
+    return this.http.put<ProductModel>(this.requestURL + '/' + userUpdatedData.id, userUpdatedData, this.httpOptions).pipe(
     );
   }
 }
