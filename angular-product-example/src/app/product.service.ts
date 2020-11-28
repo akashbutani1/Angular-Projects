@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { ProductModel } from './ProductModel';
 
 @Injectable({
@@ -11,13 +10,13 @@ export class ProductService {
 
   constructor(private http: HttpClient) { }
 
-  requestURL: string = 'api/TblProducts';
+  requestURL: string = 'https://localhost:44385/api/TblProducts';
 
   //get products from API
   getProductsFromAPI(sort: string, order: string, page: number, firstName: string, category: number): Observable<any> {
     debugger;
 
-    return this.http.get<any>('https://localhost:44385/api/TblProducts?SearchQuery=' + firstName + '&Sort=' + sort + '&Order=' + order + '&PageNumber=' + (page + 1) + '&SearchCatgory=' + category).pipe(
+    return this.http.get<any>(this.requestURL+'?SearchQuery=' + firstName + '&Sort=' + sort + '&Order=' + order + '&PageNumber=' + (page + 1) + '&SearchCatgory=' + category).pipe(
 
     );
   }
@@ -27,19 +26,16 @@ export class ProductService {
   deleteProduct(product: number): Observable<ProductModel> {
     debugger;
 
-    const url = "https://localhost:44385/api/TblProducts/" + product;
+    const url = this.requestURL + '/' + product;
     return this.http.delete<ProductModel>(url, this.httpOptions).pipe(
     );
 
   }
 
-
-
-
   //get products by id
   getProductById(id: number): Observable<ProductModel> {
     debugger;
-    const url = 'https://localhost:44385/api/TblProducts/' + id;
+    const url = this.requestURL + '/' + id;
     return this.http.get<ProductModel>(url).pipe();
   }
   httpOptions = {
@@ -49,14 +45,13 @@ export class ProductService {
   addProduct(userData: ProductModel): Observable<ProductModel> {
     debugger;
     
-    return this.http.post<ProductModel>("https://localhost:44385/api/TblProducts", userData).pipe();
+    return this.http.post<ProductModel>(this.requestURL, userData).pipe();
   }
 
   //update product
   updateProduct(userUpdatedData: ProductModel): Observable<ProductModel> {
     debugger;
-    return this.http.put<ProductModel>(`https://localhost:44385/api/TblProducts/${userUpdatedData.id}`, userUpdatedData, this.httpOptions).pipe(
-      //map(data => data)
+    return this.http.put<ProductModel>(this.requestURL + '/${userUpdatedData.id}', userUpdatedData, this.httpOptions).pipe(
     );
   }
 }
