@@ -21,14 +21,14 @@ export class AddEditProductComponent implements OnInit {
   isAddMode: boolean;
   productForm: FormGroup;
   categoryData: CategoryModel[] = [];
-  selectedValue : string;
+  selectedValue: string;
 
   constructor(
     private categoryService: CategoryService,
     private formBuilder: FormBuilder,
     private productService: ProductService,
     public dialogRef: MatDialogRef<AddEditProductComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: ProductModel
+    @Inject(MAT_DIALOG_DATA) public data: ProductModel
   ) { }
 
   ngOnInit(): void {
@@ -48,12 +48,12 @@ export class AddEditProductComponent implements OnInit {
       productName: ['', [Validators.required, Validators.minLength(3), Validators.pattern("^[ A-Za-z0-9_@./#&()+-]*$")]],
       productPrice: ['', [Validators.required, Validators.pattern("^[0-9.]*$")]],
       productCategory: ['', [Validators.required, Validators.minLength(3)]],
-      
+
     });
 
     if (String(this.id) == "undefined") {
       this.isAddMode = true;
-      
+
     }
     else {
       this.isAddMode = false;
@@ -66,7 +66,7 @@ export class AddEditProductComponent implements OnInit {
             productName: x.productName,
             productPrice: x.productPrice,
             productCategory: x.categoryId
-          }); 
+          });
         });
     }
   }
@@ -78,33 +78,40 @@ export class AddEditProductComponent implements OnInit {
   onSubmit() {
     debugger;
 
-    const registerObject: ProductModel = {
-      id: this.data.id,
-      productName: this.productForm.controls.productName.value,
-      productPrice: this.productForm.controls.productPrice.value,
-      categoryId: this.selectedValue
-    };
+
 
     if (this.isAddMode) {
-      this.productService.addProduct(registerObject).subscribe(res => {
-        console.log(res);
-        //this.goBack();
+      const registerObject: ProductModel = {
+        id:0,
+        productName: this.productForm.controls.productName.value,
+        productPrice: parseInt(this.productForm.controls.productPrice.value),
+        categoryId: parseInt(this.selectedValue)
+      };
+      this.productService.addProduct(registerObject).subscribe(data => {  
+        console.log(data); 
+    
       });
     }
     else {
+      const registerObject: ProductModel = {
+        id: this.data.id,
+        productName: this.productForm.controls.productName.value,
+        productPrice: parseInt(this.productForm.controls.productPrice.value),
+        categoryId: parseInt(this.selectedValue)
+      };
       this.productService.updateProduct(registerObject)
         .subscribe(response => {
           console.log(response);
-         // this.goBack();
+          // this.goBack();
         });
     }
 
   }
 
-  changeSelect(data){
+  changeSelect(data : any) {
     debugger;
     this.selectedValue = this.categoryData[data].categoryName;
-    
+
   }
 
 }

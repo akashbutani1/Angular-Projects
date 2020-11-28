@@ -91,9 +91,9 @@ export class ProductListComponent implements AfterViewInit {
       if (result === 1) {
         // After dialog is closed we're doing frontend updates
         this.refreshTable();
-        this._snackbar.open('Data Added Successfully !!', 'Close', {
-          duration: 5000
-        });
+        // this._snackbar.open('Data Added Successfully !!', 'Close', {
+        //   duration: 5000
+        // });
       }
     });
   }

@@ -4,6 +4,6 @@ export class ProductModel{
     id: number;
     productName:string;
     productPrice:number;
-    categoryId:string;
+    categoryId:number;
 
 }
