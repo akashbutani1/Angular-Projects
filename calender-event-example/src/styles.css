@@ -1,0 +1,37 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.mat-dialog-container {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    min-width: 350px !important;
+    min-height: 350px !important;
+    overflow-x: hidden !important;
+    overflow-y: hidden !important;
+    margin: auto;
+}
+
+button:focus {
+    outline: none !important;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline {
+    color: black;
+}
+
+.timepicker-overlay {
+    z-index: 1100 !important;
+}
+
+.timepicker-backdrop-overlay {
+    z-index: 1100 !important;
+}

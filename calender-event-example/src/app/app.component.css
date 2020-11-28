@@ -1,0 +1,14 @@
+.container {
+    width: 80%;
+    height: 80%;
+    margin: auto;
+}
+
+.btn-add {
+    top: 75px;
+    left: 650px;
+}
+
+.fc .fc-daygrid-day-frame:hover {
+    background: lightseagreen !important;
+}

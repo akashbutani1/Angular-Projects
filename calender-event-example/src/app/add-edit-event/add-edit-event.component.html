@@ -1,0 +1,55 @@
+<h1 mat-dialog-title style="margin-left: 25px;color: #FF4081;font-weight: bold;font-size: 30px;">Add Event
+    <button type="button" (click)="onNoClick()" class="btn-back"><mat-icon>cancel</mat-icon></button>
+</h1>
+<div>
+    <form mat-dialog-content [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+        <div class="row form-container">
+            <div class="col-md-6">
+                <mat-form-field appearance="outline" style="width: 85% !important;">
+                    <mat-label>Event Name</mat-label>
+                    <input matInput formControlName="eventName" placeholder="Enter Event Name">
+                    <mat-error *ngIf="eventForm.get('eventName').hasError('required')">
+                        Event Name is required
+                    </mat-error>
+                    <mat-error *ngIf="eventForm.get('eventName').hasError('pattern')">
+                        Enter Valid Text
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field appearance="outline" style="width: 85% !important;">
+                    <mat-label>Choose Date</mat-label>
+                    <input matInput [(ngModel)]="selectedDate" formControlName="eventDate" placeholder="Choose Date">
+                    <mat-error *ngIf="eventForm.get('eventDate').hasError('required')">
+                        Event Date is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field appearance="outline" style="width: 85% !important;">
+                    <mat-label>Choose Start Time</mat-label>
+                    <input matInput placeholder="Enter Event Start Time" [ngxTimepicker]="start" formControlName="eventStartTime">
+                    <ngx-material-timepicker #start></ngx-material-timepicker>
+                    <mat-error *ngIf="eventForm.get('eventStartTime').hasError('required')">
+                        Event Start Time is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field appearance="outline" style="width: 85% !important;">
+                    <mat-label>Choose End Time</mat-label>
+                    <input matInput placeholder="Enter Event End Time" [ngxTimepicker]="end" formControlName="eventEndTime">
+                    <ngx-material-timepicker #end></ngx-material-timepicker>
+                    <mat-error *ngIf="eventForm.get('eventEndTime').hasError('required')">
+                        Event End Time is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <mat-dialog-actions align="start">
+                <button mat-raised-button [mat-dialog-close]="true" color="accent" [disabled]="!eventForm.valid" type="submit">Add</button>
+            </mat-dialog-actions>
+        </div>
+    </form>
+
+</div>
