@@ -20,6 +20,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AddEditEventComponent } from './add-edit-event/add-edit-event.component';
+import { ScheduleModule, RecurrenceEditorModule , DayService, WeekService, WorkWeekService , MonthService , MonthAgendaService} from '@syncfusion/ej2-angular-schedule';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,interactionPlugin
@@ -42,9 +43,11 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     MatDialogModule,
     MatDatepickerModule,
     MatFormFieldModule,
-    MatNativeDateModule, FormsModule, ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),MatInputModule,NgxMaterialTimepickerModule
+    MatNativeDateModule, FormsModule, ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),MatInputModule,NgxMaterialTimepickerModule, 
+    ScheduleModule, 
+    RecurrenceEditorModule
   ],
-  providers: [],
+  providers: [ DayService, WeekService, WorkWeekService , MonthService , MonthAgendaService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

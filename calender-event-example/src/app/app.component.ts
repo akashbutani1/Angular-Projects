@@ -9,28 +9,29 @@ import { AddEditEventComponent } from './add-edit-event/add-edit-event.component
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  selectedDate : Date = new Date();
+  
+  //selectedDate : Date = new Date();
   title = 'calender event example';
 
-  constructor(private dialog : MatDialog){}
+  constructor() { }
 
-  calendarOptions: CalendarOptions = {
-    initialView: 'dayGridMonth',
-    dateClick : this.handleDateClick.bind(this)
-    
-    
-  };
+  // calendarOptions: CalendarOptions = {
+  //   initialView: 'dayGridMonth',
+  //   dateClick : this.handleDateClick.bind(this)
 
-  handleDateClick(arg : any) {
-    this.selectedDate = arg.dateStr;    
-    const dialogRef = this.dialog.open(AddEditEventComponent, {
-      data: this.selectedDate
-    });
 
-    dialogRef.afterClosed().subscribe(result => {
-     // console.log(`Dialog result: ${result}`);
-    });
-  }
+  // };
 
-  
+  // handleDateClick(arg : any) {
+  //   this.selectedDate = arg.dateStr;    
+  //   const dialogRef = this.dialog.open(AddEditEventComponent, {
+  //     data: this.selectedDate
+  //   });
+
+  //   dialogRef.afterClosed().subscribe(result => {
+  //    // console.log(`Dialog result: ${result}`);
+  //   });
+  // }
+
+
 }
