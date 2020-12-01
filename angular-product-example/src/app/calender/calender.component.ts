@@ -1,18 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DataManager, UrlAdaptor } from '@syncfusion/ej2-data';
 import { DayService, WeekService, WorkWeekService, MonthService, AgendaService, EventSettingsModel, PopupOpenEventArgs }
   from '@syncfusion/ej2-angular-schedule';
 
-
-
-
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  selector: 'app-calender',
+  templateUrl: './calender.component.html',
+  styleUrls: ['./calender.component.css'],
   providers: [DayService, WeekService, WorkWeekService, MonthService, AgendaService]
 })
-export class AppComponent {
+export class CalenderComponent implements OnInit {
 
   public scheduleData: any;
   eventSettings: EventSettingsModel;
@@ -24,11 +21,12 @@ export class AppComponent {
 
     this.scheduleData = new DataManager({
 
-      url: "https://localhost:44373/api/Schedule/GetData",
-      crudUrl: "https://localhost:44373/api/Schedule/Batch",
+      url: "https://localhost:44385/api/ScheduleAppointments/",
+      crudUrl: "https://localhost:44385/api/ScheduleAppointments/",
       adaptor: new UrlAdaptor(),
       crossDomain: true
     });
+    
     this.eventSettings = {
       dataSource: this.scheduleData,
       fields: {
@@ -53,5 +51,9 @@ export class AppComponent {
     }
 }
 
+  ngOnInit(): void {
+    
+  }
+  
 
 }

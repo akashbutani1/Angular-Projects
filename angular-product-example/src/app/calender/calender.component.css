@@ -1,0 +1,12 @@
+/* To disable the cell click action in schedule */
+
+.e-disable-dates {
+    pointer-events: none;
+}
+
+
+/* To enable showing event quick info popup action on month view */
+
+.e-disable-dates .e-appointment-wrapper {
+    pointer-events: all;
+}
