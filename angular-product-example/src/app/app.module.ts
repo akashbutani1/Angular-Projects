@@ -15,6 +15,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,6 +32,7 @@ import { AddEditProductComponent } from './add-edit-product/add-edit-product.com
 import { ScheduleModule, RecurrenceEditorModule, DayService, WeekService, MonthAgendaService, MonthService, WorkWeekService } from '@syncfusion/ej2-angular-schedule';
 import { CalenderComponent } from './calender/calender.component';
 import { CalenderListComponent } from './calender-list/calender-list.component';
+import { AddEditEventComponent } from './add-edit-event/add-edit-event.component';
 
 
 @NgModule({
@@ -40,7 +45,8 @@ import { CalenderListComponent } from './calender-list/calender-list.component';
     DashboardComponent,
     AddEditProductComponent,
     CalenderComponent,
-    CalenderListComponent
+    CalenderListComponent,
+    AddEditEventComponent
 
   ],
   imports: [
@@ -55,9 +61,9 @@ import { CalenderListComponent } from './calender-list/calender-list.component';
     MatIconModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatPaginatorModule, MatSortModule, MatTabsModule
     , MatDialogModule, MatToolbarModule, MatSelectModule, MatSnackBarModule,
     ScheduleModule, RecurrenceEditorModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule, MatDatepickerModule, NgxMaterialTimepickerModule, MatNativeDateModule
   ],
-  providers: [DayService, WeekService, MonthAgendaService, MonthService, WorkWeekService],
+  providers: [DayService, WeekService, MonthAgendaService, MonthService, WorkWeekService,MatDatepickerModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataManager, UrlAdaptor } from '@syncfusion/ej2-data';
-import { DayService, WeekService, WorkWeekService, MonthService, AgendaService, EventSettingsModel, PopupOpenEventArgs }
+import { DayService, WeekService, WorkWeekService, MonthService, AgendaService, EventSettingsModel, PopupOpenEventArgs, ScheduleComponent }
   from '@syncfusion/ej2-angular-schedule';
 
 @Component({
@@ -16,6 +16,8 @@ export class CalenderComponent implements OnInit {
   minValidation: (args: { [key: string]: string }) => boolean = (args: { [key: string]: string }) => {
     return args['value'].length >= 5;
   };
+  @ViewChild('scheduleObj')
+  public scheduleObj: ScheduleComponent;
 
   constructor() {
 
@@ -26,7 +28,7 @@ export class CalenderComponent implements OnInit {
       adaptor: new UrlAdaptor(),
       crossDomain: true
     });
-    
+
     this.eventSettings = {
       dataSource: this.scheduleData,
       fields: {
@@ -40,20 +42,55 @@ export class CalenderComponent implements OnInit {
         },
         startTime: { name: 'StartTime', validation: { required: true } },
         endTime: { name: 'EndTime', validation: { required: true } }
-      }
+      },
+      
+
     };
-
-  }
-
-  onPopupOpen(args: PopupOpenEventArgs): void {
-    if (args.type === 'QuickInfo')  {
-        args.cancel = true;
-    }
-}
-
-  ngOnInit(): void {
     
   }
-  
+
+
+  ngOnInit(): void {
+
+
+  }
+
+  onPopupOpen(args: any) {
+    if (args.type === 'QuickInfo') {
+      args.cancel = true;
+    }
+    if (args.data.name === "cellClick") {
+      if ((args.data.startTime) < new Date(new Date().setHours(0, 0, 0, 0))) {
+        args.cancel = true;
+        
+      }
+    } else {
+      if ((args.data.StartTime) < new Date(new Date().setHours(0, 0, 0, 0))) {
+        args.cancel = true;
+      }
+    }
+  }
+  onRenderCell(args: any) {
+    if (args.date < new Date(new Date().setHours(0, 0, 0, 0))) {
+      args.element.classList.add('e-disableCell');
+      
+    }
+
+  }
+  onActionBegin(args: any) {
+    if (args.requestType === "eventChange") {
+      if ((args.data.StartTime) < new Date(new Date().setHours(0, 0, 0, 0))) {
+        args.cancel = true;
+      }
+    }
+    if (args.requestType === "eventCreate") {
+      for (var i = 0; i < args.data.length; i++) {
+        if ((args.data[i].StartTime) < new Date(new Date().setHours(0, 0, 0, 0))) {
+          args.cancel = true;
+        }
+      }
+    }
+  }
+
 
 }

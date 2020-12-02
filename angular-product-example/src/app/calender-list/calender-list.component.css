@@ -88,7 +88,7 @@ table {
 
 .heading {
     margin-left: 30px;
-    margin-bottom: 15px;
+    margin-bottom: 35px;
     margin-top: 15px;
 }
 
@@ -115,6 +115,7 @@ th {
     margin-top: 10px;
     margin-bottom: 10px;
     border-radius: 0px;
+    cursor: pointer;
 }
 
 .btn-add {
@@ -159,4 +160,20 @@ th {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+tr,
+td:focus {
+    outline: none;
+    border: 0;
+    cursor: pointer;
+}
+
+tr:hover {
+    cursor: pointer;
+}
+
+tr.past {
+    background-color: lightgrey;
+    opacity: 0.6;
 }

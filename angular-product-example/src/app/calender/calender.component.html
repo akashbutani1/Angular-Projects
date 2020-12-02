@@ -1,1 +1,10 @@
-<ejs-schedule [eventSettings]="eventSettings" (popupOpen)='onPopupOpen($event)'></ejs-schedule>
+<div style="margin-top: 30px;">
+    <ejs-schedule class="calendar-container" [eventSettings]="eventSettings" (popupOpen)='onPopupOpen($event)' #ScheduleObj width="1000px">
+        <e-views>
+            <e-view option='Month'></e-view>
+            <e-view option='TimelineWeek'></e-view>
+            <e-view option='TimelineDay'></e-view>
+            <e-view option='TimelineMonth'></e-view>
+        </e-views>
+    </ejs-schedule>
+</div>

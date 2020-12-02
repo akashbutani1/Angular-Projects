@@ -1,0 +1,18 @@
+.form-container {
+    margin-left: 25px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+
+.btn-back {
+    position: absolute;
+    top: 90px;
+    left: 820px;
+    background: white;
+    border: none;
+    cursor: pointer;
+}
+
+.col-md-6 {
+    margin-bottom: 10px;
+}

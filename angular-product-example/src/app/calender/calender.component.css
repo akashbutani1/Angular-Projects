@@ -10,3 +10,8 @@
 .e-disable-dates .e-appointment-wrapper {
     pointer-events: all;
 }
+
+.calendar-container {
+    margin-top: 30px;
+    margin: 0 auto;
+}
