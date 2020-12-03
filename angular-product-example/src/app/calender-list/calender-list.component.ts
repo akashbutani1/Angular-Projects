@@ -23,13 +23,15 @@ export class CalenderListComponent implements AfterViewInit {
   resultsLength = 0;
   filterValue: string;
   alertMessage: string = "There Is No Data For Search Value : ";
+  isLoading : boolean = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('inputSearch') searchValue: ElementRef;
   filter = new EventEmitter<void>();
 
-  constructor(private calenderService: CalenderService,
+  constructor(
+    private calenderService: CalenderService,
     private dialog: MatDialog,
     private _snackbar: MatSnackBar, private route: Router) { }
 
@@ -40,21 +42,19 @@ export class CalenderListComponent implements AfterViewInit {
       .pipe(
         startWith({}),
         switchMap(() => {
-
+          
           return this.calenderService.getEventFromAPI(
             this.sort.active, this.sort.direction, this.paginator.pageIndex, this.filterValue);
         }),
 
         map(data => {
-          debugger;
-
+          this.isLoading = false;
           this.resultsLength = data.totalCount;
           return data.items;
         })
       ).subscribe(data => {
-        debugger;
         console.log(data);
-
+        this.isLoading = false;
         this.dataEvents = data;
 
       });
@@ -106,12 +106,16 @@ export class CalenderListComponent implements AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.refreshTable();
       if (result === 1) {
         // After dialog is closed we're doing frontend updates
-       //this.refreshTable();
+       
+       setTimeout(() => {
         this._snackbar.open('Data Added Successfully !!', 'Close', {
           duration: 5000
         });
+       }, 1000);
+        
       }
     });
   }
@@ -123,12 +127,16 @@ export class CalenderListComponent implements AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.refreshTable();
       if (result === 1) {
         // After dialog is closed we're doing frontend updates
-        //this.refreshTable();
-        this._snackbar.open('Data Edited Successfully ', 'Close', {
-          duration: 5000
-        });
+        
+        setTimeout(() => {
+          this._snackbar.open('Data Edited Successfully ', 'Close', {
+            duration: 5000
+          });
+        }, 1000);
+        
       }
     });
   }
@@ -137,10 +145,16 @@ export class CalenderListComponent implements AfterViewInit {
   delete(event: EventModel): void {
 
     setTimeout(() => {
-      this.calenderService.deleteEvent(event).subscribe(res => { //console.log(res)
+      this.calenderService.deleteEvent(event).subscribe(res => { console.log(res)
         ;
       });
     }, 1000);
+  }
+
+  //refresh Table
+  refreshTable() {
+    this.filterValue = "";
+    this.filter.emit();
   }
 
 }

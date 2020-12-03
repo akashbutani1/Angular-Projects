@@ -49,8 +49,54 @@ button:focus {
     color: black !important;
 }
 
-.e-time-zone-container {
+.e-title-text {
+    font-size: 25px !important;
+}
+
+.e-time-zone-container,
+.e-location-container {
     display: none;
+}
+
+.e-location-container {
+    width: 100% !important;
+    margin-bottom: 10px;
+    margin-left: -8px;
+}
+
+.e-end-container {
+    width: 100% !important;
+    margin-top: 25px;
+    margin-left: -8px;
+}
+
+.e-subject-container,
+.e-start-container {
+    width: 100% !important;
+    margin-bottom: 10px;
+    margin-left: 0px;
+}
+
+.e-tooltip-wrap.e-schedule-error {
+    background-color: white;
+    border-color: white;
+    z-index: 1000;
+    left: 10px !important;
+}
+
+.e-tooltip-wrap.e-schedule-error .e-tip-content,
+.e-tooltip-wrap.e-schedule-error .e-tip-content label {
+    color: red;
+}
+
+.e-tooltip-wrap.e-schedule-error .e-arrow-tip.e-tip-top {
+    display: none;
+}
+
+.e-schedule-dialog .e-title-location-row,
+.e-schedule-dialog .e-start-end-row {
+    display: block;
+    width: 100%;
 }
 
 .e-schedule .e-month-view .e-work-cells,
@@ -67,7 +113,7 @@ button:focus {
 }
 
 .e-popup.e-popup-open.e-dialog {
-    min-height: 500px !important;
+    min-height: 575px !important;
 }
 
 .timepicker-overlay {

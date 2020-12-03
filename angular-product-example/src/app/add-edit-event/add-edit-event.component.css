@@ -16,3 +16,10 @@
 .col-md-6 {
     margin-bottom: 10px;
 }
+
+.heading {
+    margin-left: 25px;
+    color: #FF4081;
+    font-weight: bold;
+    font-size: 30px;
+}

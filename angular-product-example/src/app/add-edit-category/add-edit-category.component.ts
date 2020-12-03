@@ -1,10 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { CategoryService } from '../category.service';
 import { CategoryModel } from '../CategoryModel';
-import { Location } from '@angular/common'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
@@ -20,33 +18,27 @@ export class AddEditCategoryComponent implements OnInit {
   categoryForm: FormGroup;
 
   constructor(
-    private route: ActivatedRoute,
     private categoryService: CategoryService,
-    private location: Location,
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<AddEditCategoryComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: CategoryModel
+    @Inject(MAT_DIALOG_DATA) public data: CategoryModel
   ) { }
 
   ngOnInit(): void {
-    debugger;
     this.id = this.data.id;
-    
+
     this.categoryForm = this.formBuilder.group({
       categoryName: ['', [Validators.required, Validators.minLength(3), Validators.pattern("^[a-zA-Z_ -]+$")]],
     });
 
-    if (String(this.id) == "undefined") {
+    if (String(this.id) == "undefined") { //typeof
       this.isAddMode = true;
     }
     else {
-      
       this.isAddMode = false;
       this.categoryService.getCategoriesById(this.id)
         .pipe(first())
         .subscribe(x => {
-         // console.log(x);
-
           this.categoryForm.patchValue({
             categoryName: x.categoryName
           });
@@ -59,7 +51,6 @@ export class AddEditCategoryComponent implements OnInit {
   }
 
   onSubmit() {
-    debugger;
 
     const registerObject: CategoryModel = {
       id: this.data.id,
@@ -67,16 +58,15 @@ export class AddEditCategoryComponent implements OnInit {
     };
 
     if (this.isAddMode) {
-      this.categoryService.addCategory(registerObject).subscribe(res => {
-        //console.log(res);
-        //this.goBack();
+      this.categoryService.addCategory(registerObject).subscribe(
+        res => {
+        console.log(res);
       });
     }
     else {
       this.categoryService.updateCategory(registerObject)
         .subscribe(response => {
-         // console.log(response);
-          //this.goBack();
+          console.log(response);
         });
     }
 

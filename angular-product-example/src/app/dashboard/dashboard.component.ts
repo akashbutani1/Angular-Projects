@@ -1,8 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
-import { CategoryListComponent } from '../category-list/category-list.component';
-import { CategoryService } from '../category.service';
-import { CategoryModel } from '../CategoryModel';
 import { ProductListComponent } from '../product-list/product-list.component';
 
 @Component({
@@ -18,17 +15,13 @@ export class DashboardComponent implements OnInit {
   }
 
   @ViewChild(ProductListComponent) private productComponent: ProductListComponent;
-  //@ViewChild(CategoryListComponent) private categoryComponent: CategoryListComponent;
-  onTabChanged(event: MatTabChangeEvent) 
-  {
+  onTabChanged(event: MatTabChangeEvent) {
     debugger;
-    if(event.index == 0)
-    {
-        this.productComponent.ngAfterViewInit();
+    if (event.index == 0) {
+      this.productComponent.ngAfterViewInit();
     }
-    else
-    {
-       // this.categoryComponent.ngAfterViewInit();
+    else {
+      //do nothing
     }
   }
 

@@ -1,75 +1,96 @@
 <h1 class="heading">
-    Events List (Upcoming Events)</h1>
+    Events List
+</h1>
+
 <div class="row" style="margin-left: 18px;">
 
     <div class="col-md-10">
         <mat-form-field appearance="outline">
             <mat-label>Search Value</mat-label>
             <input matInput #inputSearch placeholder="Search Subject" autocomplete="off">
-
         </mat-form-field>
 
         <button mat-raised-button color="accent" (click)='searchFilter()' class="btn-search">
           <mat-icon [inline]="true">search</mat-icon>
         </button>
-
     </div>
 
 </div>
+
+<div *ngIf="isLoading" class="example-loading-shade">
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+</div>
+
 <div class="col-md-10 table-container">
-    <table mat-table matSort [dataSource]="dataEvents" matSortActive="StartTime" matSortDisableClear matSortDirection="asc" class="mat-elevation-z8">
+    <table mat-table matSort [dataSource]="dataEvents" matSortActive="Id" matSortDisableClear matSortDirection="asc" class="mat-elevation-z8">
 
         <!-- id Column -->
         <ng-container matColumnDef="Id">
-
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                No.
+            </th>
             <td mat-cell *matCellDef="let element" routerLink="/calender">
                 {{element.id}}
             </td>
-
         </ng-container>
 
         <!-- Event Name Column -->
         <ng-container matColumnDef="Subject">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Subject </th>
-            <td mat-cell *matCellDef="let element" (click)="routeToCalendar(element.isPastEvent)"> {{element.subject}}</td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Subject
+            </th>
+            <td mat-cell *matCellDef="let element" (click)="routeToCalendar(element.isPastEvent)">
+                {{element.subject}}
+            </td>
         </ng-container>
 
         <!-- Event STart Date Column -->
         <ng-container matColumnDef="StartTime">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Event Start Date </th>
-            <td mat-cell *matCellDef="let element" (click)="routeToCalendar(element.isPastEvent)"> {{element.startTime | date:'medium'}}</td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Event Start Date
+            </th>
+            <td mat-cell *matCellDef="let element" (click)="routeToCalendar(element.isPastEvent)">
+                {{element.startTime | date:'medium'}}
+            </td>
         </ng-container>
 
         <!-- Event End Date Column -->
         <ng-container matColumnDef="EndTime">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Event End Date </th>
-            <td mat-cell *matCellDef="let element" (click)="routeToCalendar(element.isPastEvent)"> {{element.endTime | date:'medium'}}</td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Event End Date
+            </th>
+            <td mat-cell *matCellDef="let element" (click)="routeToCalendar(element.isPastEvent)">
+                {{element.endTime | date:'medium'}}
+            </td>
         </ng-container>
 
         <!-- Action column -->
         <ng-container matColumnDef="action">
-            <th mat-header-cell *matHeaderCellDef> Action </th>
+            <th mat-header-cell *matHeaderCellDef>
+                Action
+                <button mat-raised-button color="accent" (click)="addNew()" class="btn-add">
+                    <mat-icon>add</mat-icon>
+                 </button>
+            </th>
             <td mat-cell *matCellDef="let element">
                 <button mat-raised-button color="primary" class="btn-delete" (click)='element.isPastEvent && confirmDelete(element)' disableRipple [disabled]="!element.isPastEvent">
                      <mat-icon>delete_outline</mat-icon>
                 </button>
                 <button mat-raised-button color="primary" class="btn-delete" (click)='element.isPastEvent && editData(element.id)' disableRipple [disabled]="!element.isPastEvent">
-                    <mat-icon>add</mat-icon>
+                    <mat-icon>create</mat-icon>
                </button>
-                <button mat-raised-button color="accent" (click)="addNew()" class="btn-add">
-                <mat-icon>add</mat-icon>
-              </button>
-
             </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'past': !row.isPastEvent}">
-        </tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'past': !row.isPastEvent}"></tr>
 
         <tr class="mat-row" *matNoDataRow>
-            <td class="mat-cell" colspan="8"><span style="color: red;">No Data matching the Search Value</span></td>
+            <td class="mat-cell" colspan="8">
+                <span style="color: red;">
+                    No Data matching the Search Value
+                </span>
+            </td>
         </tr>
 
     </table>

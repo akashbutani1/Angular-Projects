@@ -15,3 +15,21 @@
     margin-top: 30px;
     margin: 0 auto;
 }
+
+.custom-event-editor .e-textlabel {
+    padding-right: 15px;
+    text-align: right;
+}
+
+.custom-event-editor td {
+    padding: 7px;
+    padding-right: 16px;
+}
+
+.e-disablecell-style {
+    background-color: grey !important;
+}
+
+.calendar-container {
+    margin-top: 30px;
+}

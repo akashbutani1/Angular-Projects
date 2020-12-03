@@ -1,9 +1,16 @@
-<h1 mat-dialog-title *ngIf="isAddMode" style="margin-left: 25px;color: #FF4081;font-weight: bold;font-size: 30px;">Add Event
-    <button type="button" (click)="onNoClick()" class="btn-back"><mat-icon>cancel</mat-icon></button>
+<h1 mat-dialog-title *ngIf="isAddMode" class="heading">
+    Add Event
+    <button type="button" (click)="onNoClick()" class="btn-back">
+        <mat-icon>cancel</mat-icon>
+    </button>
 </h1>
-<h1 mat-dialog-title *ngIf="!isAddMode" style="margin-left: 25px;color: #FF4081;font-weight: bold;font-size: 30px;">Edit Event
-    <button type="button" (click)="onNoClick()" class="btn-back"><mat-icon>cancel</mat-icon></button>
+<h1 mat-dialog-title *ngIf="!isAddMode" class="heading">
+    Edit Event
+    <button type="button" (click)="onNoClick()" class="btn-back">
+        <mat-icon>cancel</mat-icon>
+    </button>
 </h1>
+
 <div>
     <form mat-dialog-content [formGroup]="eventForm" (ngSubmit)="onSubmit()">
         <div class="row form-container">
@@ -62,7 +69,7 @@
             <div class="col-md-6">
                 <mat-form-field appearance="outline" style="width: 85% !important;">
                     <mat-label>Choose Start Time</mat-label>
-                    <input matInput [(ngModel)]="value1" placeholder="Enter Event Start Time" [ngxTimepicker]="start" formControlName="startTime">
+                    <input matInput [(ngModel)]="startTimeValue" placeholder="Enter Event Start Time" [ngxTimepicker]="start" formControlName="startTime">
                     <ngx-material-timepicker #start></ngx-material-timepicker>
                     <mat-error *ngIf="eventForm.get('startTime').hasError('required')">
                         Event Start Time is required
@@ -72,7 +79,7 @@
             <div class="col-md-6">
                 <mat-form-field appearance="outline" style="width: 85% !important;">
                     <mat-label>Choose End Time</mat-label>
-                    <input matInput [(ngModel)]="value2" placeholder="Enter Event End Time" [ngxTimepicker]="end" formControlName="EndTime">
+                    <input matInput [(ngModel)]="endTimeValue" placeholder="Enter Event End Time" [ngxTimepicker]="end" formControlName="EndTime">
                     <ngx-material-timepicker #end></ngx-material-timepicker>
                     <mat-error *ngIf="eventForm.get('EndTime').hasError('required')">
                         Event End Time is required
@@ -81,9 +88,10 @@
             </div>
 
             <mat-dialog-actions align="start">
-                <button mat-raised-button [mat-dialog-close]="true" color="accent" [disabled]="!eventForm.valid" type="submit">Save Details</button>
+                <button mat-raised-button [mat-dialog-close]="true" color="accent" [disabled]="!eventForm.valid" type="submit">
+                    Save Details
+                </button>
             </mat-dialog-actions>
         </div>
     </form>
-
 </div>

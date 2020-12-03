@@ -1,11 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { CategoryService } from '../category.service';
 import { CategoryModel } from '../CategoryModel';
 import { ProductModel } from '../ProductModel';
-import { Location } from '@angular/common';
 import { ProductService } from '../product.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -39,7 +37,6 @@ export class AddEditProductComponent implements OnInit {
     this.categoryService.getCategoriesFromAPI(
       '', '', 0, '').subscribe(
         data => {
-          //console.log(data);
           this.categoryData = data.items;
         }
       );
@@ -60,7 +57,6 @@ export class AddEditProductComponent implements OnInit {
       this.productService.getProductById(this.id)
         .pipe(first())
         .subscribe(x => {
-          //console.log(x);
 
           this.productForm.patchValue({
             productName: x.productName,
@@ -77,8 +73,6 @@ export class AddEditProductComponent implements OnInit {
 
   onSubmit() {
     debugger;
-
-
 
     if (this.isAddMode) {
       const registerObject: ProductModel = {
@@ -102,7 +96,6 @@ export class AddEditProductComponent implements OnInit {
       this.productService.updateProduct(registerObject)
         .subscribe(response => {
           console.log(response);
-          // this.goBack();
         });
     }
 
@@ -111,7 +104,6 @@ export class AddEditProductComponent implements OnInit {
   changeSelect(data : any) {
     debugger;
     this.selectedValue = this.categoryData[data].categoryName;
-
   }
 
 }

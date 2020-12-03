@@ -58,12 +58,25 @@ import { AddEditEventComponent } from './add-edit-event/add-edit-event.component
     FormsModule,
     ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
     MatButtonModule,
-    MatIconModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatPaginatorModule, MatSortModule, MatTabsModule
-    , MatDialogModule, MatToolbarModule, MatSelectModule, MatSnackBarModule,
-    ScheduleModule, RecurrenceEditorModule,
-    MatProgressSpinnerModule, MatDatepickerModule, NgxMaterialTimepickerModule, MatNativeDateModule
+    MatIconModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatTabsModule,
+    MatDialogModule,
+    MatToolbarModule,
+    MatSelectModule,
+    MatSnackBarModule,
+    ScheduleModule,
+    RecurrenceEditorModule,
+    MatProgressSpinnerModule,
+    MatDatepickerModule,
+    NgxMaterialTimepickerModule,
+    MatNativeDateModule
   ],
-  providers: [DayService, WeekService, MonthAgendaService, MonthService, WorkWeekService,MatDatepickerModule],
+  providers: [DayService, WeekService, MonthAgendaService, MonthService, WorkWeekService, MatDatepickerModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

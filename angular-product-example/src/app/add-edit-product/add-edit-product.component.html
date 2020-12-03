@@ -1,7 +1,16 @@
-<h1 mat-dialog-title *ngIf="isAddMode" style="margin-left: 30px;margin-top:0px;font-weight: bold;color:#FF4081;">Add Product
-    <button type="button" (click)="onNoClick()" class="btn-back"><mat-icon [inline]="true">cancel</mat-icon></button></h1>
-<h1 mat-dialog-title *ngIf="!isAddMode" style="margin-left: 30px;margin-top:0px;font-weight: bold;color:#FF4081;">Edit Product
-    <button type="button" (click)="onNoClick()" class="btn-back"><mat-icon [inline]="true">cancel</mat-icon></button></h1>
+<h1 mat-dialog-title *ngIf="isAddMode" class="heading">
+    Add Product
+    <button type="button" (click)="onNoClick()" class="btn-back">
+        <mat-icon [inline]="true">cancel</mat-icon>
+    </button>
+</h1>
+<h1 mat-dialog-title *ngIf="!isAddMode" class="heading">
+    Edit Product
+    <button type="button" (click)="onNoClick()" class="btn-back">
+        <mat-icon [inline]="true">cancel</mat-icon>
+    </button>
+</h1>
+
 <div>
 
     <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="mat-dialog-content">
@@ -54,10 +63,9 @@
         <div mat-dialog-actions>
             <div class="btn-details">
                 <button mat-raised-button color="accent" [disabled]="!productForm.valid" type="submit" [mat-dialog-close]=1>
-        Save <mat-icon>save</mat-icon>
-      </button>
+                    Save <mat-icon>save</mat-icon>
+                </button>
             </div>
-
         </div>
     </form>
 </div>

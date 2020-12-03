@@ -21,8 +21,8 @@ export class AddEditEventComponent implements OnInit {
   id: number;
   isAddMode: boolean;
   eventForm: FormGroup;
-  value1:string;
-  value2:string;
+  startTimeValue: string;
+  endTimeValue: string;
 
 
   ngOnInit(): void {
@@ -36,8 +36,6 @@ export class AddEditEventComponent implements OnInit {
       endDate: ['', [Validators.required]],
       startTime: ['', [Validators.required]],
       EndTime: ['', [Validators.required]],
-
-
     });
 
     if (String(this.id) == "undefined" || this.id == 0) {
@@ -49,25 +47,22 @@ export class AddEditEventComponent implements OnInit {
       this.eventService.getEventById(this.id)
         .pipe(first())
         .subscribe(x => {
-            var dt = new Date(x.startTime);
-            var h = dt.getHours();
-            var m = dt.getMinutes();
-            this.value1 = (h > 12) ? (h-12 + ':' + m +' PM') : (h + ':' + m +' AM');
-            console.log(this.value1);
 
-            var dt1 = new Date(x.endTime);
-            var h1 = dt1.getHours();
-            var m1= dt.getMinutes();
-            this.value2 = (h1 > 12) ? (h1-12 + ':' + m1 +' PM') : (h1 + ':' + m1 +' AM');
-            console.log(this.value2);
-            
-           
-            
+          var dt = new Date(x.startTime);
+          var h = dt.getHours();
+          var m = dt.getMinutes();
+          this.startTimeValue = (h > 12) ? (h - 12 + ':' + m + ' PM') : (h + ':' + m + ' AM');
+
+          var dt1 = new Date(x.endTime);
+          var h1 = dt1.getHours();
+          var m1 = dt1.getMinutes();
+          this.endTimeValue = (h1 > 12) ? (h1 - 12 + ':' + m1 + ' PM') : (h1 + ':' + m1 + ' AM');
+
           this.eventForm.patchValue({
             subject: x.subject,
-            description : x.description,
-            startDate : new Date(x.startTime),
-            endDate : new Date(x.endTime),
+            description: x.description,
+            startDate: new Date(x.startTime),
+            endDate: new Date(x.endTime),
           });
         });
     }
@@ -77,51 +72,44 @@ export class AddEditEventComponent implements OnInit {
   }
 
   onSubmit() {
-    debugger;
-    
-    var s = this.eventForm.controls.startTime.value;
-    var e =this.eventForm.controls.EndTime.value;
 
-    var sss = s.toString().split(':');
-    var ssh = sss[1].split(' '); //01
-    var eee = e.toString().split(':');//01
-    var eeh = eee[1].split(' ');
+    var starttime = this.eventForm.controls.startTime.value;
+    var endtime = this.eventForm.controls.EndTime.value;
+
+    var starthour = starttime.toString().split(':');
+    var startmin = starthour[1].split(' ');
+    var endhour = endtime.toString().split(':');
+    var endmin = endhour[1].split(' ');
 
 
     var startdate = new Date(this.eventForm.controls.startDate.value);
     var enddate = new Date(this.eventForm.controls.endDate.value);
-    startdate.setHours(sss[0],ssh[0],0,0);
-    enddate.setHours(eee[0],eeh[0],0,0);
-
-    console.log(startdate);
-    
+    startdate.setHours(starthour[0], startmin[0], 0, 0);
+    enddate.setHours(endhour[0], endmin[0], 0, 0);
 
     const registerObject: EventModel = {
-      
+
       id: this.data,
       subject: this.eventForm.controls.subject.value,
       description: this.eventForm.controls.description.value,
-
       startTime: startdate,
       endTime: enddate,
       isPastEvent: null
 
     };
 
-    if(this.isAddMode){
+    if (this.isAddMode) {
       this.eventService.addEvent(registerObject)
-      .subscribe(response => {
-        //console.log(response);
-        
-      });
+        .subscribe(response => {
+          console.log(response);
+        });
     }
-    else{
+    else {
       this.eventService.updateEvent(registerObject)
-      .subscribe(response => {
-        console.log(response);
-        
-      });
+        .subscribe(response => {
+          console.log(response);
+        });
     }
-    
+
   }
 }

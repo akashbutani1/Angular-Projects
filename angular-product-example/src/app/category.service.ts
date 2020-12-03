@@ -11,37 +11,35 @@ export class CategoryService {
 
   constructor(private http: HttpClient) { }
 
-  requestURL: string = 'api/tblCategories';
+  requestURL: string = 'https://localhost:44385/api/TblCategories';
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
 
   //get products from API
   getCategoriesFromAPI(sort:string, order:string, page:number, query:string): Observable<any>{
     
-
-    return this.http.get<any>('https://localhost:44385/api/TblCategories?SearchQuery='+query+'&Sort='+sort+'&Order='+order+'&PageNumber='+(page+1)).pipe(
-      
-    );
+    return this.http.get<any>(this.requestURL + '?SearchQuery='+query+'&Sort='+sort+'&Order='+order+'&PageNumber='+(page+1)).pipe();
   }
 
   //get categories by Id
   getCategoriesById(id: number): Observable<CategoryModel> {
-    const url = `https://localhost:44385/api/TblCategories/${id}`;
+    const url = this.requestURL + `/${id}`;
     return this.http.get<CategoryModel>(url).pipe();
   }
 
    //Add Category 
    addCategory(userData : CategoryModel): Observable<any> {
     debugger;
-    return this.http.post<CategoryModel>("https://localhost:44385/api/TblCategories",userData,this.httpOptions).pipe();
+    return this.http.post<CategoryModel>(this.requestURL ,userData,this.httpOptions).pipe();
   }
 
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
+  
 
   /** PUT: update the category on the server */
   updateCategory(userUpdatedData: CategoryModel): Observable<CategoryModel> {
     debugger;
-    return this.http.put<CategoryModel>(`https://localhost:44385/api/TblCategories/${userUpdatedData.id}`,userUpdatedData, this.httpOptions).pipe(
+    return this.http.put<CategoryModel>(this.requestURL + `/${userUpdatedData.id}`,userUpdatedData, this.httpOptions).pipe(
       map(data => data));
   }
 
@@ -49,7 +47,7 @@ export class CategoryService {
   
   deleteCategory(category: CategoryModel | number): Observable<CategoryModel> {
     const id = typeof category === 'number' ? category : category.id;
-    const url = "https://localhost:44385/api/TblCategories/"+id;
+    const url = this.requestURL +id;
     return this.http.delete<CategoryModel>(url, this.httpOptions).pipe(
     );
 

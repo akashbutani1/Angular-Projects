@@ -53,3 +53,10 @@ button:disabled {
     left: 800px;
     background: white;
 }
+
+.add-edit-heading {
+    margin-left: 30px;
+    margin-top: 0px;
+    font-weight: bold;
+    color: #FF4081;
+}

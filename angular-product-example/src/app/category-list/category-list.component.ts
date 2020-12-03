@@ -1,10 +1,9 @@
 import { Location } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, EventEmitter, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
-import { Router } from '@angular/router';
 import { merge } from 'rxjs';
 import { map, startWith, switchMap } from 'rxjs/operators';
 import { AddEditCategoryComponent } from '../add-edit-category/add-edit-category.component';
@@ -50,18 +49,12 @@ export class CategoryListComponent implements AfterViewInit {
             this.sort.active, this.sort.direction, this.paginator.pageIndex, this.filterValue);
         }),
 
-        map(data => {
-          debugger;
-          
+        map(data => {          
           this.resultsLength = data.totalCount;
           return data.items;
         })
-      ).subscribe(data => {
-        debugger;
-        
-        this.dataCategory = data;
-       // console.log(this.dataCategory);
-        
+      ).subscribe(data => {        
+        this.dataCategory = data;        
       });
   }
 
@@ -138,8 +131,6 @@ export class CategoryListComponent implements AfterViewInit {
     this.categoryService.getCategoriesFromAPI(
       this.sort.active, this.sort.direction, this.paginator.pageIndex, this.filterValue).subscribe(
         data => {
-
-          
           this.resultsLength = data.totalCount;
           this.dataCategory = data.items;
         }
@@ -150,8 +141,9 @@ export class CategoryListComponent implements AfterViewInit {
   delete(category: CategoryModel): void {
 
     setTimeout(() => {
-      this.categoryService.deleteCategory(category).subscribe(res => { //console.log(res)
-        ;
+      this.categoryService.deleteCategory(category).subscribe(
+        res => { 
+          console.log(res);
       });
     }, 1000);
   }
