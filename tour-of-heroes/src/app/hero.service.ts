@@ -18,7 +18,7 @@ export class HeroService {
 
   //Get Data From API Without Parameter(Dasahboard)
   getHeroesAngular(): Observable<any>{
-    debugger;
+    
 
     return this.http.get<any>('https://localhost:44373/api/tblHeroes?SearchQuery=&Sort=&Order=&PageNumber=1').pipe(
       tap(_ => this.log('fetched heroes')),
@@ -28,7 +28,7 @@ export class HeroService {
 
   //Get Data From API With Parameter(Heroes)
   getHeroesFromWebAPI(sort:string, order:string, page:number, firstName:string): Observable<any>{
-    debugger;
+    
 
     return this.http.get<any>('https://localhost:44373/api/tblHeroes?SearchQuery='+firstName+'&Sort='+sort+'&Order='+order+'&PageNumber='+(page+1)).pipe(
       tap(_ => this.log('fetched heroes')),
@@ -38,7 +38,7 @@ export class HeroService {
 
   //Get Data From API With search Parameter(Dashboard)
   searchHeroesDashboard(searchValue: string): Observable<any>{
-    debugger;
+    
 
     return this.http.get<any>('https://localhost:44373/api/tblHeroes?SearchQuery='+searchValue+'&Sort=&Order=&PageNumber=1').pipe(
       tap(_ => this.log('fetched heroes')),
@@ -64,7 +64,7 @@ export class HeroService {
 
   /** PUT: update the hero on the server */
   updateHero(userUpdatedData: HeroAPI): Observable<HeroAPI> {
-    debugger;
+    
     return this.http.put<HeroAPI>(`https://localhost:44373/api/tblHeroes/${userUpdatedData.id}`,userUpdatedData, this.httpOptions).pipe(
       map(data => data),
       tap(_ => this.log(`updated hero id = ${userUpdatedData.id}`)),
@@ -78,7 +78,7 @@ export class HeroService {
 
   //Add hero in Heroes Component
   addHero(userData : HeroAPI): Observable<any> {
-    debugger;
+    
     return this.http.post<HeroAPI>("https://localhost:44373/api/tblHeroes",userData,this.httpOptions).pipe(
       tap(_ => this.log(`Hero Added Successfully`)),
       catchError(this.handleError<any>('Add Hero'))

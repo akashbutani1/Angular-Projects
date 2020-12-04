@@ -1,11 +1,11 @@
 import { Location } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, EventEmitter, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, ViewChild, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { merge } from 'rxjs';
-import { map, startWith, switchMap } from 'rxjs/operators';
+import { first, map, startWith, switchMap } from 'rxjs/operators';
 import { AddEditCategoryComponent } from '../add-edit-category/add-edit-category.component';
 import { CategoryService } from '../category.service';
 import { CategoryModel } from '../CategoryModel';
@@ -23,7 +23,10 @@ export class CategoryListComponent implements AfterViewInit {
   dataCategory: CategoryModel[] = [];
   filterValue: string;
   alertMessage: string = "There Is No Data For Search Value : ";
-  
+
+  @Output()
+  notify: EventEmitter<string> = new EventEmitter<string>();
+
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -44,24 +47,24 @@ export class CategoryListComponent implements AfterViewInit {
       .pipe(
         startWith({}),
         switchMap(() => {
-          
+
           return this.categoryService.getCategoriesFromAPI(
             this.sort.active, this.sort.direction, this.paginator.pageIndex, this.filterValue);
         }),
 
-        map(data => {          
+        map(data => {
           this.resultsLength = data.totalCount;
           return data.items;
         })
-      ).subscribe(data => {        
-        this.dataCategory = data;        
+      ).subscribe(data => {
+        this.dataCategory = data;
       });
   }
 
 
   //search filter
   searchFilter() {
-    debugger;
+
     this.filterValue = this.searchValue.nativeElement.value;
     this.filter.emit();
     this.searchValue.nativeElement.value = "";
@@ -90,46 +93,38 @@ export class CategoryListComponent implements AfterViewInit {
 
   }
 
-  //add data
-  addNew() {
-    const dialogRef = this.dialog.open(AddEditCategoryComponent, {
-      data: { issue: CategoryModel }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 1) {
-        // After dialog is closed we're doing frontend updates
-        this.refreshTable();
-        this._snackbar.open('Data Added Successfully !!', 'Close', {
-          duration: 5000
-        });
-      }
-    });
-  }
-
-  //edit data
-  editData(id: number, category_name: string) {
+  //add edit data
+  addEditData(id: number, category_name: string) {
     const dialogRef = this.dialog.open(AddEditCategoryComponent, {
       data: { id: id, categoryName: category_name }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result === 1) {
-        // After dialog is closed we're doing frontend updates
-        this.refreshTable();
-        this._snackbar.open('Data Edited Successfully ', 'Close', {
-          duration: 5000
-        });
+      if(result === 1){
+        if (id == 0) {
+          this.passData('add');
+        }
+        else {
+          this.passData('edit');
+        }
       }
+      
+      // After dialog is closed we're doing frontend updates
+      
+      this.refreshTable();
+
     });
   }
 
 
+
   //refresh Table
   refreshTable() {
-    debugger;
+
     this.categoryService.getCategoriesFromAPI(
-      this.sort.active, this.sort.direction, this.paginator.pageIndex, this.filterValue).subscribe(
+      this.sort.active, this.sort.direction, this.paginator.pageIndex, this.filterValue)
+      .pipe()
+      .subscribe(
         data => {
           this.resultsLength = data.totalCount;
           this.dataCategory = data.items;
@@ -141,15 +136,16 @@ export class CategoryListComponent implements AfterViewInit {
   delete(category: CategoryModel): void {
 
     setTimeout(() => {
-      this.categoryService.deleteCategory(category).subscribe(
-        res => { 
-          console.log(res);
-      });
+      this.categoryService.deleteCategory(category);
     }, 1000);
   }
 
   goBack(): void {
     this.location.back();
+  }
+
+  passData(data: string) {
+    this.notify.emit(data);
   }
 
 

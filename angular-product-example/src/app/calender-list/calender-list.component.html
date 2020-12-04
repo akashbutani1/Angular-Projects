@@ -68,7 +68,7 @@
         <ng-container matColumnDef="action">
             <th mat-header-cell *matHeaderCellDef>
                 Action
-                <button mat-raised-button color="accent" (click)="addNew()" class="btn-add">
+                <button mat-raised-button color="accent" (click)="addEditData(0)" class="btn-add">
                     <mat-icon>add</mat-icon>
                  </button>
             </th>
@@ -76,7 +76,7 @@
                 <button mat-raised-button color="primary" class="btn-delete" (click)='element.isPastEvent && confirmDelete(element)' disableRipple [disabled]="!element.isPastEvent">
                      <mat-icon>delete_outline</mat-icon>
                 </button>
-                <button mat-raised-button color="primary" class="btn-delete" (click)='element.isPastEvent && editData(element.id)' disableRipple [disabled]="!element.isPastEvent">
+                <button mat-raised-button color="primary" class="btn-delete" (click)='element.isPastEvent && addEditData(element.id)' disableRipple [disabled]="!element.isPastEvent">
                     <mat-icon>create</mat-icon>
                </button>
             </td>

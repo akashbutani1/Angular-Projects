@@ -36,6 +36,6 @@ export class AddEditEventComponent implements OnInit {
   }
 
   onSubmit(){
-    console.log(this.eventForm.value);
+    //console.log(this.eventForm.value);
   }
 }

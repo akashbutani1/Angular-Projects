@@ -28,7 +28,7 @@ export class HeroDetailComponent implements OnInit {
 
 
   ngOnInit(): void {
-    debugger;
+    
     const id = +this.route.snapshot.paramMap.get('id');
 
     this.updateHeroForm = this.formBuilder.group({
@@ -43,7 +43,7 @@ export class HeroDetailComponent implements OnInit {
       this.heroService.getHero(id)
         .pipe(first())
         .subscribe(x => {
-          console.log(x);
+          //(x);
 
           this.updateHeroForm.patchValue({
             heroFirstName: x.hero_name,
@@ -65,7 +65,7 @@ export class HeroDetailComponent implements OnInit {
   }
 
   onSubmit() {
-    debugger;
+    
 
     const registerObject: HeroAPI = {
       id: +this.route.snapshot.paramMap.get('id'),
@@ -76,14 +76,14 @@ export class HeroDetailComponent implements OnInit {
 
     if (this.isAddMode) {
       this.heroService.addHero(registerObject).subscribe(res => {
-        console.log(res);
+        //console.log(res);
         this.goBack();
       });
     }
     else {
       this.heroService.updateHero(registerObject)
         .subscribe(response => {
-          console.log(response);
+         // console.log(response);
           this.goBack();
         });
     }

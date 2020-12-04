@@ -1,10 +1,10 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter,ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { merge } from 'rxjs';
-import { map, startWith, switchMap } from 'rxjs/operators';
+import { first, map, startWith, switchMap } from 'rxjs/operators';
 import { AddEditProductComponent } from '../add-edit-product/add-edit-product.component';
 import { CategoryService } from '../category.service';
 import { CategoryModel } from '../CategoryModel';
@@ -27,6 +27,11 @@ export class ProductListComponent implements AfterViewInit {
   selectedValue: number = 0;
   alertMessage: string = "There Is No Data For Search Value : ";
 
+  @Input()
+  sendData: string;
+
+
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('inputSearch') searchValue: ElementRef;
@@ -39,34 +44,43 @@ export class ProductListComponent implements AfterViewInit {
     private _snackbar: MatSnackBar
   ) { }
 
+  ngOnInit(): void {
+    
+    if (this.sendData == 'add') {
+      this.getCategory();
+      this.sendData = '';
+    }
+    else if(this.sendData == 'edit'){
+      this.filter.emit();
+      this.getCategory();
+      this.sendData = '';
+    }
+    else{
+      this.getCategory();
+    }
+  }
 
   ngAfterViewInit() {
 
-    debugger;
+
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
     merge(this.sort.sortChange, this.paginator.page, this.filter)
       .pipe(
         startWith({}),
         switchMap(() => {
-          //getting categories data for select form field
-          this.categoryService.getCategoriesFromAPI(
-            '', '', 0, '').subscribe(
-              data => {
-                this.dataCategory = data.items;
-              }
-            );
+          
+          
           return this.productService.getProductsFromAPI(
-            this.sort.active, this.sort.direction, this.paginator.pageIndex, this.filterValue,this.selectedValue);
+            this.sort.active, this.sort.direction, this.paginator.pageIndex, this.filterValue, this.selectedValue);
         }),
 
         map(data => {
-          debugger;
-          console.log(data);
+
           this.resultsLength = data.totalCount;
           return data.items;
         })
       ).subscribe(data => {
-        debugger;
+
         this.dataProducts = data;
       });
   }
@@ -74,56 +88,32 @@ export class ProductListComponent implements AfterViewInit {
 
   //search filter
   searchFilter() {
-    debugger;
-    this.filterValue = this.searchValue.nativeElement.value;    
+
+    this.filterValue = this.searchValue.nativeElement.value;
     this.filter.emit();
     this.searchValue.nativeElement.value = "";
-    
+
   }
 
-  //add data
-  addNew() {
-    const dialogRef = this.dialog.open(AddEditProductComponent, {
-      data: { issue: ProductModel }
-    });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 1) {
-        // After dialog is closed we're doing frontend updates
-        this.refreshTable();
-        setTimeout(() => {
-          this._snackbar.open('Data Added Successfully !!', 'Close', {
-            duration: 4000
-          });
-        }, 2000);
-        
-      }
-    });
-  }
 
   //edit data
-  editData(id: number, product_name:string,product_price:number,category_name:string) {
+  addEditData(id: number, product_name: string, product_price: number, category_name: string) {
     const dialogRef = this.dialog.open(AddEditProductComponent, {
-      data: { id: id, productName: product_name,productPrice: product_price,categoryName: category_name }
+      data: { id: id, productName: product_name, productPrice: product_price, categoryName: category_name }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
         // After dialog is closed we're doing frontend updates
         this.refreshTable();
-        setTimeout(() => {
-          this._snackbar.open('Data Edited Successfully : '+id, 'Close', {
-            duration: 5000
-          });
-        }, 3000);
-        
+
       }
     });
   }
 
   //delete confirm dialog box 
   confirmDelete(product: ProductModel) {
-    debugger;
     const confirmDialog = this.dialog.open(ConfirmDialogComponent, {
       data: {
         title: 'Delete Product',
@@ -132,14 +122,15 @@ export class ProductListComponent implements AfterViewInit {
     });
     confirmDialog.afterClosed().subscribe(result => {
       if (result === true) {
-        debugger;
+
         setTimeout(() => {
-          this.productService.deleteProduct(product.id).subscribe(res => { console.log(res); });
+          this.productService.deleteProduct(product.id);
+            
         }, 1000);
 
         this.dataProducts = this.dataProducts.filter(h => h !== product);
-        this.resultsLength = this.resultsLength - 1; 
-        this._snackbar.open('Data Deleted Successfully : '+product.id, 'Close', {
+        this.resultsLength = this.resultsLength - 1;
+        this._snackbar.open('Data Deleted Successfully : ' + product.id, 'Close', {
           duration: 5000
         });
       }
@@ -148,18 +139,30 @@ export class ProductListComponent implements AfterViewInit {
   }
 
 
-  changeSelect(data : any) {
-    debugger;
+  changeSelect(data: any) {
+
     this.selectedValue = this.dataCategory[data].id;
-    
+
   }
 
   //refresh Table
   refreshTable() {
-    debugger;
+
     this.selectedValue = 0;
     this.filterValue = "";
     this.filter.emit();
+  }
+
+  //get category
+  getCategory() {
+    this.categoryService.getCategoriesFromAPI(
+      '', '', 0, '')
+      .pipe(first())
+      .subscribe(
+        data => {
+          this.dataCategory = data.items;
+        }
+      );
   }
 
 

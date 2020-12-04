@@ -30,7 +30,7 @@ export class CategoryService {
 
    //Add Category 
    addCategory(userData : CategoryModel): Observable<any> {
-    debugger;
+    
     return this.http.post<CategoryModel>(this.requestURL ,userData,this.httpOptions).pipe();
   }
 
@@ -38,7 +38,7 @@ export class CategoryService {
 
   /** PUT: update the category on the server */
   updateCategory(userUpdatedData: CategoryModel): Observable<CategoryModel> {
-    debugger;
+    
     return this.http.put<CategoryModel>(this.requestURL + `/${userUpdatedData.id}`,userUpdatedData, this.httpOptions).pipe(
       map(data => data));
   }

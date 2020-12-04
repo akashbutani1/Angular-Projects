@@ -1,18 +1,12 @@
-<h1 mat-dialog-title *ngIf="isAddMode" class="add-edit-heading">
-    Add Category
-    <button type="button" (click)="onNoClick()" class="btn-back">
-        <mat-icon>cancel</mat-icon>
-    </button>
-</h1>
-<h1 mat-dialog-title *ngIf="!isAddMode" class="add-edit-heading">
-    Edit Category
+<h1 mat-dialog-title class="add-edit-heading">
+    {{isAddMode === true ? 'Add Category' : 'Edit Category'}}
     <button type="button" (click)="onNoClick()" class="btn-back">
         <mat-icon>cancel</mat-icon>
     </button>
 </h1>
 <div>
 
-    <form class="mat-dialog-content" [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+    <form class="mat-dialog-content" [formGroup]="categoryForm">
         <div class="row form-container">
 
             <div class="col-md-2">
@@ -36,7 +30,7 @@
 
         <div mat-dialog-actions>
             <div class="btn-details">
-                <button mat-raised-button color="accent" [mat-dialog-close]="1" [disabled]="!categoryForm.valid" type="submit">
+                <button mat-raised-button color="accent" [disabled]="!categoryForm.valid" (click)="onSubmit()" type="submit">
                     Save 
                     <mat-icon>save</mat-icon>
                 </button>

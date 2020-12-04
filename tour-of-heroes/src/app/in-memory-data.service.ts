@@ -12,7 +12,7 @@
 
   
 //   createDb() {
-//     debugger;
+//     
 //     const heroes = [
 //       { id: 11, name: 'Dr Nice', lastName: 'Hydrogen', nickName: 'H'},
 //       { id: 12, name: 'Narco', lastName: 'Helium', nickName: 'He'     },
@@ -34,7 +34,7 @@
   
 
 //   // getFinalHeroes(heroData: Hero[],sort: string, order: string, page: string, pagesize: string): Hero[]{
-//   //   debugger;
+//   //   
 //   //   return heroData;
 //   // }
 

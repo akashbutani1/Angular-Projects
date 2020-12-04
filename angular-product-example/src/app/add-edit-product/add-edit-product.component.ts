@@ -6,6 +6,7 @@ import { CategoryModel } from '../CategoryModel';
 import { ProductModel } from '../ProductModel';
 import { ProductService } from '../product.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-edit-product',
@@ -25,17 +26,20 @@ export class AddEditProductComponent implements OnInit {
     private categoryService: CategoryService,
     private formBuilder: FormBuilder,
     private productService: ProductService,
+    private _snackbar: MatSnackBar,
     public dialogRef: MatDialogRef<AddEditProductComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ProductModel
   ) { }
 
   ngOnInit(): void {
-    debugger;
+    
     this.id = this.data.id;
 
     //getting categories data for select form field
     this.categoryService.getCategoriesFromAPI(
-      '', '', 0, '').subscribe(
+      '', '', 0, '')
+      .pipe(first())
+      .subscribe(
         data => {
           this.categoryData = data.items;
         }
@@ -48,7 +52,7 @@ export class AddEditProductComponent implements OnInit {
 
     });
 
-    if (String(this.id) == "undefined") {
+    if (this.id == 0) {
       this.isAddMode = true;
 
     }
@@ -72,18 +76,29 @@ export class AddEditProductComponent implements OnInit {
   }
 
   onSubmit() {
-    debugger;
+    
 
     if (this.isAddMode) {
       const registerObject: ProductModel = {
-        id:0,
+        id: 0,
         productName: this.productForm.controls.productName.value,
         productPrice: parseInt(this.productForm.controls.productPrice.value),
         categoryId: parseInt(this.selectedValue)
       };
-      this.productService.addProduct(registerObject).subscribe(data => {  
-        console.log(data); 
-    
+      this.productService.addProduct(registerObject).pipe(first())
+      .subscribe(data => {
+        if (data.id != 0) {
+          this.dialogRef.close();
+          this._snackbar.open('Data Added Successfully !!', 'Close', {
+            duration: 4000
+          });
+        }
+        else {
+          this._snackbar.open('Duplicate Data Found !!', 'Close', {
+            duration: 4000
+          });
+        }
+
       });
     }
     else {
@@ -93,16 +108,26 @@ export class AddEditProductComponent implements OnInit {
         productPrice: parseInt(this.productForm.controls.productPrice.value),
         categoryId: parseInt(this.selectedValue)
       };
-      this.productService.updateProduct(registerObject)
+      this.productService.updateProduct(registerObject).pipe(first())
         .subscribe(response => {
-          console.log(response);
+          if(response != null){
+            this.dialogRef.close();
+            this._snackbar.open('Data Edited Successfully !!', 'Close', {
+              duration: 3000
+            });
+          }
+          else{
+            this._snackbar.open('Duplicate Data Found !!', 'Close', {
+              duration: 3000
+            });
+          }
         });
     }
 
   }
 
-  changeSelect(data : any) {
-    debugger;
+  changeSelect(data: any) {
+    
     this.selectedValue = this.categoryData[data].categoryName;
   }
 

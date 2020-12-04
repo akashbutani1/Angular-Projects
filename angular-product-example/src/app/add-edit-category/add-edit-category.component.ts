@@ -4,6 +4,7 @@ import { first } from 'rxjs/operators';
 import { CategoryService } from '../category.service';
 import { CategoryModel } from '../CategoryModel';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-edit-category',
@@ -16,10 +17,12 @@ export class AddEditCategoryComponent implements OnInit {
   id: number;
   isAddMode: boolean;
   categoryForm: FormGroup;
+  success: boolean = false;
 
   constructor(
     private categoryService: CategoryService,
     private formBuilder: FormBuilder,
+    private _snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<AddEditCategoryComponent>,
     @Inject(MAT_DIALOG_DATA) public data: CategoryModel
   ) { }
@@ -31,7 +34,7 @@ export class AddEditCategoryComponent implements OnInit {
       categoryName: ['', [Validators.required, Validators.minLength(3), Validators.pattern("^[a-zA-Z_ -]+$")]],
     });
 
-    if (String(this.id) == "undefined") { //typeof
+    if (this.id == 0) { 
       this.isAddMode = true;
     }
     else {
@@ -58,15 +61,38 @@ export class AddEditCategoryComponent implements OnInit {
     };
 
     if (this.isAddMode) {
-      this.categoryService.addCategory(registerObject).subscribe(
+      this.categoryService.addCategory(registerObject).pipe(first()).subscribe(
         res => {
-        console.log(res);
-      });
+         
+          if (res.id != 0) {
+            this.dialogRef.close(1);
+            this._snackBar.open('Data Added Successfully !!', 'Close', {
+              duration: 3000
+            });
+          }
+          else {
+            
+            this._snackBar.open('Duplicate Data Found !!', 'Close', {
+              duration: 3000
+            });
+          }
+        });
     }
     else {
-      this.categoryService.updateCategory(registerObject)
-        .subscribe(response => {
-          console.log(response);
+      this.categoryService.updateCategory(registerObject).pipe(first())
+        .subscribe(res => {
+          if (res != null) {
+            this.dialogRef.close(1);
+            this._snackBar.open('Data Edited Successfully !!', 'Close', {
+              duration: 3000
+            });
+          }
+          else {
+            
+            this._snackBar.open('Duplicate Data Found !!', 'Close', {
+              duration: 3000
+            });
+          }
         });
     }
 

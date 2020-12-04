@@ -9,20 +9,19 @@ import { ProductListComponent } from '../product-list/product-list.component';
 })
 export class DashboardComponent implements OnInit {
 
+  notifyData : string
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  @ViewChild(ProductListComponent) private productComponent: ProductListComponent;
-  onTabChanged(event: MatTabChangeEvent) {
-    debugger;
-    if (event.index == 0) {
-      this.productComponent.ngAfterViewInit();
-    }
-    else {
-      //do nothing
-    }
+  //data from category for add / edit is done
+  getData(data : string){
+    this.notifyData = data;
+    this.productComponent.ngOnInit();
   }
+
+  @ViewChild(ProductListComponent) private productComponent: ProductListComponent;
+  
 
 }

@@ -37,7 +37,7 @@ export class DashboardComponent implements OnInit {
 
 
   searchFilter() {
-    debugger;
+    
     this.noDataFound = false;
     this.heroService.searchHeroesDashboard(this.searchValue.nativeElement.value).subscribe(
       response => {

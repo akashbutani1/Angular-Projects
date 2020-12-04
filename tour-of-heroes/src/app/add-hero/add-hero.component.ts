@@ -41,7 +41,7 @@ export class AddHeroComponent implements OnInit {
   });
 
   onSubmit() {
-    debugger;
+    
     const registerObject: HeroAPI = {
       id: 0,
       hero_name: this.addHeroForm.controls.firstName.value,
@@ -49,7 +49,7 @@ export class AddHeroComponent implements OnInit {
       hero_nickname: this.addHeroForm.controls.nickName.value
       
     };
-    this.heroService.addHero(registerObject).subscribe(res => console.log(res));
+    this.heroService.addHero(registerObject).subscribe(res => //console.log(res));
     
     setTimeout(() => {
       this.router.navigate(['/heroes']);

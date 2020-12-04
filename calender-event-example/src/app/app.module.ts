@@ -21,6 +21,9 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AddEditEventComponent } from './add-edit-event/add-edit-event.component';
 import { ScheduleModule, RecurrenceEditorModule , DayService, WeekService, WorkWeekService , MonthService , MonthAgendaService} from '@syncfusion/ej2-angular-schedule';
+import { TestExampleComponent } from './test-example/test-example.component';
+import { ExampleComponent } from './example/example.component';
+import { Example2Component } from './example2/example2.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,interactionPlugin
@@ -30,7 +33,10 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
 @NgModule({
   declarations: [
     AppComponent,
-    AddEditEventComponent
+    AddEditEventComponent,
+    TestExampleComponent,
+    ExampleComponent,
+    Example2Component
   ],
   imports: [
     BrowserModule,

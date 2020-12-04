@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { first } from 'rxjs/operators';
 import { CalenderService } from '../calender.service';
 import { EventModel } from '../EventModel';
@@ -14,6 +15,7 @@ export class AddEditEventComponent implements OnInit {
 
   constructor(private eventService: CalenderService,
     private formBuilder: FormBuilder,
+    private snackbar: MatSnackBar,
     public dialogRef: MatDialogRef<AddEditEventComponent>,
     @Inject(MAT_DIALOG_DATA) public data: number) { }
 
@@ -26,7 +28,7 @@ export class AddEditEventComponent implements OnInit {
 
 
   ngOnInit(): void {
-    debugger;
+    
     this.id = this.data;
 
     this.eventForm = this.formBuilder.group({
@@ -38,7 +40,7 @@ export class AddEditEventComponent implements OnInit {
       EndTime: ['', [Validators.required]],
     });
 
-    if (String(this.id) == "undefined" || this.id == 0) {
+    if (this.id == 0) {
       this.isAddMode = true;
     }
     else {
@@ -99,15 +101,35 @@ export class AddEditEventComponent implements OnInit {
     };
 
     if (this.isAddMode) {
-      this.eventService.addEvent(registerObject)
+      this.eventService.addEvent(registerObject).pipe(first())
         .subscribe(response => {
-          console.log(response);
+         
+          if (response.id != 0) {
+            this.dialogRef.close();
+            this.snackbar.open('Data Added Successfully !!', 'Close', {
+              duration: 3000
+            });
+          }
+          else {
+            this.snackbar.open('Duplicate Data Found !!', 'Close', {
+              duration: 3000
+            });
+          }
         });
     }
     else {
-      this.eventService.updateEvent(registerObject)
+      this.eventService.updateEvent(registerObject).pipe(first())
         .subscribe(response => {
-          console.log(response);
+          if(response != null){
+            this.snackbar.open('Data Edited Successfully !!', 'Close', {
+              duration: 3000
+            });
+          }
+          else{
+            this.snackbar.open('Duplicate Data Found !!', 'Close', {
+              duration: 3000
+            });
+          }
         });
     }
 

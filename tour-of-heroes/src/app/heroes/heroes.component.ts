@@ -50,12 +50,12 @@ export class HeroesComponent implements AfterViewInit {
         }),
 
         map(data => {
-          debugger;
+          
           this.resultsLength = data.TotalCount;
           return data.Items;
         })
       ).subscribe(data => {
-        debugger;
+        
         this.dataHeroes = data;
       });
   }
@@ -88,7 +88,7 @@ export class HeroesComponent implements AfterViewInit {
   delete(hero: HeroAPI): void {
 
     setTimeout(() => {
-      this.heroService.deleteHero(hero).subscribe(res => { console.log(res); });
+      this.heroService.deleteHero(hero).subscribe(res => { //console.log(res); });
     }, 1000);
   }
 
@@ -96,7 +96,7 @@ export class HeroesComponent implements AfterViewInit {
 
   //search filter
   searchFilter() {
-    debugger;
+    
     this.filterValue = this.searchValue.nativeElement.value;
     this.filter.emit();
     this.searchValue.nativeElement.value = "";

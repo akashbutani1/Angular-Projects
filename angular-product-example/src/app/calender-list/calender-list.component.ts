@@ -5,7 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 import { merge } from 'rxjs';
-import { map, startWith, switchMap } from 'rxjs/operators';
+import { first, map, startWith, switchMap } from 'rxjs/operators';
 import { AddEditEventComponent } from '../add-edit-event/add-edit-event.component';
 import { CalenderService } from '../calender.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
@@ -53,7 +53,6 @@ export class CalenderListComponent implements AfterViewInit {
           return data.items;
         })
       ).subscribe(data => {
-        console.log(data);
         this.isLoading = false;
         this.dataEvents = data;
 
@@ -62,7 +61,7 @@ export class CalenderListComponent implements AfterViewInit {
 
   //routing
   routeToCalendar(pastevent: boolean) {
-    debugger;
+    
     if (pastevent) {
       this.route.navigate(['calender']);
     }
@@ -72,7 +71,7 @@ export class CalenderListComponent implements AfterViewInit {
 
   //search filter
   searchFilter() {
-    debugger;
+    
     this.filterValue = this.searchValue.nativeElement.value;
     this.filter.emit();
     this.searchValue.nativeElement.value = "";
@@ -100,28 +99,7 @@ export class CalenderListComponent implements AfterViewInit {
   }
 
   //add data
-  addNew() {
-    const dialogRef = this.dialog.open(AddEditEventComponent, {
-      data: 0
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      this.refreshTable();
-      if (result === 1) {
-        // After dialog is closed we're doing frontend updates
-       
-       setTimeout(() => {
-        this._snackbar.open('Data Added Successfully !!', 'Close', {
-          duration: 5000
-        });
-       }, 1000);
-        
-      }
-    });
-  }
-
-  //edit data
-  editData(data : number) {
+  addEditData(data : number) {
     const dialogRef = this.dialog.open(AddEditEventComponent, {
       data: data
     });
@@ -129,24 +107,19 @@ export class CalenderListComponent implements AfterViewInit {
     dialogRef.afterClosed().subscribe(result => {
       this.refreshTable();
       if (result === 1) {
-        // After dialog is closed we're doing frontend updates
-        
-        setTimeout(() => {
-          this._snackbar.open('Data Edited Successfully ', 'Close', {
-            duration: 5000
-          });
-        }, 1000);
         
       }
     });
   }
 
+  
+
   //delete Data
   delete(event: EventModel): void {
 
     setTimeout(() => {
-      this.calenderService.deleteEvent(event).subscribe(res => { console.log(res)
-        ;
+      this.calenderService.deleteEvent(event).pipe()
+      .subscribe(res => { 
       });
     }, 1000);
   }

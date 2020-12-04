@@ -1,18 +1,12 @@
-<h1 mat-dialog-title *ngIf="isAddMode" class="heading">
-    Add Event
-    <button type="button" (click)="onNoClick()" class="btn-back">
-        <mat-icon>cancel</mat-icon>
-    </button>
-</h1>
-<h1 mat-dialog-title *ngIf="!isAddMode" class="heading">
-    Edit Event
+<h1 mat-dialog-title class="heading">
+    {{isAddMode === true ? 'Add Event' : 'Edit Event'}}
     <button type="button" (click)="onNoClick()" class="btn-back">
         <mat-icon>cancel</mat-icon>
     </button>
 </h1>
 
 <div>
-    <form mat-dialog-content [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+    <form mat-dialog-content [formGroup]="eventForm">
         <div class="row form-container">
             <div class="col-md-6">
                 <mat-form-field appearance="outline" style="width: 85% !important;">
@@ -88,7 +82,7 @@
             </div>
 
             <mat-dialog-actions align="start">
-                <button mat-raised-button [mat-dialog-close]="true" color="accent" [disabled]="!eventForm.valid" type="submit">
+                <button mat-raised-button (click)="onSubmit()" color="accent" [disabled]="!eventForm.valid" type="submit">
                     Save Details
                 </button>
             </mat-dialog-actions>
