@@ -105,14 +105,16 @@ export class AddEditEventComponent implements OnInit {
         .subscribe(response => {
          
           if (response.id != 0) {
-            this.dialogRef.close();
+            this.dialogRef.close(1);
             this.snackbar.open('Data Added Successfully !!', 'Close', {
-              duration: 3000
+              duration: 3000,
+              panelClass: ['snackbar-style']
             });
           }
           else {
             this.snackbar.open('Duplicate Data Found !!', 'Close', {
-              duration: 3000
+              duration: 3000,
+              panelClass: ['error-snackbar-style']
             });
           }
         });
@@ -121,13 +123,16 @@ export class AddEditEventComponent implements OnInit {
       this.eventService.updateEvent(registerObject).pipe(first())
         .subscribe(response => {
           if(response != null){
+            this.dialogRef.close(1);
             this.snackbar.open('Data Edited Successfully !!', 'Close', {
-              duration: 3000
+              duration: 3000,
+              panelClass: ['snackbar-style']
             });
           }
           else{
             this.snackbar.open('Duplicate Data Found !!', 'Close', {
-              duration: 3000
+              duration: 3000,
+              panelClass: ['error-snackbar-style']
             });
           }
         });

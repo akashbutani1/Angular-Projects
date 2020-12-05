@@ -123,3 +123,18 @@ button:focus {
 .timepicker-backdrop-overlay {
     z-index: 1100 !important;
 }
+
+.snackbar-style {
+    background: #3F51B5;
+    color: white;
+}
+
+.mat-simple-snackbar-action {
+    color: darkpink !important;
+    background: white;
+}
+
+.error-snackbar-style {
+    background: red;
+    color: white;
+}

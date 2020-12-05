@@ -95,12 +95,14 @@ export class AddEditProductComponent implements OnInit {
         if (data.id != 0) {
           this.dialogRef.close();
           this._snackbar.open('Data Added Successfully !!', 'Close', {
-            duration: 4000
+            duration: 4000,
+            panelClass: ['snackbar-style']
           });
         }
         else {
           this._snackbar.open('Duplicate Data Found !!', 'Close', {
-            duration: 4000
+            duration: 4000,
+            panelClass: ['error-snackbar-style']
           });
         }
 
@@ -118,12 +120,14 @@ export class AddEditProductComponent implements OnInit {
           if(response != null){
             this.dialogRef.close();
             this._snackbar.open('Data Edited Successfully !!', 'Close', {
-              duration: 3000
+              duration: 3000,
+              panelClass: ['snackbar-style']
             });
           }
           else{
             this._snackbar.open('Duplicate Data Found !!', 'Close', {
-              duration: 3000
+              duration: 3000,
+              panelClass: ['error-snackbar-style']
             });
           }
         });

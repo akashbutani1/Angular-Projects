@@ -67,13 +67,15 @@ export class AddEditCategoryComponent implements OnInit {
           if (res.id != 0) {
             this.dialogRef.close(1);
             this._snackBar.open('Data Added Successfully !!', 'Close', {
-              duration: 3000
+              duration: 3000,
+              panelClass: ['snackbar-style']
             });
           }
           else {
             
             this._snackBar.open('Duplicate Data Found !!', 'Close', {
-              duration: 3000
+              duration: 3000,
+              panelClass: ['error-snackbar-style']
             });
           }
         });
@@ -84,13 +86,15 @@ export class AddEditCategoryComponent implements OnInit {
           if (res != null) {
             this.dialogRef.close(1);
             this._snackBar.open('Data Edited Successfully !!', 'Close', {
-              duration: 3000
+              duration: 3000,
+              panelClass: ['snackbar-style']
             });
           }
           else {
             
             this._snackBar.open('Duplicate Data Found !!', 'Close', {
-              duration: 3000
+              duration: 3000,
+              panelClass: ['error-snackbar-style']
             });
           }
         });

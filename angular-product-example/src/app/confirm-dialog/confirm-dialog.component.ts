@@ -34,13 +34,15 @@ export class ConfirmDialogComponent implements OnInit {
         .subscribe(res => {
           if (res == null) {
             this._snackbar.open('Some Error Occured !! Please Try Again', 'Close', {
-              duration: 3000
+              duration: 3000,
+              panelClass: ['error-snackbar-style']
             });
           }
           else {
             this.dialogRef.close(1);
             this._snackbar.open('Data Deleted Successfully', 'Close', {
-              duration: 3000
+              duration: 3000,
+              panelClass: ['snackbar-style']
             });
           }
         }
@@ -52,13 +54,15 @@ export class ConfirmDialogComponent implements OnInit {
       .subscribe(res => {
         if (res == null) {
           this._snackbar.open('Some Error Occured !! Please Try Again', 'Close', {
-            duration: 3000
+            duration: 3000,
+            panelClass: ['error-snackbar-style']
           });
         }
         else {
           this.dialogRef.close(1);
           this._snackbar.open('Data Deleted Successfully', 'Close', {
-            duration: 3000
+            duration: 3000,
+            panelClass: ['snackbar-style']
           });
         }
       }
@@ -70,13 +74,15 @@ export class ConfirmDialogComponent implements OnInit {
       .subscribe(res => {
         if (res == null) {
           this._snackbar.open('Some Error Occured !! Please Try Again', 'Close', {
-            duration: 3000
+            duration: 3000,
+            panelClass: ['error-snackbar-style']
           });
         }
         else {
           this.dialogRef.close(1);
           this._snackbar.open('Data Deleted Successfully', 'Close', {
-            duration: 3000
+            duration: 3000,
+            panelClass: ['snackbar-style']
           });
         }
       }
