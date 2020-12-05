@@ -11,7 +11,7 @@
             <div class="col-md-6">
                 <mat-form-field appearance="outline" style="width: 85% !important;">
                     <mat-label>Event Name</mat-label>
-                    <input matInput formControlName="subject" placeholder="Enter Event Name">
+                    <input autoFocus trim matInput formControlName="subject" placeholder="Enter Event Name">
                     <mat-error *ngIf="eventForm.get('subject').hasError('required')">
                         Event Name is required
                     </mat-error>
@@ -26,7 +26,7 @@
             <div class="col-md-6">
                 <mat-form-field appearance="outline" style="width: 85% !important;">
                     <mat-label>Event Description</mat-label>
-                    <input matInput formControlName="description" placeholder="Enter Event Description">
+                    <input trim matInput formControlName="description" placeholder="Enter Event Description">
                     <mat-error *ngIf="eventForm.get('description').hasError('required')">
                         Event Description is required
                     </mat-error>

@@ -42,9 +42,14 @@ export class CalenderListComponent implements AfterViewInit {
       .pipe(
         startWith({}),
         switchMap(() => {
-          
+          const registerObject = {
+            Sort:this.sort.active,
+            Order:this.sort.direction,
+            PageNumber:this.paginator.pageIndex + 1,
+            SearchQuery: this.filterValue
+          }
           return this.calenderService.getEventFromAPI(
-            this.sort.active, this.sort.direction, this.paginator.pageIndex, this.filterValue);
+            registerObject);
         }),
 
         map(data => {
@@ -81,18 +86,16 @@ export class CalenderListComponent implements AfterViewInit {
     const confirmDialog = this.dialog.open(ConfirmDialogComponent, {
       data: {
         title: 'Delete Event : ' + event.subject,
-        message: 'Are you sure to Remove this ?'
+        message: 'Are you sure to Remove this ?',
+        DialogData : event,
+        type : 'event'
       }
     });
     confirmDialog.afterClosed().subscribe(result => {
-      if (result === true) {
-        this.delete(event);
+      if (result === 1) {
 
         this.dataEvents = this.dataEvents.filter(h => h !== event);
         this.resultsLength = this.resultsLength - 1;
-        this._snackbar.open('Data Deleted Successfully', 'Close', {
-          duration: 5000
-        });
       }
     });
 
@@ -114,15 +117,7 @@ export class CalenderListComponent implements AfterViewInit {
 
   
 
-  //delete Data
-  delete(event: EventModel): void {
-
-    setTimeout(() => {
-      this.calenderService.deleteEvent(event).pipe()
-      .subscribe(res => { 
-      });
-    }, 1000);
-  }
+  
 
   //refresh Table
   refreshTable() {

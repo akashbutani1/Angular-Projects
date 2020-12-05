@@ -47,9 +47,14 @@ export class CategoryListComponent implements AfterViewInit {
       .pipe(
         startWith({}),
         switchMap(() => {
-
+          const registerObject = {
+            Sort : this.sort.active,
+            Order: this.sort.direction,
+            PageNumber:this.paginator.pageIndex + 1,
+            SearchQuery:this.filterValue
+          };
           return this.categoryService.getCategoriesFromAPI(
-            this.sort.active, this.sort.direction, this.paginator.pageIndex, this.filterValue);
+            registerObject);
         }),
 
         map(data => {
@@ -76,18 +81,16 @@ export class CategoryListComponent implements AfterViewInit {
     const confirmDialog = this.dialog.open(ConfirmDialogComponent, {
       data: {
         title: 'Delete Category : ' + category.categoryName,
-        message: 'Are you sure to Remove this ?'
+        message: 'Are you sure to Remove this ?',
+        DialogData : category,
+        type : 'category'
       }
     });
     confirmDialog.afterClosed().subscribe(result => {
-      if (result === true) {
-        this.delete(category);
-
+      if (result === 1) {
         this.dataCategory = this.dataCategory.filter(h => h !== category);
         this.resultsLength = this.resultsLength - 1;
-        this._snackbar.open('Data Deleted Successfully', 'Close', {
-          duration: 5000
-        });
+        
       }
     });
 
@@ -120,9 +123,14 @@ export class CategoryListComponent implements AfterViewInit {
 
   //refresh Table
   refreshTable() {
-
+    const registerObject = {
+      Sort : this.sort.active,
+      Order: this.sort.direction,
+      PageNumber:this.paginator.pageIndex + 1,
+      SearchQuery:this.filterValue
+    };
     this.categoryService.getCategoriesFromAPI(
-      this.sort.active, this.sort.direction, this.paginator.pageIndex, this.filterValue)
+      registerObject)
       .pipe()
       .subscribe(
         data => {
@@ -132,13 +140,7 @@ export class CategoryListComponent implements AfterViewInit {
       );
   }
 
-  //delete Data
-  delete(category: CategoryModel): void {
-
-    setTimeout(() => {
-      this.categoryService.deleteCategory(category);
-    }, 1000);
-  }
+  
 
   goBack(): void {
     this.location.back();

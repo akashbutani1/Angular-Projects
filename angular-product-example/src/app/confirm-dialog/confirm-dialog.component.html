@@ -7,6 +7,6 @@
 </div>
 
 <div mat-dialog-actions style="justify-content: center;">
-    <button style="margin:0px 10px;" mat-raised-button color="accent" [mat-dialog-close]="true" class="btn-confirm">Confirm</button>
+    <button style="margin:0px 10px;" mat-raised-button color="accent" (click)="onSubmit()" class="btn-confirm">Confirm</button>
     <button mat-raised-button color="basic" [mat-dialog-close]="false" class="btn-cancel">Cancel</button>
 </div>

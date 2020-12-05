@@ -18,6 +18,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import {TrimWhiteSpace} from  './trim.directive';
+import {AutofocusDirective} from './auto-focus.directive';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -46,7 +48,9 @@ import { AddEditEventComponent } from './add-edit-event/add-edit-event.component
     AddEditProductComponent,
     CalenderComponent,
     CalenderListComponent,
-    AddEditEventComponent
+    AddEditEventComponent,
+    TrimWhiteSpace,
+    AutofocusDirective
 
   ],
   imports: [

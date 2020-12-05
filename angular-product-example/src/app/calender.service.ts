@@ -16,16 +16,16 @@ export class CalenderService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  getEventFromAPI(sort: string, order: string, page: number,search : string): Observable<any> {
+  getEventFromAPI(data : any): Observable<any> {
 
-    return this.http.get<any>(this.requestURL + '?SearchQuery='+ search + '&Sort=' + sort + '&Order=' + order + '&PageNumber=' + (page + 1)).pipe();
+    return this.http.get<any>(this.requestURL + '?SearchQuery='+data.SearchQuery+'&Sort='+data.Sort+'&Order='+data.Order+'&PageNumber='+data.PageNumber).pipe();
   
   }
 
-  deleteEvent(event: EventModel | number): Observable<EventModel> {
+  deleteEvent(event: EventModel): Observable<EventModel> {
 
-    const id = typeof event === 'number' ? event : event.id;
-    const url = this.requestURL + '/' + id;
+    //const id = typeof event === 'number' ? event : event.id;
+    const url = this.requestURL + '/' + event.id;
     return this.http.delete<EventModel>(url).pipe(
     );
 

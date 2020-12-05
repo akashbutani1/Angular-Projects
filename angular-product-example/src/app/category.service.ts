@@ -17,9 +17,9 @@ export class CategoryService {
   };
 
   //get products from API
-  getCategoriesFromAPI(sort:string, order:string, page:number, query:string): Observable<any>{
+  getCategoriesFromAPI(data : any): Observable<any>{
     
-    return this.http.get<any>(this.requestURL + '?SearchQuery='+query+'&Sort='+sort+'&Order='+order+'&PageNumber='+(page+1)).pipe();
+    return this.http.get<any>(this.requestURL + '?SearchQuery='+data.SearchQuery+'&Sort='+data.Sort+'&Order='+data.Order+'&PageNumber='+data.PageNumber).pipe();
   }
 
   //get categories by Id
@@ -47,7 +47,7 @@ export class CategoryService {
   
   deleteCategory(category: CategoryModel | number): Observable<CategoryModel> {
     const id = typeof category === 'number' ? category : category.id;
-    const url = this.requestURL +id;
+    const url = this.requestURL + '/' +id;
     return this.http.delete<CategoryModel>(url, this.httpOptions).pipe(
     );
 

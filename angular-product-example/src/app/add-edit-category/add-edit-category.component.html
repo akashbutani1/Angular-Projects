@@ -12,7 +12,7 @@
             <div class="col-md-2">
                 <mat-form-field appearance="outline">
                     <mat-label>Category Name</mat-label>
-                    <input matInput formControlName="categoryName" placeholder="Enter Category Name" autocomplete="off">
+                    <input autoFocus trim matInput formControlName="categoryName" placeholder="Enter Category Name" autocomplete="off">
                     <mat-error *ngIf="categoryForm.get('categoryName').hasError('required')">
                         Category Name is required
                     </mat-error>

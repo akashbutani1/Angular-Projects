@@ -13,7 +13,7 @@
             <div class="col-md-6">
                 <mat-form-field appearance="outline">
                     <mat-label>Product Name</mat-label>
-                    <input matInput formControlName="productName" placeholder="Enter Product Name" autocomplete="off">
+                    <input autoFocus trim matInput formControlName="productName" placeholder="Enter Product Name" autocomplete="off">
                     <mat-error *ngIf="productForm.get('productName').hasError('required')">
                         Product Name is required
                     </mat-error>
@@ -29,7 +29,7 @@
             <div class="col-md-6">
                 <mat-form-field appearance="outline">
                     <mat-label>Product Price</mat-label>
-                    <input matInput formControlName="productPrice" placeholder="Enter Product Price" autocomplete="off">
+                    <input trim matInput formControlName="productPrice" placeholder="Enter Product Price" autocomplete="off">
                     <mat-error *ngIf="productForm.get('productPrice').hasError('required')">
                         Product price is required
                     </mat-error>

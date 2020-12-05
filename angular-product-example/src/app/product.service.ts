@@ -16,14 +16,14 @@ export class ProductService {
   };
 
   //get products from API
-  getProductsFromAPI(sort: string, order: string, page: number, firstName: string, category: number): Observable<any> {
-    return this.http.get<any>(this.requestURL+'?SearchQuery=' + firstName + '&Sort=' + sort + '&Order=' + order + '&PageNumber=' + (page + 1) + '&SearchCatgory=' + category).pipe();
+  getProductsFromAPI(data : any): Observable<any> {
+    return this.http.get<any>(this.requestURL+'?SearchQuery=' + data.SearchQuery + '&Sort=' + data.Sort + '&Order=' + data.Order + '&PageNumber=' + data.PageNumber + '&SearchCatgory=' + data.SearchCategory).pipe();
   }
 
   //delete product
 
-  deleteProduct(product: number): Observable<ProductModel> {
-    const url = this.requestURL + '/' + product;
+  deleteProduct(product: ProductModel): Observable<ProductModel> {
+    const url = this.requestURL + '/' + product.id;
     return this.http.delete<ProductModel>(url, this.httpOptions).pipe(
     );
 

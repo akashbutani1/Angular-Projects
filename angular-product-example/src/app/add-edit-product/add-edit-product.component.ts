@@ -34,10 +34,15 @@ export class AddEditProductComponent implements OnInit {
   ngOnInit(): void {
     
     this.id = this.data.id;
-
+    const registerObject = {
+      Sort : '',
+      Order: '',
+      PageNumber:1,
+      SearchQuery:''
+    };
     //getting categories data for select form field
     this.categoryService.getCategoriesFromAPI(
-      '', '', 0, '')
+      registerObject)
       .pipe(first())
       .subscribe(
         data => {

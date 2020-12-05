@@ -68,10 +68,16 @@ export class ProductListComponent implements AfterViewInit {
       .pipe(
         startWith({}),
         switchMap(() => {
-          
+          const registerObject = {
+            Sort:this.sort.active,
+            Order:this.sort.direction,
+            PageNumber:this.paginator.pageIndex + 1,
+            SearchQuery: this.filterValue,
+            SearchCategory:this.selectedValue
+          }
           
           return this.productService.getProductsFromAPI(
-            this.sort.active, this.sort.direction, this.paginator.pageIndex, this.filterValue, this.selectedValue);
+            registerObject);
         }),
 
         map(data => {
@@ -117,22 +123,18 @@ export class ProductListComponent implements AfterViewInit {
     const confirmDialog = this.dialog.open(ConfirmDialogComponent, {
       data: {
         title: 'Delete Product',
-        message: 'Are you sure to Remove this ?'
+        message: 'Are you sure to Remove this ?',
+        DialogData : product,
+        type : 'product'
       }
     });
     confirmDialog.afterClosed().subscribe(result => {
-      if (result === true) {
+      if (result === 1) {
 
-        setTimeout(() => {
-          this.productService.deleteProduct(product.id);
-            
-        }, 1000);
 
         this.dataProducts = this.dataProducts.filter(h => h !== product);
         this.resultsLength = this.resultsLength - 1;
-        this._snackbar.open('Data Deleted Successfully : ' + product.id, 'Close', {
-          duration: 5000
-        });
+        
       }
     });
 
@@ -155,8 +157,14 @@ export class ProductListComponent implements AfterViewInit {
 
   //get category
   getCategory() {
+    const registerObject = {
+      Sort : '',
+      Order: '',
+      PageNumber:1,
+      SearchQuery:''
+    };
     this.categoryService.getCategoriesFromAPI(
-      '', '', 0, '')
+      registerObject)
       .pipe(first())
       .subscribe(
         data => {
