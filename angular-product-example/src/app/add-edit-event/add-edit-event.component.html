@@ -59,6 +59,11 @@
                         Event End Date is required
                     </mat-error>
                 </mat-form-field>
+                <div class='mat-error' style="margin-top: -18px;margin-left: 15px;font-size: 13px;" *ngIf="eventForm.errors?.invalid">
+                    End date must be greater than Start date
+                </div>
+
+
             </div>
             <div class="col-md-6">
                 <mat-form-field appearance="outline" style="width: 85% !important;">
@@ -80,7 +85,6 @@
                     </mat-error>
                 </mat-form-field>
             </div>
-
             <mat-dialog-actions align="start">
                 <button mat-raised-button (click)="onSubmit()" color="accent" [disabled]="!eventForm.valid" type="submit">
                     Save Details

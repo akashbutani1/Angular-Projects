@@ -20,6 +20,7 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import {TrimWhiteSpace} from  './trim.directive';
 import {AutofocusDirective} from './auto-focus.directive';
+import {MatStepperModule} from '@angular/material/stepper';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -35,6 +36,7 @@ import { ScheduleModule, RecurrenceEditorModule, DayService, WeekService, MonthA
 import { CalenderComponent } from './calender/calender.component';
 import { CalenderListComponent } from './calender-list/calender-list.component';
 import { AddEditEventComponent } from './add-edit-event/add-edit-event.component';
+import { UserRegistrationComponent } from './user-registration/user-registration.component';
 
 
 @NgModule({
@@ -50,7 +52,8 @@ import { AddEditEventComponent } from './add-edit-event/add-edit-event.component
     CalenderListComponent,
     AddEditEventComponent,
     TrimWhiteSpace,
-    AutofocusDirective
+    AutofocusDirective,
+    UserRegistrationComponent
 
   ],
   imports: [
@@ -78,7 +81,7 @@ import { AddEditEventComponent } from './add-edit-event/add-edit-event.component
     MatProgressSpinnerModule,
     MatDatepickerModule,
     NgxMaterialTimepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,MatStepperModule
   ],
   providers: [DayService, WeekService, MonthAgendaService, MonthService, WorkWeekService, MatDatepickerModule],
   bootstrap: [AppComponent]

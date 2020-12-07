@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { first } from 'rxjs/operators';
@@ -28,7 +28,7 @@ export class AddEditEventComponent implements OnInit {
 
 
   ngOnInit(): void {
-    
+
     this.id = this.data;
 
     this.eventForm = this.formBuilder.group({
@@ -38,7 +38,7 @@ export class AddEditEventComponent implements OnInit {
       endDate: ['', [Validators.required]],
       startTime: ['', [Validators.required]],
       EndTime: ['', [Validators.required]],
-    });
+    }, { validators: this.endDateValidator });
 
     if (this.id == 0) {
       this.isAddMode = true;
@@ -69,6 +69,16 @@ export class AddEditEventComponent implements OnInit {
         });
     }
   }
+
+  endDateValidator: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
+    debugger;
+    const startdate = control.get('startDate');
+    const enddate = control.get('endDate');
+
+    return startdate && enddate && startdate.value > enddate.value ? { invalid: true } : null;
+  };
+
+
   onNoClick(): void {
     this.dialogRef.close();
   }
@@ -103,7 +113,7 @@ export class AddEditEventComponent implements OnInit {
     if (this.isAddMode) {
       this.eventService.addEvent(registerObject).pipe(first())
         .subscribe(response => {
-         
+
           if (response.id != 0) {
             this.dialogRef.close(1);
             this.snackbar.open('Data Added Successfully !!', 'Close', {
@@ -122,14 +132,14 @@ export class AddEditEventComponent implements OnInit {
     else {
       this.eventService.updateEvent(registerObject).pipe(first())
         .subscribe(response => {
-          if(response != null){
+          if (response != null) {
             this.dialogRef.close(1);
             this.snackbar.open('Data Edited Successfully !!', 'Close', {
               duration: 3000,
               panelClass: ['snackbar-style']
             });
           }
-          else{
+          else {
             this.snackbar.open('Duplicate Data Found !!', 'Close', {
               duration: 3000,
               panelClass: ['error-snackbar-style']

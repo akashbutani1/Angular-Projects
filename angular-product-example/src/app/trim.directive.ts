@@ -16,6 +16,7 @@ export class TrimWhiteSpace extends DefaultValueAccessor {
   ngOnChange = (val: string) => {
     this.onChange(val.trim());
   };
+  
   @HostListener('blur', ['$event.target.value'])
   applyTrim(val: string) {
     this.writeValue(val.trim());

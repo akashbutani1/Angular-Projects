@@ -1,0 +1,145 @@
+<div class="stepper-container">
+    <mat-horizontal-stepper linear #stepper>
+
+        <ng-template matStepperIcon="edit">
+            <mat-icon>check</mat-icon>
+        </ng-template>
+
+        <mat-step>
+            <mat-horizontal-stepper #innerstepper id="inner">
+                <mat-step [stepControl]="firstFormGroup">
+
+                    <form [formGroup]="firstFormGroup">
+                        <mat-form-field appearance="outline">
+                            <mat-label>User Name</mat-label>
+                            <input autoFocus trim matInput formControlName="UserName" placeholder="Enter user name">
+                            <mat-error *ngIf="firstFormGroup.get('UserName').hasError('required')">
+                                User name is required
+                            </mat-error>
+                            <mat-error *ngIf="firstFormGroup.get('UserName').hasError('pattern')">
+                                User name invalid
+                            </mat-error>
+                            <mat-error *ngIf="firstFormGroup.get('UserName').hasError('minlength')">
+                                min length is 3
+                            </mat-error>
+                        </mat-form-field>
+                        <div style="margin-top: 25px;">
+                            <button style="border-radius:0px;" [disabled]="!firstFormGroup.valid" mat-raised-button matStepperNext color="accent">Next</button>
+                        </div>
+                    </form>
+                </mat-step>
+
+                <mat-step [stepControl]="secondFormGroup">
+                    <form [formGroup]="secondFormGroup">
+                        <div class="row">
+                            <div class="col-md-6" style="margin-bottom:25px;">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>First Name</mat-label>
+                                    <input trim matInput formControlName="FirstName" placeholder="Enter first name">
+                                    <mat-error *ngIf="secondFormGroup.get('FirstName').hasError('required')">
+                                        First name is required
+                                    </mat-error>
+                                    <mat-error *ngIf="secondFormGroup.get('FirstName').hasError('pattern')">
+                                        First name invalid
+                                    </mat-error>
+                                    <mat-error *ngIf="secondFormGroup.get('FirstName').hasError('minlength')">
+                                        min length is 3
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-6" style="margin-bottom:25px;">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Last Name</mat-label>
+                                    <input matInput formControlName="LastName" placeholder="Enter last name">
+                                    <mat-error *ngIf="secondFormGroup.get('LastName').hasError('required')">
+                                        Last name is required
+                                    </mat-error>
+                                    <mat-error *ngIf="secondFormGroup.get('LastName').hasError('pattern')">
+                                        Last name invalid
+                                    </mat-error>
+                                    <mat-error *ngIf="secondFormGroup.get('LastName').hasError('minlength')">
+                                        min length is 3
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div>
+                            <button style="border-radius:0px;" mat-raised-button matStepperPrevious>Back</button>
+                            <button style="border-radius:0px;margin-left: 25px;" (click)="goForward(stepper)" [disabled]="!secondFormGroup.valid" mat-raised-button matStepperNext color="accent">Next</button>
+                        </div>
+                    </form>
+                </mat-step>
+            </mat-horizontal-stepper>
+        </mat-step>
+
+
+        <mat-step [stepControl]="thirdFormGroup">
+            <form [formGroup]="thirdFormGroup">
+                <div class="row">
+                    <div class="col-md-6" style="margin-bottom:25px;">
+                        <mat-form-field appearance="outline" style="width: 38% !important;">
+                            <mat-label>Email</mat-label>
+                            <input trim matInput formControlName="Email" placeholder="Enter Email">
+                            <mat-error *ngIf="thirdFormGroup.get('Email').hasError('required')">
+                                Email is required
+                            </mat-error>
+                            <mat-error *ngIf="thirdFormGroup.get('Email').hasError('pattern')">
+                                Email is invalid
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6" style="margin-bottom:25px;">
+                        <mat-form-field appearance="outline" style="width: 38% !important;">
+                            <mat-label>Phone Number</mat-label>
+                            <input matInput formControlName="PhoneNumber" placeholder="Enter Phone Number">
+                            <mat-error *ngIf="thirdFormGroup.get('PhoneNumber').hasError('required')">
+                                Phone number is required
+                            </mat-error>
+                            <mat-error *ngIf="thirdFormGroup.get('PhoneNumber').hasError('pattern')">
+                                Phone number is invalid
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6" style="margin-bottom:25px;">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Date Of Birth</mat-label>
+                            <input matInput formControlName="DateOfBirth" [matDatepicker]="picker1">
+                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                            <mat-error *ngIf="thirdFormGroup.get('DateOfBirth').hasError('required')">
+                                Date Of Birth is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div>
+                    <button style="border-radius:0px;" mat-raised-button matStepperPrevious>Back</button>
+                    <button style="border-radius:0px;margin-left: 25px;" [disabled]="!thirdFormGroup.valid" mat-raised-button matStepperNext color="accent">Next</button>
+                </div>
+            </form>
+        </mat-step>
+
+        <mat-step [stepControl]="fourthFormGroup">
+            <form [formGroup]="fourthFormGroup">
+                <mat-form-field appearance="outline">
+                    <mat-label>
+                        Address
+                    </mat-label>
+                    <textarea trim matInput formControlName="Address" placeholder="Enter Address"></textarea>
+                    <mat-error *ngIf="fourthFormGroup.get('Address').hasError('required')">
+                        Addres is required
+                    </mat-error>
+                    <mat-error *ngIf="fourthFormGroup.get('Address').hasError('minlength')">
+                        min length is 10
+                    </mat-error>
+                </mat-form-field>
+                <div style="margin-top: 25px;">
+                    <button style="border-radius:0px;" mat-raised-button matStepperPrevious>Back</button>
+                    <button style="border-radius:0px;margin-left: 25px;" mat-raised-button color="accent" type="submit" [disabled]="!fourthFormGroup.valid" (click)="onSubmit()">Submit</button>
+                </div>
+            </form>
+        </mat-step>
+
+    </mat-horizontal-stepper>
+
+</div>

@@ -138,3 +138,25 @@ button:focus {
     background: red;
     color: white;
 }
+
+.stepper-container {
+    margin-top: 50px !important;
+    margin: 0 auto;
+    width: 50%;
+    height: auto;
+    border: 0.5px solid black;
+    box-shadow: 1px 1px 1px 1px #888888;
+}
+
+.mat-horizontal-stepper-header {
+    pointer-events: none !important;
+    margin: 0 auto;
+}
+
+.mat-stepper-horizontal-line {
+    display: none;
+}
+
+#inner .mat-horizontal-stepper-header-container {
+    display: none !important;
+}
