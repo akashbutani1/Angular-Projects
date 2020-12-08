@@ -168,3 +168,9 @@ button:focus {
 #innerstepper1 .mat-horizontal-stepper-header-container {
     display: none !important;
 }
+
+.register-container {
+    margin: 0 auto;
+    width: 50%;
+    margin-top: 50px;
+}

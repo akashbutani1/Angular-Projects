@@ -80,7 +80,7 @@
         </mat-step>
 
 
-        <mat-step [stepControl]="thirdFormGroup">
+        <!-- <mat-step [stepControl]="thirdFormGroup">
             <form [formGroup]="thirdFormGroup">
                 <div class="row">
                     <div class="col-md-6" style="margin-bottom:25px;">
@@ -125,27 +125,29 @@
                 <button mat-raised-button (click)="moveBack(stepper)">Back</button>
                 <button mat-raised-button [disabled]="!thirdFormGroup.valid" color="accent" (click)="moveForward(stepper)" style="margin-left: 25px;">Next</button>
             </div>
-        </mat-step>
+        </mat-step> -->
 
-        <mat-step [stepControl]="fourthFormGroup">
-            <form [formGroup]="fourthFormGroup">
-                <mat-form-field appearance="outline">
-                    <mat-label>
-                        Address
-                    </mat-label>
-                    <textarea trim matInput formControlName="Address" placeholder="Enter Address"></textarea>
-                    <mat-error *ngIf="fourthFormGroup.get('Address').hasError('required')">
-                        Addres is required
-                    </mat-error>
-                    <mat-error *ngIf="fourthFormGroup.get('Address').hasError('minlength')">
-                        min length is 10
-                    </mat-error>
-                </mat-form-field>
-
-            </form>
+        <mat-step>
+            <mat-horizontal-stepper #innerstepper1 id="innerstepper1">
+                <mat-step>
+                    3.1
+                </mat-step>
+                <mat-step>
+                    3.2
+                </mat-step>
+                <mat-step>
+                    3.3
+                </mat-step>
+                <mat-step>
+                    3.4
+                </mat-step>
+                <mat-step>
+                    3.5
+                </mat-step>
+            </mat-horizontal-stepper>
             <div>
-                <button mat-raised-button (click)="moveBack(stepper)">Back</button>
-                <button [disabled]="!fourthFormGroup.valid" mat-raised-button color="accent" (click)="moveForward(stepper)" style="margin-left: 25px;">Next</button>
+                <button mat-raised-button color="accent" (click)="moveForward(innerstepper1)">Next</button>
+                <button mat-raised-button (click)="moveBack(innerstepper1) ">Back</button>
             </div>
         </mat-step>
 

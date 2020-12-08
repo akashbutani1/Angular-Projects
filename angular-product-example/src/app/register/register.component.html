@@ -1,0 +1,55 @@
+<div class="register-container">
+    <h1>Register</h1>
+    <form [formGroup]="registerForm">
+        <div class="row">
+            <div class="col-md-10">
+                <mat-form-field appearance="outline" style="margin-bottom: 18px;">
+                    <mat-label>User Name</mat-label>
+                    <input autoFocus trim matInput formControlName="Username" placeholder="Enter User Name" autocomplete="off">
+                    <mat-error *ngIf="registerForm.get('Username').hasError('required')">
+                        User name is required
+                    </mat-error>
+                    <mat-error *ngIf="registerForm.get('Username').hasError('minlength')">
+                        Min Length is 3
+                    </mat-error>
+                    <mat-error *ngIf="registerForm.get('Username').hasError('pattern')">
+                        Username is invalid
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-10">
+                <mat-form-field appearance="outline" style="margin-bottom: 18px;">
+                    <mat-label>User Email</mat-label>
+                    <input trim matInput formControlName="Email" placeholder="Enter Email" autocomplete="off">
+                    <mat-error *ngIf="registerForm.get('Email').hasError('required')">
+                        User Email is required
+                    </mat-error>
+                    <mat-error *ngIf="registerForm.get('Email').hasError('minlength')">
+                        Min Length is 6
+                    </mat-error>
+                    <mat-error *ngIf="registerForm.get('Email').hasError('pattern')">
+                        Email is invalid
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-10">
+                <mat-form-field appearance="outline" style="margin-bottom: 18px;">
+                    <mat-label>Password</mat-label>
+                    <input trim matInput formControlName="Password" placeholder="Enter Password" type="password" autocomplete="off">
+                    <mat-error *ngIf="registerForm.get('Password').hasError('required')">
+                        Password is required
+                    </mat-error>
+                    <mat-error *ngIf="registerForm.get('Password').hasError('minlength')">
+                        Min Length is 6
+                    </mat-error>
+                    <mat-error *ngIf="registerForm.get('Password').hasError('pattern')">
+                        Password is invalid
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-10">
+                <button mat-raised-button color="accent" [disabled]="!registerForm.valid" (click)="onSubmit()" type="submit">Register<mat-icon>save</mat-icon></button>
+            </div>
+        </div>
+    </form>
+</div>

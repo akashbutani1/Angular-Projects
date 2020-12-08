@@ -48,15 +48,16 @@ export class UserRegistrationComponent implements OnInit {
   }
 
   moveForward(stepper: MatStepper) {
-    
+
     if (stepper.selectedIndex === stepper.steps.length - 1) {
-      if (stepper.selectedIndex === this.MainStepper.steps.length - 1) {
+      if (this.MainStepper.selectedIndex === this.MainStepper.steps.length - 1) {
         this.onSubmit();
       }
       else {
         this.MainStepper.next();
       }
     }
+
     else {
       stepper.next();
     }
@@ -73,34 +74,36 @@ export class UserRegistrationComponent implements OnInit {
 
 
   onSubmit() {
-    const registerObject = {
-      UserName: this.firstFormGroup.controls.UserName.value,
-      FirstName: this.secondFormGroup.controls.FirstName.value,
-      LastName: this.secondFormGroup.controls.LastName.value,
-      UserEmail: this.thirdFormGroup.controls.Email.value,
-      PhoneNo: this.thirdFormGroup.controls.PhoneNumber.value,
-      DateOfBirth: new Date(this.thirdFormGroup.controls.DateOfBirth.value),
-      Address: this.fourthFormGroup.controls.Address.value,
-    };
-
-    this.userservice.addUsers(registerObject).pipe(first()).subscribe(result => {
-      if (result != null) {
-
-        this.snackbar.open('Data Added Successfully !!', 'Close', {
-          duration: 3000,
-          panelClass: ['snackbar-style']
-        });
-        this.route.navigate(['dashboard']);
-
-
-      }
-      else {
-        this.snackbar.open('Error Occured !!', 'Close', {
-          duration: 3000,
-          panelClass: ['error-snackbar-style']
-        });
-      }
-    });
+    console.log('hello');
   }
+  //   const registerObject = {
+  //     UserName: this.firstFormGroup.controls.UserName.value,
+  //     FirstName: this.secondFormGroup.controls.FirstName.value,
+  //     LastName: this.secondFormGroup.controls.LastName.value,
+  //     UserEmail: this.thirdFormGroup.controls.Email.value,
+  //     PhoneNo: this.thirdFormGroup.controls.PhoneNumber.value,
+  //     DateOfBirth: new Date(this.thirdFormGroup.controls.DateOfBirth.value),
+  //     Address: this.fourthFormGroup.controls.Address.value,
+  //   };
+
+  //   this.userservice.addUsers(registerObject).pipe(first()).subscribe(result => {
+  //     if (result != null) {
+
+  //       this.snackbar.open('Data Added Successfully !!', 'Close', {
+  //         duration: 3000,
+  //         panelClass: ['snackbar-style']
+  //       });
+  //       this.route.navigate(['dashboard']);
+
+
+  //     }
+  //     else {
+  //       this.snackbar.open('Error Occured !!', 'Close', {
+  //         duration: 3000,
+  //         panelClass: ['error-snackbar-style']
+  //       });
+  //     }
+  //   });
+
 
 }
