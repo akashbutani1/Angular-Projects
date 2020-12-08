@@ -71,7 +71,7 @@ export class AddEditEventComponent implements OnInit {
   }
 
   endDateValidator: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
-    debugger;
+    
     const startdate = control.get('startDate');
     const enddate = control.get('endDate');
 

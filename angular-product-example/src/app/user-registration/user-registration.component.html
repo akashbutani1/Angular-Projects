@@ -1,5 +1,5 @@
 <div class="stepper-container">
-    <mat-horizontal-stepper linear #stepper>
+    <mat-horizontal-stepper #stepper>
 
         <ng-template matStepperIcon="edit">
             <mat-icon>check</mat-icon>
@@ -7,6 +7,7 @@
 
         <mat-step>
             <mat-horizontal-stepper #innerstepper id="inner">
+
                 <mat-step [stepControl]="firstFormGroup">
 
                     <form [formGroup]="firstFormGroup">
@@ -23,10 +24,12 @@
                                 min length is 3
                             </mat-error>
                         </mat-form-field>
-                        <div style="margin-top: 25px;">
-                            <button style="border-radius:0px;" [disabled]="!firstFormGroup.valid" mat-raised-button matStepperNext color="accent">Next</button>
-                        </div>
+
                     </form>
+                    <div>
+                        <!-- <button mat-raised-button [disabled]="innerstepper.selectedIndex == 0" (click)="moveBack(innerstepper)">Back</button> -->
+                        <button [disabled]="!firstFormGroup.valid" mat-raised-button color="accent" (click)="moveForward(innerstepper)">Next</button>
+                    </div>
                 </mat-step>
 
                 <mat-step [stepControl]="secondFormGroup">
@@ -63,13 +66,17 @@
                                 </mat-form-field>
                             </div>
                         </div>
-                        <div>
-                            <button style="border-radius:0px;" mat-raised-button matStepperPrevious>Back</button>
-                            <button style="border-radius:0px;margin-left: 25px;" (click)="goForward(stepper)" [disabled]="!secondFormGroup.valid" mat-raised-button matStepperNext color="accent">Next</button>
-                        </div>
+
                     </form>
+                    <div>
+                        <button mat-raised-button [disabled]="innerstepper.selectedIndex == 0" (click)="moveBack(innerstepper)">Back</button>
+                        <button [disabled]="!secondFormGroup.valid" mat-raised-button color="accent" (click)="moveForward(innerstepper)" style="margin-left: 25px;">Next</button>
+                    </div>
                 </mat-step>
+
             </mat-horizontal-stepper>
+
+
         </mat-step>
 
 
@@ -112,11 +119,12 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div>
-                    <button style="border-radius:0px;" mat-raised-button matStepperPrevious>Back</button>
-                    <button style="border-radius:0px;margin-left: 25px;" [disabled]="!thirdFormGroup.valid" mat-raised-button matStepperNext color="accent">Next</button>
-                </div>
+
             </form>
+            <div>
+                <button mat-raised-button (click)="moveBack(stepper)">Back</button>
+                <button mat-raised-button [disabled]="!thirdFormGroup.valid" color="accent" (click)="moveForward(stepper)" style="margin-left: 25px;">Next</button>
+            </div>
         </mat-step>
 
         <mat-step [stepControl]="fourthFormGroup">
@@ -133,11 +141,12 @@
                         min length is 10
                     </mat-error>
                 </mat-form-field>
-                <div style="margin-top: 25px;">
-                    <button style="border-radius:0px;" mat-raised-button matStepperPrevious>Back</button>
-                    <button style="border-radius:0px;margin-left: 25px;" mat-raised-button color="accent" type="submit" [disabled]="!fourthFormGroup.valid" (click)="onSubmit()">Submit</button>
-                </div>
+
             </form>
+            <div>
+                <button mat-raised-button (click)="moveBack(stepper)">Back</button>
+                <button [disabled]="!fourthFormGroup.valid" mat-raised-button color="accent" (click)="moveForward(stepper)" style="margin-left: 25px;">Next</button>
+            </div>
         </mat-step>
 
     </mat-horizontal-stepper>

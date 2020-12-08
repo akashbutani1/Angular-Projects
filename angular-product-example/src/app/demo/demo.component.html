@@ -1,0 +1,49 @@
+<mat-horizontal-stepper linear #stepper>
+    <mat-step>
+        <mat-horizontal-stepper #innerstepper id="innerstepper">
+            <mat-step>
+                1.1
+            </mat-step>
+            <mat-step>
+                1.2
+            </mat-step>
+        </mat-horizontal-stepper>
+        <div>
+            <button mat-raised-button (click)="moveForward(innerstepper)">Next</button>
+            <button mat-raised-button [disabled]="innerstepper.selectedIndex == 0" (click)="moveBack(innerstepper)">Back</button>
+        </div>
+    </mat-step>
+    <mat-step>
+        2 step
+        <div>
+            <button mat-raised-button (click)="moveForward(stepper)">Next</button>
+            <button mat-raised-button (click)="moveBack(stepper)">Back</button>
+        </div>
+    </mat-step>
+    <mat-step>
+        <mat-horizontal-stepper #innerstepper1 id="innerstepper1">
+            <mat-step>
+                3.1
+            </mat-step>
+            <mat-step>
+                3.2
+            </mat-step>
+            <mat-step>
+                3.3
+            </mat-step>
+
+        </mat-horizontal-stepper>
+        <div>
+
+            <button mat-raised-button (click)="moveForward(innerstepper1)">Next</button>
+            <button mat-raised-button (click)="moveBack(innerstepper1)">Back</button>
+        </div>
+    </mat-step>
+    <mat-step>
+        final stage
+        <div>
+            <button mat-raised-button>Submit</button>
+            <button mat-raised-button (click)="moveBack(stepper) ">Back</button>
+        </div>
+    </mat-step>
+</mat-horizontal-stepper>

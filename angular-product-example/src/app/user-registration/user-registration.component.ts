@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatStepper } from '@angular/material/stepper';
@@ -18,11 +18,15 @@ export class UserRegistrationComponent implements OnInit {
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
   fourthFormGroup: FormGroup;
+  mainStepNo: number = 1;
+  //@ViewChild('innerstepper') private myStepper: MatStepper;
+  @ViewChild('stepper') private MainStepper: MatStepper;
+
 
   constructor(private _formBuilder: FormBuilder,
-     private userservice: UserService, 
-     private snackbar: MatSnackBar,
-     private route: Router) { }
+    private userservice: UserService,
+    private snackbar: MatSnackBar,
+    private route: Router) { }
 
   ngOnInit() {
 
@@ -43,9 +47,30 @@ export class UserRegistrationComponent implements OnInit {
     });
   }
 
-  goForward(stepper: MatStepper) {
-    stepper.next();
+  moveForward(stepper: MatStepper) {
+    
+    if (stepper.selectedIndex === stepper.steps.length - 1) {
+      if (stepper.selectedIndex === this.MainStepper.steps.length - 1) {
+        this.onSubmit();
+      }
+      else {
+        this.MainStepper.next();
+      }
+    }
+    else {
+      stepper.next();
+    }
   }
+
+  moveBack(stepper: MatStepper) {
+    if (stepper.selectedIndex == 0) {
+      this.MainStepper.previous();
+    }
+    else {
+      stepper.previous();
+    }
+  }
+
 
   onSubmit() {
     const registerObject = {
@@ -66,7 +91,7 @@ export class UserRegistrationComponent implements OnInit {
           panelClass: ['snackbar-style']
         });
         this.route.navigate(['dashboard']);
-        
+
 
       }
       else {

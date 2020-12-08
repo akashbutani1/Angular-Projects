@@ -37,6 +37,7 @@ import { CalenderComponent } from './calender/calender.component';
 import { CalenderListComponent } from './calender-list/calender-list.component';
 import { AddEditEventComponent } from './add-edit-event/add-edit-event.component';
 import { UserRegistrationComponent } from './user-registration/user-registration.component';
+import { DemoComponent } from './demo/demo.component';
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import { UserRegistrationComponent } from './user-registration/user-registration
     AddEditEventComponent,
     TrimWhiteSpace,
     AutofocusDirective,
-    UserRegistrationComponent
+    UserRegistrationComponent,
+    DemoComponent
 
   ],
   imports: [

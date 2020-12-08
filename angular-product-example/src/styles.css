@@ -160,3 +160,11 @@ button:focus {
 #inner .mat-horizontal-stepper-header-container {
     display: none !important;
 }
+
+#innerstepper .mat-horizontal-stepper-header-container {
+    display: none !important;
+}
+
+#innerstepper1 .mat-horizontal-stepper-header-container {
+    display: none !important;
+}
