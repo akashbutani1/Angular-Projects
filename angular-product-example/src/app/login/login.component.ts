@@ -41,8 +41,6 @@ export class LoginComponent implements OnInit {
         if (result != null) {
 
           this.loginService.setUserLoggedInStatus(result);
-          // localStorage.setItem('user', result);
-          // localStorage.setItem('token', result.token);
           this.loginService.loginstatus = true;
 
           if(this.loginService.redirectUrl == null){

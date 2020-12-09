@@ -1,11 +1,13 @@
 <mat-card class="register-container">
 
-    <h1>Login</h1>
+    <h1 style="font-size: 35px;margin-left: 113px;margin-top: 25px;margin-bottom: 25px;">
+        LOGIN
+    </h1>
     <form [formGroup]="loginForm">
         <div class="row">
 
             <div class="col-md-10">
-                <mat-form-field appearance="outline" style="margin-bottom: 18px;">
+                <mat-form-field appearance="outline" style="margin-bottom: 18px;width:100%;">
                     <mat-label>User Email</mat-label>
                     <input autoFocus trim matInput formControlName="Email" placeholder="Enter Email" autocomplete="off">
                     <mat-error *ngIf="loginForm.get('Email').hasError('required')">
@@ -20,7 +22,7 @@
                 </mat-form-field>
             </div>
             <div class="col-md-10">
-                <mat-form-field appearance="outline" style="margin-bottom: 18px;">
+                <mat-form-field appearance="outline" style="margin-bottom: 18px;width:100%;">
                     <mat-label>Password</mat-label>
                     <input trim matInput formControlName="Password" placeholder="Enter Password" type="password" autocomplete="off">
                     <mat-error *ngIf="loginForm.get('Password').hasError('required')">
@@ -35,11 +37,17 @@
                 </mat-form-field>
             </div>
             <div class="col-md-10">
-                <button mat-raised-button color="accent" [disabled]="!loginForm.valid" (click)="onSubmit()" type="submit">Login<mat-icon>save</mat-icon></button>
+                <button mat-raised-button color="accent" [disabled]="!loginForm.valid" style="padding-left: 132px;padding-right: 132px;font-size: 20px;" (click)="onSubmit()" type="submit">
+                    Login
+                    <mat-icon>save</mat-icon>
+                </button>
             </div>
             <div style="margin-top: 15px;">
-                <label style="margin-top: 25px;">Are you new User ? Register here</label><br>
-                <button mat-raised-button color="accent" style="margin-top: 15px;" routerLink='/register' routerLinkActive="router-link-active" type="button">Register<mat-icon>save</mat-icon></button>
+                <label style="margin-top: 25px;margin-left: 65px;">Are you new User ? Register here</label><br>
+                <button type="button" mat-raised-button color="accent" style="margin-top: 15px;padding-left: 120px;padding-right: 120px;margin-bottom: 50px;font-size: 20px;" routerLink='/register' routerLinkActive="router-link-active" type="button">
+                    Register
+                    <mat-icon>save</mat-icon>
+                </button>
             </div>
         </div>
     </form>

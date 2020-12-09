@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { LoginRegisterService } from '../login-register.service';
 
@@ -13,7 +15,8 @@ export class RegisterComponent implements OnInit {
 
   registerForm : FormGroup;
   
-  constructor(private formbuilder : FormBuilder,private registerService : LoginRegisterService) { }
+  constructor(private formbuilder : FormBuilder,private registerService : LoginRegisterService,
+    private snackbar : MatSnackBar,private route :Router) { }
 
   ngOnInit(): void {
 
@@ -31,7 +34,23 @@ export class RegisterComponent implements OnInit {
       Password : this.registerForm.controls.Password.value
     }
 
-    this.registerService.addUser(registerObject).pipe(first()).subscribe();
+    this.registerService.addUser(registerObject).pipe(first()).subscribe(
+      result => {
+        if(result != null){
+          this.route.navigate(['/login']);
+          this.snackbar.open('Registaration successful', 'Close', {
+            duration: 3000,
+            panelClass: ['snackbar-style']
+          });
+        }
+        else{
+          this.snackbar.open('Registration Failed : Duplicate Data', 'Close', {
+            duration: 3000,
+            panelClass: ['error-snackbar-style']
+          });
+        }
+      }
+    );
   }
 
 }
