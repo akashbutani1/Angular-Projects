@@ -21,7 +21,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import {TrimWhiteSpace} from  './trim.directive';
 import {AutofocusDirective} from './auto-focus.directive';
 import {MatStepperModule} from '@angular/material/stepper';
-
+import {MatCardModule} from '@angular/material/card';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -39,6 +39,8 @@ import { AddEditEventComponent } from './add-edit-event/add-edit-event.component
 import { UserRegistrationComponent } from './user-registration/user-registration.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { AuthGuard } from './auth.guard';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
 @NgModule({
@@ -57,7 +59,8 @@ import { RegisterComponent } from './register/register.component';
     AutofocusDirective,
     UserRegistrationComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    PageNotFoundComponent
 
   ],
   imports: [
@@ -85,9 +88,9 @@ import { RegisterComponent } from './register/register.component';
     MatProgressSpinnerModule,
     MatDatepickerModule,
     NgxMaterialTimepickerModule,
-    MatNativeDateModule,MatStepperModule
+    MatNativeDateModule,MatStepperModule,MatCardModule
   ],
-  providers: [DayService, WeekService, MonthAgendaService, MonthService, WorkWeekService, MatDatepickerModule],
+  providers: [AuthGuard,DayService, WeekService, MonthAgendaService, MonthService, WorkWeekService, MatDatepickerModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

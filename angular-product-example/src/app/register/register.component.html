@@ -1,4 +1,4 @@
-<div class="register-container">
+<mat-card class="register-container">
     <h1>Register</h1>
     <form [formGroup]="registerForm">
         <div class="row">
@@ -50,6 +50,10 @@
             <div class="col-md-10">
                 <button mat-raised-button color="accent" [disabled]="!registerForm.valid" (click)="onSubmit()" type="submit">Register<mat-icon>save</mat-icon></button>
             </div>
+            <div style="margin-top: 15px;">
+                <label style="margin-top: 25px;">Are you already User ? Login here</label><br>
+                <button mat-raised-button color="accent" style="margin-top: 15px;" routerLink='/login' routerLinkActive="router-link-active" type="button">Login<mat-icon>save</mat-icon></button>
+            </div>
         </div>
     </form>
-</div>
+</mat-card>
