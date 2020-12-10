@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatTableModule } from '@angular/material/table';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -41,6 +41,9 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthGuard } from './auth.guard';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { MyLoaderComponent } from './my-loader/my-loader.component';
+import { LoaderInterceptor } from './loader-interceptor.service';
+import { LoaderService } from './loader.service';
 
 
 @NgModule({
@@ -60,7 +63,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     UserRegistrationComponent,
     LoginComponent,
     RegisterComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    MyLoaderComponent
 
   ],
   imports: [
@@ -90,7 +94,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     NgxMaterialTimepickerModule,
     MatNativeDateModule,MatStepperModule,MatCardModule
   ],
-  providers: [AuthGuard,DayService, WeekService, MonthAgendaService, MonthService, WorkWeekService, MatDatepickerModule],
+  providers: [AuthGuard,DayService, WeekService, MonthAgendaService, MonthService, WorkWeekService, MatDatepickerModule,LoaderService,
+    { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

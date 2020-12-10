@@ -13,9 +13,6 @@
                     <mat-error *ngIf="loginForm.get('Email').hasError('required')">
                         User Email is required
                     </mat-error>
-                    <mat-error *ngIf="loginForm.get('Email').hasError('minlength')">
-                        Min Length is 6
-                    </mat-error>
                     <mat-error *ngIf="loginForm.get('Email').hasError('pattern')">
                         Email is invalid
                     </mat-error>
