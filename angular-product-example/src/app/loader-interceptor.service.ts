@@ -1,4 +1,3 @@
-// loader-interceptor.service.ts
 import { Injectable } from '@angular/core';
 import {
   HttpResponse,
@@ -9,12 +8,13 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { LoaderService } from './loader.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable()
 export class LoaderInterceptor implements HttpInterceptor {
   private requests: HttpRequest<any>[] = [];
 
-  constructor(private loaderService: LoaderService) { }
+  constructor(private loaderService: LoaderService,private snackbar : MatSnackBar) { }
 
   removeRequest(req: HttpRequest<any>) {
     const i = this.requests.indexOf(req);
@@ -28,10 +28,10 @@ export class LoaderInterceptor implements HttpInterceptor {
 
     this.requests.push(req);
 
-    console.log("No of requests--->" + this.requests.length);
+    
 
     this.loaderService.isLoading.next(true);
-    return Observable.create(observer => {
+    return new Observable(observer => {
       const subscription = next.handle(req)
         .subscribe(
           event => {
@@ -41,7 +41,10 @@ export class LoaderInterceptor implements HttpInterceptor {
             }
           },
           err => {
-            alert('error' + err);
+            this.snackbar.open('Some Error occurred !!', 'Close', {
+              duration: 3000,
+              panelClass: ['error-snackbar-style']
+            });
             this.removeRequest(req);
             observer.error(err);
           },
