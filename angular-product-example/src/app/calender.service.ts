@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -15,10 +15,15 @@ export class CalenderService {
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
+  loader = {
+    headers : new HttpHeaders({'isloader':'false'})
+  }
 
   getEventFromAPI(data : any): Observable<any> {
 
-    return this.http.get<any>(this.requestURL + '?SearchQuery='+data.SearchQuery+'&Sort='+data.Sort+'&Order='+data.Order+'&PageNumber='+data.PageNumber).pipe();
+    let headers = new HttpParams();
+    headers.append("loader","false");
+    return this.http.get<any>(this.requestURL + '?SearchQuery='+data.SearchQuery+'&Sort='+data.Sort+'&Order='+data.Order+'&PageNumber='+data.PageNumber,this.loader).pipe();
   
   }
 

@@ -4,9 +4,10 @@
     top: -300px;
     left: 0px;
     height: 100%;
-    align-items: center;
+    display: flex;
     justify-content: center;
-    display: grid;
+    align-items: center;
+    z-index: 1999;
 }
 
 .lds-ring {

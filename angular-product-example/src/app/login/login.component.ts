@@ -39,10 +39,13 @@ export class LoginComponent implements OnInit {
         if (result != null) {
 
           this.authService.setUserLoggedInStatus(result);
-
+          if(this.authService.redirectUrl == null){
+            this.route.navigate(['/dashboard']);
+          }
+          else{
             this.route.navigate([this.authService.redirectUrl]);
-          
-          
+          }
+
           this.authService.redirectUrl = null;
           this.snackbar.open('Login successful', 'Close', {
             duration: 3000,

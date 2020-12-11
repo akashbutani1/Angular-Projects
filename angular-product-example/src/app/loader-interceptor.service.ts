@@ -11,22 +11,40 @@ import { finalize } from 'rxjs/operators';
 
 @Injectable()
 export class LoaderInterceptor implements HttpInterceptor {
-  
+
 
   constructor(private loaderService: LoaderService) { }
 
+  activeRequests = 0;
+  isLoader : boolean;
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
-    this.loaderService.isLoading.next(true);
-
-    return next.handle(req).pipe(
-      finalize(
-        () => {
-          this.loaderService.isLoading.next(false);
-        }
-      )
-    )
     
+    this.isLoader = !!req.headers.get('isloader');
+
+    if(!this.isLoader){
+      if (this.activeRequests === 0) {      
+        this.loaderService.isLoading.next(true);
+      }
+      this.activeRequests++;
+  
+      return next.handle(req).pipe(
+        finalize(
+          () => {
+            this.activeRequests--;
+            
+            if (this.activeRequests === 0) {
+              this.loaderService.isLoading.next(false);
+            }
+          }
+        )
+      )
+    }
+    else{
+      return next.handle(req);
+    }
+
+    
+
   }
 }
