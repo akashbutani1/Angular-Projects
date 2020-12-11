@@ -44,6 +44,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { MyLoaderComponent } from './my-loader/my-loader.component';
 import { LoaderInterceptor } from './loader-interceptor.service';
 import { LoaderService } from './loader.service';
+import { HeaderComponent } from './header/header.component';
 
 
 @NgModule({
@@ -64,7 +65,8 @@ import { LoaderService } from './loader.service';
     LoginComponent,
     RegisterComponent,
     PageNotFoundComponent,
-    MyLoaderComponent
+    MyLoaderComponent,
+    HeaderComponent
 
   ],
   imports: [

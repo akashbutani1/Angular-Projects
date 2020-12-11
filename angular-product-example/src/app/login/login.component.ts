@@ -1,9 +1,8 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
-import { AppComponent } from '../app.component';
 import { LoginRegisterService } from '../login-register.service';
 
 @Component({
@@ -35,7 +34,6 @@ export class LoginComponent implements OnInit {
       Email: this.loginForm.controls.Email.value,
       Password: this.loginForm.controls.Password.value
     }
-    debugger;
     this.loginService.checkUser(registerObject).pipe(first()).subscribe(
       result => {
         if (result != null) {

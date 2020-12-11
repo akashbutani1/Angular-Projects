@@ -11,7 +11,7 @@ import { RegisterComponent } from './register/register.component';
 import { UserRegistrationComponent } from './user-registration/user-registration.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'calender', component: CalenderComponent, canActivate: [AuthGuard] },
   { path: 'calender-list', component: CalenderListComponent, canActivate: [AuthGuard] },

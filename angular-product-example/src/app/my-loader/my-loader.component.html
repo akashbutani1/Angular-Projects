@@ -1,4 +1,4 @@
-<div class="progress-loader" [hidden]="!loading">
+<div class="progress-loader" *ngIf="loading">
 
     <div class="loading-spinner">
         <mat-spinner style="top:50%;"></mat-spinner>
