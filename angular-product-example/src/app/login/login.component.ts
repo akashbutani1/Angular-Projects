@@ -17,15 +17,15 @@ export class LoginComponent implements OnInit {
 
 
   constructor(private formbuilder: FormBuilder,
-    private loginService: LoginRegisterService,
+    private authService: LoginRegisterService,
     private route: Router,
     private snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
 
     this.loginForm = this.formbuilder.group({
-      Email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
-      Password: ['', [Validators.required, Validators.minLength(6), Validators.pattern("^[ A-Za-z0-9_]*$")]],
+      Email: ['', [Validators.required, Validators.email]],
+      Password: ['', [Validators.required]],
     });
   }
 
@@ -34,21 +34,16 @@ export class LoginComponent implements OnInit {
       Email: this.loginForm.controls.Email.value,
       Password: this.loginForm.controls.Password.value
     }
-    this.loginService.checkUser(registerObject).pipe(first()).subscribe(
+    this.authService.checkUser(registerObject).pipe(first()).subscribe(
       result => {
         if (result != null) {
 
-          this.loginService.setUserLoggedInStatus(result);
-          this.loginService.loginstatus = true;
+          this.authService.setUserLoggedInStatus(result);
 
-          if(this.loginService.redirectUrl == null){
-            this.route.navigate(['/dashboard']);
-          }
-          else{
-            this.route.navigate([this.loginService.redirectUrl]);
-          }
+            this.route.navigate([this.authService.redirectUrl]);
           
-          this.loginService.redirectUrl = null;
+          
+          this.authService.redirectUrl = null;
           this.snackbar.open('Login successful', 'Close', {
             duration: 3000,
             panelClass: ['snackbar-style']
@@ -57,7 +52,6 @@ export class LoginComponent implements OnInit {
 
         }
         else {
-          this.loginService.loginstatus = false;
           this.snackbar.open('Login Failed !! Try Again', 'Close', {
             duration: 3000,
             panelClass: ['error-snackbar-style']

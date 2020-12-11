@@ -13,7 +13,7 @@
                     <mat-error *ngIf="loginForm.get('Email').hasError('required')">
                         User Email is required
                     </mat-error>
-                    <mat-error *ngIf="loginForm.get('Email').hasError('pattern')">
+                    <mat-error *ngIf="loginForm.get('Email').hasError('email')">
                         Email is invalid
                     </mat-error>
                 </mat-form-field>
@@ -24,12 +24,6 @@
                     <input trim matInput formControlName="Password" placeholder="Enter Password" type="password" autocomplete="off">
                     <mat-error *ngIf="loginForm.get('Password').hasError('required')">
                         Password is required
-                    </mat-error>
-                    <mat-error *ngIf="loginForm.get('Password').hasError('minlength')">
-                        Min Length is 6
-                    </mat-error>
-                    <mat-error *ngIf="loginForm.get('Password').hasError('pattern')">
-                        Password is invalid
                     </mat-error>
                 </mat-form-field>
             </div>

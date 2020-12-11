@@ -15,7 +15,7 @@ export class RegisterComponent implements OnInit {
 
   registerForm : FormGroup;
   
-  constructor(private formbuilder : FormBuilder,private registerService : LoginRegisterService,
+  constructor(private formbuilder : FormBuilder,private authService : LoginRegisterService,
     private snackbar : MatSnackBar,private route :Router) { }
 
   ngOnInit(): void {
@@ -23,7 +23,7 @@ export class RegisterComponent implements OnInit {
     //^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$ password
     this.registerForm = this.formbuilder.group({
       Username: ['', [Validators.required, Validators.minLength(3), Validators.pattern("^[ A-Za-z0-9_@.]*$")]],
-      Email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
+      Email: ['', [Validators.required, Validators.email]],
       Password: ['', [Validators.required, Validators.minLength(6), Validators.pattern("^[ A-Za-z0-9_]*$")]],
     });
   }
@@ -35,7 +35,7 @@ export class RegisterComponent implements OnInit {
       Password : this.registerForm.controls.Password.value
     }
 
-    this.registerService.addUser(registerObject).pipe(first()).subscribe(
+    this.authService.addUser(registerObject).pipe(first()).subscribe(
       result => {
         if(result != null){
           this.route.navigate(['/login']);
