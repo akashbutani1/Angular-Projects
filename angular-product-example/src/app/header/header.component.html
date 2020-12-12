@@ -21,10 +21,18 @@
         User  
         <mat-icon [inline]="true"> format_list_bulleted</mat-icon>
     </button>
+    <button mat-raised-button color="accent" routerLink="/my-profile" style="margin-left: 35px;
+    border-radius: 0px;" *ngIf="isLoggedIn">
+        My Profile 
+        <mat-icon [inline]="true"> format_list_bulleted</mat-icon>
+    </button>
 
     <!-- <button style="margin-left: 25px;" *ngIf='!isLoggedIn' mat-raised-button color='accent' routerLink="/login" (notify)="getData($event)">Login</button> -->
-    <div *ngIf="isLoggedIn" style="margin-left: 250px;">
-        <label style="margin-right: 15px;">Welcome {{userName  | uppercase }}</label>
+    <div *ngIf="isLoggedIn" style="margin-left: 200px;">
+        <img [src]='userImage' style="width: 45px ;height:45px;border-radius: 50%;position: absolute;
+        right: 280px;
+        top: 10px;">
+        <label style="margin-right: 15px;">{{userName  | uppercase }}</label>
         <button mat-raised-button color='accent' (click)="logOut()">Log Out</button>
     </div>
 

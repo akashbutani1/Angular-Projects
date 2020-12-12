@@ -43,8 +43,5 @@ export class LoaderInterceptor implements HttpInterceptor {
     else{
       return next.handle(req);
     }
-
-    
-
   }
 }

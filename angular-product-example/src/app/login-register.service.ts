@@ -37,6 +37,9 @@ export class LoginRegisterService {
     
     localStorage.setItem('username',message.username);
     localStorage.setItem('token', message.token);
+    localStorage.setItem('email', message.email);
+    localStorage.setItem('id', message.id);
+    localStorage.setItem('image', message.image);
     this.user.next(message);
 
   }

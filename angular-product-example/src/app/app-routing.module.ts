@@ -6,6 +6,7 @@ import { CalenderListComponent } from './calender-list/calender-list.component';
 import { CalenderComponent } from './calender/calender.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
+import { MyProfileComponent } from './my-profile/my-profile.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { RegisterComponent } from './register/register.component';
 import { UserRegistrationComponent } from './user-registration/user-registration.component';
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'user-register', component: UserRegistrationComponent, canActivate: [AuthGuard] },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'my-profile', component: MyProfileComponent, canActivate: [AuthGuard] },
   { path: '**', component: PageNotFoundComponent }
 
 ];

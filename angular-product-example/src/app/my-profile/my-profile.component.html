@@ -1,0 +1,77 @@
+<mat-card class="profile-container" *ngIf="!isUpdate">
+
+
+    <h1> My Profile</h1>
+
+    <div class="col-md-6">
+        <img [src]="ProfileImage" style="width: 100px;margin-left: 115px;height: 100px;margin-top: 15px;border-radius:50%;">
+    </div>
+
+    <div class="col-md-6" style="margin-bottom: 20px;margin-top: 10px;">
+        <label>
+            <mat-icon [inline]=true style="margin-right: 10px;"> person_pin</mat-icon>{{userName}}
+        </label>
+    </div>
+
+    <div class="col-md-6" style="margin-bottom: 20px;">
+        <label>
+            <mat-icon [inline]=true style="margin-right: 10px;"> email</mat-icon>{{email}}
+        </label>
+    </div>
+
+    <div class="col-md-6">
+        <button mat-raised-button color="primary" (click)="updateProfile()" style="margin-left: 105px;">Update Profile</button>
+    </div>
+
+</mat-card>
+
+<mat-card class="profile-container" *ngIf="isUpdate">
+    <h1>My Profile</h1>
+    <form [formGroup]="updateUserForm">
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>Username</mat-label>
+                    <input autoFocus trim matInput [(ngModel)]="userName" formControlName="Username">
+                    <mat-error *ngIf="updateUserForm.get('Username').hasError('required')">
+                        Username is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>Email</mat-label>
+                    <input trim matInput formControlName="Email" [(ngModel)]="email">
+                    <mat-error *ngIf="updateUserForm.get('Email').hasError('required')">
+                        Email is required
+                    </mat-error>
+                    <mat-error *ngIf="updateUserForm.get('Email').hasError('email')">
+                        Email is invalid
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field appearance="outline" style="width: 100%;">
+                    <div>
+                        <mat-toolbar>
+                            <!-- Display files names -->
+                            <input matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="fileAttr" readonly name="name" />
+
+                            <!-- Browse Button -->
+                            <button mat-flat-button color="primary">
+                          Browse File
+                        </button>
+                        </mat-toolbar>
+
+                        <!-- Fetch selected file on change -->
+                        <input type="file" #fileInput id="uploadFile" (change)="uploadFileEvt($event)" name="uploadFile" />
+                    </div>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <button mat-raised-button color="primary" type="submit" (click)="onSubmit()">Save</button>
+                <button mat-raised-button color="primary" type="button" (click)="backToProfile()" style="margin-left: 15px;">Back To Profile</button>
+            </div>
+        </div>
+    </form>
+</mat-card>

@@ -13,6 +13,7 @@ export class HeaderComponent implements OnInit {
 
   isLoggedIn: boolean;
   userName: string;
+  userImage : string;
   private userSub: Subscription;
 
   constructor(private loginRegisterService: LoginRegisterService,
@@ -24,6 +25,7 @@ export class HeaderComponent implements OnInit {
       if(user != null){
         this.isLoggedIn = !!user;
         this.userName = localStorage.getItem('username');
+        this.userImage = '../assets/' + localStorage.getItem('image');
       }
     });
   }
@@ -34,6 +36,9 @@ export class HeaderComponent implements OnInit {
     this.userName = '';
     localStorage.removeItem('token');
     localStorage.removeItem('username');
+    localStorage.removeItem('email');
+    localStorage.removeItem('id');
+    localStorage.removeItem('image');
     this.route.navigate(['login']);
   }
 
