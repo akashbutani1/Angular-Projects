@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { EventEmitter, Injectable, Output } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +9,11 @@ export class LoginRegisterService {
 
   constructor(private http: HttpClient) { 
     if(!!localStorage.getItem('token')){
-      this.user.next(localStorage.getItem('username'));
+      const headerData = {
+        username : localStorage.getItem('username'),
+        image : localStorage.getItem('image')
+      }
+      this.user.next(headerData);
     }
   }
 
@@ -42,6 +45,10 @@ export class LoginRegisterService {
     localStorage.setItem('image', message.image);
     this.user.next(message);
 
+  }
+
+  updateMyProfileData(userData : any) : Observable<any>{
+    return this.http.put<any>('https://localhost:44385/api/TblRegisters/' + localStorage.getItem('id'),userData,this.httpOptions);
   }
 
 

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { first } from 'rxjs/operators';
 import { LoginRegisterService } from '../login-register.service';
 
 @Component({
@@ -16,13 +17,13 @@ export class MyProfileComponent implements OnInit {
   ProfileImage  = ('../assets/' + localStorage.getItem('image'));
   isUpdate : boolean = false;
   updateUserForm : FormGroup;
-  @ViewChild('fileInput') fileInput: ElementRef;
   fileAttr = localStorage.getItem('image');
-  fileUpload : any;
+  
 
-  constructor(private formbuilder : FormBuilder,private http : HttpClient,private snackbar : MatSnackBar,private authService : LoginRegisterService) { 
-    
-  }
+  constructor(
+    private formbuilder : FormBuilder,
+    private snackbar : MatSnackBar,
+    private authService : LoginRegisterService) { }
 
   ngOnInit(): void {
     this.updateUserForm = this.formbuilder.group({
@@ -32,21 +33,27 @@ export class MyProfileComponent implements OnInit {
   }
 
   onSubmit(){
-    const updateProfile = {
+    const updateProfileObject = {
       Email : this.updateUserForm.controls.Email.value,
       Username : this.updateUserForm.controls.Username.value,
       Image : this.fileAttr
     }
 
-    this.http.put<any>('https://localhost:44385/api/TblRegisters/' + localStorage.getItem('id'),updateProfile).subscribe(
+    this.authService.updateMyProfileData(updateProfileObject).subscribe(
       res => {
         if(res != null){
           localStorage.setItem('username',this.updateUserForm.controls.Username.value);
           localStorage.setItem('email',this.updateUserForm.controls.Email.value);
           localStorage.setItem('image',this.fileAttr);
-          this.authService.user.next(localStorage.getItem('username'));
-          this.authService.user.next(localStorage.getItem('image'));
+
+          const setHeaderData = {
+            username : localStorage.getItem('username'),
+            image : localStorage.getItem('image')
+          }
+          this.authService.user.next(setHeaderData);
+
           this.backToProfile();
+
           this.snackbar.open('Data Updated successfully', 'Close', {
             duration: 3000,
             panelClass: ['snackbar-style']
@@ -75,8 +82,10 @@ export class MyProfileComponent implements OnInit {
     this.isUpdate = false;
   }
 
-  uploadFileEvt(imgFile: any) {
-
+  uploadFileEvent(imgFile: any) {
+    if(this.fileAttr != null){
+      this.fileAttr = '';
+    }
     this.fileAttr += imgFile.target.files[0].name;
     
   }

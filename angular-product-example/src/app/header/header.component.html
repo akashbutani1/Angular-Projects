@@ -29,9 +29,7 @@
 
     <!-- <button style="margin-left: 25px;" *ngIf='!isLoggedIn' mat-raised-button color='accent' routerLink="/login" (notify)="getData($event)">Login</button> -->
     <div *ngIf="isLoggedIn" style="margin-left: 200px;">
-        <img [src]='userImage' style="width: 45px ;height:45px;border-radius: 50%;position: absolute;
-        right: 280px;
-        top: 10px;">
+        <img [src]='userImage' style="width: 45px ;height:45px;border-radius: 50%;position: absolute;right: 280px;top: 10px;">
         <label style="margin-right: 15px;">{{userName  | uppercase }}</label>
         <button mat-raised-button color='accent' (click)="logOut()">Log Out</button>
     </div>

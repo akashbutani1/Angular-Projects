@@ -64,12 +64,12 @@
                         </mat-toolbar>
 
                         <!-- Fetch selected file on change -->
-                        <input type="file" #fileInput id="uploadFile" (change)="uploadFileEvt($event)" name="uploadFile" />
+                        <input type="file" #fileInput id="uploadFile" (change)="uploadFileEvent($event)" name="uploadFile" />
                     </div>
                 </mat-form-field>
             </div>
             <div class="col-md-6">
-                <button mat-raised-button color="primary" type="submit" (click)="onSubmit()">Save</button>
+                <button mat-raised-button color="primary" type="submit" [disabled]="!updateUserForm.valid" (click)="onSubmit()">Save</button>
                 <button mat-raised-button color="primary" type="button" (click)="backToProfile()" style="margin-left: 15px;">Back To Profile</button>
             </div>
         </div>
