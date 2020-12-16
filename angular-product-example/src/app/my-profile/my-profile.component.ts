@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LoginRegisterService } from '../login-register.service';
@@ -12,10 +12,11 @@ export class MyProfileComponent implements OnInit {
 
   userName: string = localStorage.getItem('username');
   email: string = localStorage.getItem('email');
-  ProfileImage =  this.getImage(localStorage.getItem('image'));
+  ProfileImage = this.getImage(localStorage.getItem('image'));
   isUpdate = false;
   updateUserForm: FormGroup;
-  fileName = this.getFileName();
+  fileName = '';
+  uploadImage: any;
 
 
   constructor(
@@ -30,40 +31,65 @@ export class MyProfileComponent implements OnInit {
     });
   }
 
-  getFileName(){
-    const data = localStorage.getItem('image');
-    return data.substring(17);
-  }
 
 
   onSubmit() {
+
     const updateProfileObject = {
       Id: +localStorage.getItem('id'),
       Username: this.updateUserForm.controls.Username.value,
       Email: this.updateUserForm.controls.Email.value
     };
+
+    if (this.uploadImage != null) {
+      const imgData = new FormData();
+      imgData.append('Image', this.uploadImage, this.uploadImage.name);
+
+      this.authService.updateImage(imgData).subscribe(
+        res => {
+
+          if (res != null) {
+
+            localStorage.setItem('image', (res.dbPath));
+            this.ProfileImage = this.getImage(res.dbPath);
+
+            const setHeaderData = {
+              username: localStorage.getItem('username'),
+              image: localStorage.getItem('image')
+            };
+            this.authService.user.next(setHeaderData);
+            this.backToProfile();
+          }
+
+          else {
+
+            this.snackbar.open('Error Occurred !!', 'Close', {
+              duration: 3000,
+              panelClass: ['error-snackbar-style']
+            });
+
+          }
+        });
+    }
+
     this.authService.updateProfile(updateProfileObject).subscribe(
       result => {
 
-        if (result != null){
+        if (result != null) {
 
           localStorage.setItem('username', this.updateUserForm.controls.Username.value);
           localStorage.setItem('email', this.updateUserForm.controls.Email.value);
+
           const setHeaderData = {
             username: localStorage.getItem('username'),
             image: localStorage.getItem('image')
           };
           this.authService.user.next(setHeaderData);
-          this.snackbar.open('Data Updated successfully', 'Close', {
-            duration: 3000,
-            panelClass: ['snackbar-style']
-          });
           this.backToProfile();
-
         }
-        else{
+        else {
 
-          this.snackbar.open('Error Occured successfully', 'Close', {
+          this.snackbar.open('Error Occured !!', 'Close', {
             duration: 3000,
             panelClass: ['error-snackbar-style']
           });
@@ -71,6 +97,7 @@ export class MyProfileComponent implements OnInit {
         }
       }
     );
+
 
   }
 
@@ -86,6 +113,7 @@ export class MyProfileComponent implements OnInit {
     this.userName = localStorage.getItem('username');
     this.email = localStorage.getItem('email');
     this.isUpdate = false;
+    this.fileName = '';
   }
 
   uploadFileEvent(imgFile: any) {
@@ -93,43 +121,12 @@ export class MyProfileComponent implements OnInit {
     if (this.ProfileImage != null) {
       this.fileName = '';
     }
+    this.uploadImage = imgFile.target.files[0];
     this.fileName += imgFile.target.files[0].name; //display file name in form
 
-    const formData = new FormData();
-    formData.append('Image', imgFile.target.files[0], imgFile.target.files[0].name);
-
-    this.authService.updateImage(formData).subscribe(
-      res => {
-
-        if (res != null){
-
-          localStorage.setItem('image', (res.dbPath));
-          this.ProfileImage = this.getImage(res.dbPath);
-
-          const setHeaderData = {
-            username: localStorage.getItem('username'),
-            image: localStorage.getItem('image')
-          };
-          this.authService.user.next(setHeaderData);
-          this.snackbar.open('Image Uploaded successfully', 'Close', {
-            duration: 3000,
-            panelClass: ['snackbar-style']
-          });
-
-        }
-
-        else{
-
-          this.snackbar.open('Error Occurred !!', 'Close', {
-            duration: 3000,
-            panelClass: ['error-snackbar-style']
-          });
-
-        }
-      });
   }
 
-  getImage(path: string){
+  getImage(path: string) {
     return 'https://localhost:44385/' + path;
   }
 }

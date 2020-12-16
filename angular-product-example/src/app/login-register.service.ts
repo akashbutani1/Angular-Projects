@@ -42,13 +42,13 @@ export class LoginRegisterService {
     localStorage.setItem('token', message.token);
     localStorage.setItem('email', message.email);
     localStorage.setItem('id', message.id);
-    localStorage.setItem('image',  message.image);
+    localStorage.setItem('image','Resources/Images/' +  message.image);
     this.user.next(message);
 
   }
 
   updateImage(data: any): Observable<any> {
-    return this.http.put('https://localhost:44385/api/TblRegisters/' + localStorage.getItem('id'), data);
+    return this.http.put(this.requestURL + '/' + localStorage.getItem('id'), data);
   }
 
   updateProfile(data: any): Observable<any>{

@@ -24,8 +24,8 @@ export class HeaderComponent implements OnInit {
     this.userSub = this.loginRegisterService.user.subscribe(user => {
       if(user != null){
         this.isLoggedIn = !!user;
-        this.userName = user.username;
-        this.userImage = this.getUserImage(user.image);
+        this.userName = localStorage.getItem('username');
+        this.userImage = this.getUserImage(localStorage.getItem('image'));
       }
     });
   }

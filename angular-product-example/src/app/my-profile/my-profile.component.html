@@ -51,22 +51,13 @@
                 </mat-form-field>
             </div>
             <div class="col-md-6">
-                <mat-form-field appearance="outline" style="width: 100%;">
-                    <div>
-                        <mat-toolbar>
-                            <!-- Display files names -->
-                            <input matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="fileName" readonly name="name" />
+                Change Profile Picture : <br>
+                <button mat-flat-button color="primary" style="margin-bottom: 30px;">
+                            Browse File
+                          </button> {{fileName}}
 
-                            <!-- Browse Button -->
-                            <button mat-flat-button color="primary">
-                          Browse File
-                        </button>
-                        </mat-toolbar>
+                <input type="file" accept="image/*" id="uploadFile" (change)="uploadFileEvent($event)" name="uploadFile" />
 
-                        <!-- Fetch selected file on change -->
-                        <input type="file" accept="image/*" id="uploadFile" (change)="uploadFileEvent($event)" name="uploadFile" />
-                    </div>
-                </mat-form-field>
 
             </div>
             <div class="col-md-6">
