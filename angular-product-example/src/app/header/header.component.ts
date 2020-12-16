@@ -25,11 +25,14 @@ export class HeaderComponent implements OnInit {
       if(user != null){
         this.isLoggedIn = !!user;
         this.userName = user.username;
-        this.userImage = '../assets/' + user.image;
+        this.userImage = this.getUserImage(user.image);
       }
     });
   }
 
+  getUserImage(path: string){
+    return 'https://localhost:44385/' + path;
+  }
 
   logOut() {
     this.isLoggedIn = false;

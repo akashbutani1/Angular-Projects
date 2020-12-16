@@ -7,24 +7,24 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class LoginRegisterService {
 
-  constructor(private http: HttpClient) { 
-    if(!!localStorage.getItem('token')){
+  constructor(private http: HttpClient) {
+    if (!!localStorage.getItem('token')) {
       const headerData = {
-        username : localStorage.getItem('username'),
-        image : localStorage.getItem('image')
-      }
+        username: localStorage.getItem('username'),
+        image: localStorage.getItem('image')
+      };
       this.user.next(headerData);
     }
   }
 
   redirectUrl: string;
   loginstatus: boolean;
-  requestURL: string = 'https://localhost:44385/api/TblRegisters';
+  requestURL = 'https://localhost:44385/api/TblRegisters';
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
   user = new BehaviorSubject<any>(null);
-  
+
 
   addUser(userData: any): Observable<any> {
     return this.http.post<any>(this.requestURL, userData, this.httpOptions).pipe();
@@ -37,19 +37,22 @@ export class LoginRegisterService {
   }
 
   setUserLoggedInStatus(message: any) {
-    
-    localStorage.setItem('username',message.username);
+
+    localStorage.setItem('username', message.username);
     localStorage.setItem('token', message.token);
     localStorage.setItem('email', message.email);
     localStorage.setItem('id', message.id);
-    localStorage.setItem('image', message.image);
+    localStorage.setItem('image',  message.image);
     this.user.next(message);
 
   }
 
-  updateMyProfileData(userData : any) : Observable<any>{
-    return this.http.put<any>('https://localhost:44385/api/TblRegisters/' + localStorage.getItem('id'),userData,this.httpOptions);
+  updateImage(data: any): Observable<any> {
+    return this.http.put('https://localhost:44385/api/TblRegisters/' + localStorage.getItem('id'), data);
   }
 
+  updateProfile(data: any): Observable<any>{
+    return this.http.post(this.requestURL + '/UpdateUserData' , data);
+  }
 
 }
